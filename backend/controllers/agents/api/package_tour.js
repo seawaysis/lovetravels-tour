@@ -16,15 +16,14 @@ const addPackageTour = async (req,res) => {
         if(reDecoded.err){
             res.status(401).send({message : reDecoded.err})
         }else{
-            console.log(reDecoded.username)
             const resultAgent = await sequelize.query('SELECT * FROM agent WHERE username = ? LIMIT 1', {
             replacements: [reDecoded.username],
             type: QueryTypes.SELECT,
             });
-            if (!Object.keys(result).length){
+            if (!Object.keys(resultAgent).length){
                 res.status(400).send({message : 'Agent not found '})
             }else{
-                const resultPackage = await db.Package.create({
+                const resultPackage = await db.Package_tour.create({
                     package_name:body.packageName,
                     description:body.description,
                     max_amount:body.maxPersons,
@@ -37,17 +36,21 @@ const addPackageTour = async (req,res) => {
                     license_id: resultAgent[0].license_id
 
                 })
-                // let typeName = 'main'
-                // await Promise.all(pic.map(async (file) => {
-                //         result = await db.Gallery.create({
-                //             pic_path: file.originalname,
-                //             type:typeName,
-                //             update_date: datetime.today(),
-                //             package_id: 1
-                //     });
-                //     typeName = 'other'
-                // }));
-                res.status(200).send("add package ok !!")
+                if(!resultPackage.dataValues.package_id){
+                    res.status(400).send({message : 'Insert package fail'})
+                }else{
+                    let count = 1
+                    await Promise.all(pic.map(async (file) => {
+                        result = await db.Gallery.create({
+                            pic_path: file.originalname,
+                            type:count++,
+                            update_date: datetime.today(),
+                            package_id: resultPackage.dataValues.package_id
+                        });
+                        //result.dataValues.id
+                    }));
+                    res.status(200).send("add package ok !!")
+                }
             }
         }
     }

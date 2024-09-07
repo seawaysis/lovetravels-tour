@@ -14,7 +14,7 @@ function PrivateRoutes(props) {
     <Routes>
         {allowedRoutes.map(route => <Route 
             path={route.url}
-            //keys={route.url}
+            key={route.url}
             element={<route.component />}
          />)}
         <Route path="*" element={<Navigate to={redirectRoutes} />} />

@@ -1,6 +1,6 @@
 const today = () => {
     const today = new Date().toLocaleString('th-TH')
-
+    console.log(today)
     const formatData = (input) => {
         if (input > 9) {
             return input;

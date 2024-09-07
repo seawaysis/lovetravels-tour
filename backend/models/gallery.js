@@ -10,7 +10,7 @@ module.exports = (Sequelize , DataTypes) => {
             notNull: true
         },
         type: {
-            type: DataTypes.STRING(10),
+            type: DataTypes.INTEGER(3),
             notNull: true
         },
         update_date: {

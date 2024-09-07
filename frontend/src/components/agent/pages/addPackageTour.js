@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Form,Input,InputNumber,Button, Row, Col, notification,DatePicker, Space} from 'antd'
+import { Form,Input,InputNumber,Button, Row, Col, notification,DatePicker} from 'antd'
 import Title from 'antd/lib/typography/Title';
 import axios from '../../../routers/axios';
 import { useNavigate } from 'react-router-dom';
 //import LocalStorages from '../../../services/localStorages'
 
+import ConfigDate from '../configDate'
 import Upload from './upload'
 import Header from './header'
 import './allStyle.css';
@@ -19,14 +20,17 @@ function AddPackageTour() {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState([])
   const onFinish = values => {
+    //console.log(new Date(values.rangeDate[0]['$d']).toISOString().split('T')[0])
+    const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate)
     const body = {
             packageName: values.packageName,
             description: values.description,
             daysTrip: values.daysTrip,
             maxPersons: values.maxPersons,
             price: values.price,
-            priceDiscount: values.price_Discount,
-            rangeDate: values.rangeDate
+            priceDiscount: values.priceDiscount,
+            startDate: getDate.startDate,
+            endDate: getDate.endDate
         }
         
         const formData = new FormData()
@@ -36,7 +40,6 @@ function AddPackageTour() {
         for(let i=0;i < fileList.length;i++){
            formData.append('pic_package',fileList[i])
         }
-        console.log(formData)
         notification.warning({
                     message: `Add Package Progress`,
                     showProgress: true,
@@ -191,9 +194,11 @@ function AddPackageTour() {
                             ]}
                         >
                         <RangePicker
-                            //defaultValue={[dayjs('2015/01/01', dateFormat), dayjs('2015/01/01', dateFormat)]}
-                            format={'YYYY/MM/DD'}
-                            style={{backgroundColor:'rgb(240, 240, 240)'}}
+                            showTime={{
+                                format: 'HH:mm',
+                            }}
+                            format={'YYYY/MM/DD HH:mm'}
+                            style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}
                             />
                         </Form.Item>
 

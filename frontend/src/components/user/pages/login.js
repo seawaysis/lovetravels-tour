@@ -97,7 +97,7 @@ function Login(props) {
                         >
                             <Input.Password />
                         </Form.Item>
-                        <Flex gap="middle" justify="right" horizontal style={{}}>
+                        <Flex gap="middle" justify="right" horizontal>
                             <Button onClick={toRegis} className="Button button_link_style" htmlType="button" type="link" size="large">Sign up</Button>
                             <Button className="Button button_style" htmlType="submit" size="large">Login</Button>
                         </Flex>

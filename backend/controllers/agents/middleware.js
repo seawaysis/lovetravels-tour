@@ -94,7 +94,13 @@ const formAddPackage = () => {
     body('priceDiscount').not().isEmpty().withMessage('Invalid discount dose not empty')
     .exists({checkFalsy: true}).withMessage('You must type a number')
     .isLength({min:1}).withMessage('The minimum discount length is 1 number')
-    .isLength({max:2}).withMessage('The maximum discount length is 2 number')
+    .isLength({max:2}).withMessage('The maximum discount length is 2 number'),
+    body('startDate').not().isEmpty().withMessage('Invalid startDate dose not empty')
+    .isLength({min:16,max:16}).withMessage('The date length is 10 only')
+    .matches(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/).withMessage('The date format invalid'),
+    body('startDate').not().isEmpty().withMessage('Invalid startDate dose not empty')
+    .isLength({min:16,max:16}).withMessage('The date length is 10 only')
+    .matches(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/).withMessage('The date format invalid')
   ]
 }
 module.exports = {

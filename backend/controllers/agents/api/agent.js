@@ -1,13 +1,13 @@
 const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
-const nodemailer = require('nodemailer');
 const bcryptjs = require('bcryptjs');
 const datetime = require('../datetime');
 const encryptToken = require('../encrypt');
 const email = require('../email')
 
 const loginAgent = async (req,res) => {
+    datetime.today()
     const body = req.body;
     const result = await sequelize.query('SELECT * FROM agent WHERE username = ?', {
         replacements: [body.user],
