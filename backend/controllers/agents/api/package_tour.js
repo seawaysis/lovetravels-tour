@@ -8,14 +8,7 @@ const datetime = require('../datetime');
 const addPackageTour = async (req,res) => {
     const body = req.body;
     const pic = req.files
-    const token = req.headers.autherization.split(' ')[1]
-    if(!token){
-        return res.status(401).send({message : 'No Autherization Token'})
-    }else{
-        const reDecoded = await encryptToken.reDecoded(token)
-        if(reDecoded.err){
-            res.status(401).send({message : reDecoded.err})
-        }else{
+    const reDecoded = req.decodeToken
             const resultAgent = await sequelize.query('SELECT * FROM agent WHERE username = ? LIMIT 1', {
             replacements: [reDecoded.username],
             type: QueryTypes.SELECT,
@@ -50,11 +43,15 @@ const addPackageTour = async (req,res) => {
                         //result.dataValues.id
                     }));
                     res.status(200).send("add package ok !!")
-                }
-            }
         }
     }
 }
+const allPackagtTour = async (req,res) => {
+    const body = req.body;
+    console.log(req.decodeToken)
+    res.status(200).send("all package ok !!")
+}
 module.exports = {
-    addPackageTour
+    addPackageTour,
+    allPackagtTour
 }

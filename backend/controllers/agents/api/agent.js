@@ -69,15 +69,9 @@ const registerAgent = async (req,res) => {
     }
 }
 const confEmailAgent = async (req,res) => {
-    const token = req.headers.autherization.split(' ')[1]
     const body = req.body
-    if(!token){
-        return res.status(401).send({message : 'No Autherization Token'})
-    }else{
-        const reDecoded = await encryptToken.reDecoded(token)
-        if(reDecoded.err){
-            res.status(401).send({message : reDecoded.err})
-        }else{
+    const reDecoded = req.decodeToken
+    
             const result = await sequelize.query('SELECT username,email,conf_email FROM agent WHERE email = ?', {
                 replacements: [reDecoded.email],
                 type: QueryTypes.SELECT,
@@ -101,17 +95,8 @@ const confEmailAgent = async (req,res) => {
                 }
             }
         }
-    }
-}
 const resendOTPAgent = async (req,res) => {
-    const token = req.headers.autherization.split(' ')[1]
-    if(!token){
-        return res.status(401).send({message : 'No Autherization Token'})
-    }else{
-        const reDecoded = await encryptToken.reDecoded(token)
-        if(reDecoded.err){
-            res.status(401).send({message : reDecoded.err})
-        }else{
+    const reDecoded = req.decodeToken
             const numOTP = await getOTPNum(8)
             const confEncoded = await getConfirmToken(reDecoded.email)
             const status = await email.sender({receive: reDecoded.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
@@ -125,8 +110,6 @@ const resendOTPAgent = async (req,res) => {
                 update.error ? res.status(400).send({message : update.error}) : res.status(200).send({confirmToken:confEncoded,message: 'Resend OTP successfully !!'})
             }
         }
-    }
-}
 function getConfirmToken(UEmail){
     const confEncoded = encryptToken.reEncoded({email: UEmail,typeRole: 'pendding'})
     return confEncoded

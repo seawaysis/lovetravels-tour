@@ -12,18 +12,18 @@ axios.interceptors.request.use(
             'user':[
                 {'login' : {headers: {'Content-Type': 'application/json'}}},
                 {'register' : {headers: {'Content-Type': 'application/json'}}},
-                {'auth_token' : {headers: {Autherization : `Bearer ${token.refreshToken}`}}},
-                {'resend_otp' : {headers: {Autherization : `Bearer ${token.confirmToken}`}}},
-                {'confirm_email' : {headers: {Autherization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
+                {'auth_token' : {headers: {authorization : `Bearer ${token.refreshToken}`}}},
+                {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
+                {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
             ],
             'agent':[
                 {'login' : {headers: {'Content-Type': 'application/json'}}},
                 {'register' : {headers: {'Content-Type': 'multipart/form-data'}}},
-                {'auth_token' : {headers: {Autherization : `Bearer ${token.refreshToken}`}}},
-                {'resend_otp' : {headers: {Autherization : `Bearer ${token.confirmToken}`}}},
-                {'confirm_email' : {headers: {Autherization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
-                {'add_package' : {headers: {Autherization : `Bearer ${token.refreshToken}`,'Content-Type': 'multipart/form-data'}}},
-                {'booking' : {headers: {Autherization : `Bearer ${token.refreshToken}`}}},
+                {'auth_token' : {headers: {authorization : `Bearer ${token.refreshToken}`}}},
+                {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
+                {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
+                {'add_package' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'multipart/form-data'}}},
+                {'booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
             ]
         }
             arrPath[urlSplit[0]].forEach((v) => {

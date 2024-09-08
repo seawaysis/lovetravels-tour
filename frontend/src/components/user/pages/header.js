@@ -5,9 +5,8 @@ import { Drawer,Menu,Flex,Divider,notification } from 'antd';
 import LocalStorages from '../../../services/localStorages'
 import { useNavigate } from 'react-router-dom';
 import {MenuOutlined} from '@ant-design/icons';
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import { updateRole } from '../../../services/store/Reducer'
-import { useSelector } from 'react-redux';
 import './allStyle.css';
 
 function Header(props) {

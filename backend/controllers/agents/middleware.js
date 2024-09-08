@@ -2,19 +2,32 @@
 const encryptToken = require('./encrypt');
 const {body,check,validationResult} = require('express-validator')
 const datetime = require('./datetime')
-const checkMemberToken = (req, res, next) => {
-  try{
-    const token = req.headers.authorization.split(' ')[1]
-    const verifyed = encryptToken.decoded(token);
-    next();
-  }catch(err){
-    res.status(401).json({status:'error',message:err.message})
-  }
+
+const checkAccessToken = async (req, res, next) => {
+    if(!req.headers.authorization){
+        return res.status(401).send({message : 'No authorization Token'})
+    }else{
+        const decoded = await encryptToken.decoded(req.headers.authorization.split(' ')[1])
+        if(decoded.err){
+            res.status(401).send({message : decoded.err})
+        }else{
+          req.decodeToken = decoded
+          next()
+        }
+    }
 }
-const checkRefreshMemberToken = () => {
-  if (!req.headers["authorization"]) return res.sendStatus(401)
-  const verifyed = encryptToken.reDecoded(req.headers.authorization.split(' ')[1]);
-console.log(verifyed)
+const checkRefreshToken = async (req, res, next) => {
+  if(!req.headers.authorization){
+        return res.status(401).send({message : 'No authorization Token'})
+    }else{
+        const reDecoded = await encryptToken.reDecoded(req.headers.authorization.split(' ')[1])
+        if(reDecoded.err){
+            res.status(401).send({message : reDecoded.err})
+        }else{
+          req.decodeToken = reDecoded
+          next()
+        }
+    }
 }
 const validationForm = (req,res,next) => {
   const errors = validationResult(req);
@@ -104,7 +117,8 @@ const formAddPackage = () => {
   ]
 }
 module.exports = {
-    checkMemberToken,
+    checkAccessToken,
+    checkRefreshToken,
     formLogin,
     formRegis,
     formConfirmEmail,

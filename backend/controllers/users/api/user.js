@@ -55,10 +55,10 @@ const registerUser = async (req,res) => {
     }
 }
 const confEmailUser = async (req,res) => {
-    if(!req.headers.autherization){
-        return res.status(401).send({message : 'No Autherization Token'})
+    if(!req.headers.authorization){
+        return res.status(401).send({message : 'No authorization Token'})
     }else{
-        const token = req.headers.autherization.split(' ')[1]
+        const token = req.headers.authorization.split(' ')[1]
         const body = req.body
         const reDecoded = await encryptToken.reDecoded(token)
         if(reDecoded.err){
@@ -90,10 +90,10 @@ const confEmailUser = async (req,res) => {
     }
 }
 const resendOTPUser = async (req,res) => {
-    if(!req.headers.autherization){
-        return res.status(401).send({message : 'No Autherization Token'})
+    if(!req.headers.authorization){
+        return res.status(401).send({message : 'No authorization Token'})
     }else{
-        const token = req.headers.autherization.split(' ')[1]
+        const token = req.headers.authorization.split(' ')[1]
         const reDecoded = await encryptToken.reDecoded(token)
         if(reDecoded.err){
             res.status(401).send({message : reDecoded.err})
@@ -114,10 +114,10 @@ const resendOTPUser = async (req,res) => {
     }
 }
 const authToken = async (req,res) => {
-    if(!req.headers.autherization){
-        return res.status(401).send({message : 'No Autherization Token'})
+    if(!req.headers.authorization){
+        return res.status(401).send({message : 'No authorization Token'})
     }else{
-        const token = req.headers.autherization.split(' ')[1]
+        const token = req.headers.authorization.split(' ')[1]
         const reDecoded = await encryptToken.reDecoded(token)
         if(reDecoded.err){
             res.status(401).send({message : reDecoded.err})

@@ -37,10 +37,11 @@ const uploadPackage = multer({ storage:storagePackage,fileFillter })
 
 router.post('/login',userMiddlewares.formLogin(),userMiddlewares.validationForm,userControllers.loginAgent);
 router.post('/register',uploadRegister.array('payment',1),userMiddlewares.formRegis(),userMiddlewares.validationForm,userControllers.registerAgent);
-router.post('/confirm_email',userMiddlewares.formConfirmEmail(),userMiddlewares.validationForm,userControllers.confEmailAgent);
-router.get('/resend_otp',userControllers.resendOTPAgent);
+router.post('/confirm_email',userMiddlewares.checkRefreshToken,userMiddlewares.formConfirmEmail(),userMiddlewares.validationForm,userControllers.confEmailAgent);
+router.get('/resend_otp',userMiddlewares.checkRefreshToken,userControllers.resendOTPAgent);
 
-router.post('/add_package',uploadPackage.array('pic_package',5),userMiddlewares.formAddPackage(),userMiddlewares.validationForm,packageControllers.addPackageTour);
+router.post('/add_package',userMiddlewares.checkAccessToken,uploadPackage.array('pic_package',5),userMiddlewares.formAddPackage(),userMiddlewares.validationForm,packageControllers.addPackageTour);
+router.get('/all_package',userMiddlewares.checkAccessToken,packageControllers.allPackagtTour)
 router.post('/booking',bookingControllers.getAllBooking);
 router.get('/upload',bookingControllers.uploadPic);
 
