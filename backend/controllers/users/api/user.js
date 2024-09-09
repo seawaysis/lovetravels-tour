@@ -55,16 +55,9 @@ const registerUser = async (req,res) => {
     }
 }
 const confEmailUser = async (req,res) => {
-    if(!req.headers.authorization){
-        return res.status(401).send({message : 'No authorization Token'})
-    }else{
-        const token = req.headers.authorization.split(' ')[1]
         const body = req.body
-        const reDecoded = await encryptToken.reDecoded(token)
-        if(reDecoded.err){
-            res.status(401).send({message : reDecoded.err})
-        }else{
-            const result = await sequelize.query('SELECT email,conf_email FROM member WHERE email = ?', {
+        const reDecoded = req.decodeToken
+        const result = await sequelize.query('SELECT email,conf_email FROM member WHERE email = ?', {
                 replacements: [reDecoded.email],
                 type: QueryTypes.SELECT,
             });
@@ -86,18 +79,9 @@ const confEmailUser = async (req,res) => {
                 update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'member',message: 'Verify Email successfully !!'})
                 }
             }
-        }
     }
-}
 const resendOTPUser = async (req,res) => {
-    if(!req.headers.authorization){
-        return res.status(401).send({message : 'No authorization Token'})
-    }else{
-        const token = req.headers.authorization.split(' ')[1]
-        const reDecoded = await encryptToken.reDecoded(token)
-        if(reDecoded.err){
-            res.status(401).send({message : reDecoded.err})
-        }else{
+            const reDecoded = req.decodeToken
             const numOTP = await getOTPNum(8)
             const confEncoded = await getConfirmToken(reDecoded.email)
             const status = await email.sender({receive: reDecoded.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
@@ -111,17 +95,8 @@ const resendOTPUser = async (req,res) => {
                 update.error ? res.status(400).send({message : update.error}) : res.status(200).send({confirmToken:confEncoded,message: 'Resend OTP successfully !!'})
             }
         }
-    }
-}
 const authToken = async (req,res) => {
-    if(!req.headers.authorization){
-        return res.status(401).send({message : 'No authorization Token'})
-    }else{
-        const token = req.headers.authorization.split(' ')[1]
-        const reDecoded = await encryptToken.reDecoded(token)
-        if(reDecoded.err){
-            res.status(401).send({message : reDecoded.err})
-        }else{
+    const reDecoded = req.decodeToken
             let detailToken = {}
             if(reDecoded.typeRole === 'member'){
                 detailToken = {email: reDecoded.email,typeRole: reDecoded.typeRole}
@@ -131,8 +106,6 @@ const authToken = async (req,res) => {
             const reEncoded = await encryptToken.reEncoded(detailToken)
             reEncoded.err ? res.status(400).send({message : reEncoded.err}) : res.status(200).send({refreshToken:reEncoded,typeRole:reDecoded.typeRole})
         }
-    }
-}
 function getConfirmToken(UEmail){
     const confEncoded = encryptToken.reEncoded({email: UEmail,typeRole: 'pendding'})
     return confEncoded

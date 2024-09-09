@@ -1,5 +1,5 @@
 module.exports = (Sequelize , DataTypes) => {
-    const model = Sequelize.define('Package_tour',{
+    const model = Sequelize.define('PackageTour',{
         package_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -42,12 +42,12 @@ module.exports = (Sequelize , DataTypes) => {
             type: DataTypes.DATE,
             notNull: true
         },
-        license_id: {
-            type: DataTypes.STRING(100),
+        username: {
+            type: DataTypes.STRING(30),
             foreignKey: true,
-        }
+        },
     },{
-        tableName: 'package_tour',
+        tableName: 'packageTour',
         collate: 'utf8mb4_general_ci',
         timestamps: false,
     });
@@ -57,7 +57,7 @@ module.exports = (Sequelize , DataTypes) => {
         //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
         model.hasMany(models.Gallery,{foreignKey:'package_id'}) //one to many
 
-        model.belongsTo(models.Agent, {foreignKey:'license_id',allowNull: false}) //one to one || one to many
+        model.belongsTo(models.Agent, {foreignKey:'username',allowNull: false}) //one to one || one to many
         //model.belongsTo(models.Reservation, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
         //model.belongsToMany(models.Member, {through: models.User}) //many to many
     }

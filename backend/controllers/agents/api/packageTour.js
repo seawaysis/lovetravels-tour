@@ -16,7 +16,7 @@ const addPackageTour = async (req,res) => {
             if (!Object.keys(resultAgent).length){
                 res.status(400).send({message : 'Agent not found '})
             }else{
-                const resultPackage = await db.Package_tour.create({
+                const resultPackage = await db.PackageTour.create({
                     package_name:body.packageName,
                     description:body.description,
                     max_amount:body.maxPersons,
@@ -26,29 +26,35 @@ const addPackageTour = async (req,res) => {
                     start_date:body.startDate,
                     end_date:body.endDate,
                     update_date: datetime.today(),
-                    license_id: resultAgent[0].license_id
+                    username: resultAgent[0].username
 
                 })
-                if(!resultPackage.dataValues.package_id){
-                    res.status(400).send({message : 'Insert package fail'})
-                }else{
-                    let count = 1
-                    await Promise.all(pic.map(async (file) => {
-                        result = await db.Gallery.create({
-                            pic_path: file.originalname,
-                            type:count++,
-                            update_date: datetime.today(),
-                            package_id: resultPackage.dataValues.package_id
-                        });
-                        //result.dataValues.id
-                    }));
-                    res.status(200).send("add package ok !!")
-        }
+                console.log(resultPackage)
+        //         if(!resultPackage.dataValues.package_id){
+        //             res.status(400).send({message : 'Insert package fail'})
+        //         }else{
+        //             let count = 1
+        //             await Promise.all(pic.map(async (file) => {
+        //                 result = await db.Gallery.create({
+        //                     pic_path: file.originalname,
+        //                     type:count++,
+        //                     update_date: datetime.today(),
+        //                     package_id: resultPackage.dataValues.package_id
+        //                 });
+        //                 //result.dataValues.id
+        //             }));
+        //             res.status(200).send("add package ok !!")
+        // }
+        res.status(200).send("add package ok !!")
     }
 }
 const allPackagtTour = async (req,res) => {
     const body = req.body;
     console.log(req.decodeToken)
+    const resultAgent = await sequelize.query('SELECT * FROM package WHERE username = ? LIMIT 1', {
+            replacements: [reDecoded.username],
+            type: QueryTypes.SELECT,
+            });
     res.status(200).send("all package ok !!")
 }
 module.exports = {

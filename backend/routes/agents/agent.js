@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userControllers = require('../../controllers/agents/api/agent');
 const bookingControllers = require('../../controllers/agents/api/booking');
-const packageControllers = require('../../controllers/agents/api/package_tour')
+const packageControllers = require('../../controllers/agents/api/packageTour')
 const multer = require('multer');
-const userMiddlewares = require('../../controllers/agents/middleware');
+const Middlewares = require('../../controllers/agents/middleware');
 
 const storageRegister = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -35,13 +35,13 @@ const fileFillter = {fileFilter: (req, file, cb) => {
 const uploadRegister = multer({ storage:storageRegister,fileFillter })
 const uploadPackage = multer({ storage:storagePackage,fileFillter })
 
-router.post('/login',userMiddlewares.formLogin(),userMiddlewares.validationForm,userControllers.loginAgent);
-router.post('/register',uploadRegister.array('payment',1),userMiddlewares.formRegis(),userMiddlewares.validationForm,userControllers.registerAgent);
-router.post('/confirm_email',userMiddlewares.checkRefreshToken,userMiddlewares.formConfirmEmail(),userMiddlewares.validationForm,userControllers.confEmailAgent);
-router.get('/resend_otp',userMiddlewares.checkRefreshToken,userControllers.resendOTPAgent);
+router.post('/login',Middlewares.formLogin(),Middlewares.validationForm,userControllers.loginAgent);
+router.post('/register',uploadRegister.array('payment',1),Middlewares.formRegis(),Middlewares.validationForm,userControllers.registerAgent);
+router.post('/confirm_email',Middlewares.checkRefreshToken,Middlewares.formConfirmEmail(),Middlewares.validationForm,userControllers.confEmailAgent);
+router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTPAgent);
 
-router.post('/add_package',userMiddlewares.checkAccessToken,uploadPackage.array('pic_package',5),userMiddlewares.formAddPackage(),userMiddlewares.validationForm,packageControllers.addPackageTour);
-router.get('/all_package',userMiddlewares.checkAccessToken,packageControllers.allPackagtTour)
+router.post('/add_package',Middlewares.checkAccessToken,uploadPackage.array('pic_package',5),Middlewares.formAddPackage(),Middlewares.validationForm,packageControllers.addPackageTour);
+router.get('/all_package',Middlewares.checkAccessToken,packageControllers.allPackagtTour)
 router.post('/booking',bookingControllers.getAllBooking);
 router.get('/upload',bookingControllers.uploadPic);
 
