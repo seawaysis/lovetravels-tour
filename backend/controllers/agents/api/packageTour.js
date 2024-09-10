@@ -8,9 +8,9 @@ const datetime = require('../datetime');
 const addPackageTour = async (req,res) => {
     const body = req.body;
     const pic = req.files
-    const reDecoded = req.decodeToken
+    const decodeToken = req.decodeToken
             const resultAgent = await sequelize.query('SELECT * FROM agent WHERE username = ? LIMIT 1', {
-            replacements: [reDecoded.username],
+            replacements: [decodeToken.username],
             type: QueryTypes.SELECT,
             });
             console.log(resultAgent)
@@ -49,12 +49,17 @@ const addPackageTour = async (req,res) => {
 }
 const allPackagtTour = async (req,res) => {
     const body = req.body;
-    console.log(req.decodeToken)
-    const resultAgent = await sequelize.query('SELECT * FROM package WHERE username = ? LIMIT 1', {
-            replacements: [reDecoded.username],
+    const decodeToken = req.decodeToken
+    console.log(decodeToken)
+    const result = await sequelize.query('SELECT * FROM packageTour WHERE username = ? ORDER BY start_date ASC', {
+            replacements: [decodeToken.username],
             type: QueryTypes.SELECT,
+            }).then(r => {
+                return r
+            }).catch(err => {
+                return err
             });
-    res.status(200).send("all package ok !!")
+   result.parent ? res.status(400).json({message : result.parent.code}) : res.status(200).json(result)
 }
 module.exports = {
     addPackageTour,

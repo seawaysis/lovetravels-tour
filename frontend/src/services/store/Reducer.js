@@ -23,7 +23,7 @@ const roleStore = createSlice({
         //...
       })
       builder.addCase(getRole.fulfilled, (state, action) => {
-          console.log('extra : '+action.payload)
+          //console.log('extra : '+action.payload)
           state.role = action.payload
         //slice.caseReducers.setData(state, action);
       })

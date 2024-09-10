@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import ConfigRoutes from '../../routers/routers';
 import { Routes,Route,Navigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
@@ -6,7 +6,8 @@ import getRole from '../../services/store/thunks'
 function PrivateRoutes(props) {
 
     const dispatch = useDispatch();
-    dispatch(getRole())
+    //dispatch(getRole())
+    useEffect(() => {dispatch(getRole());return null;}, [dispatch]);
     const { role } = useSelector((state) => state.Roles) 
     const allowedRoutes = ConfigRoutes[role].allowedRoutes;
     const redirectRoutes = ConfigRoutes[role].redirectRoutes;

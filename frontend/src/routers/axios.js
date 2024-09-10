@@ -23,6 +23,7 @@ axios.interceptors.request.use(
                 {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
                 {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
                 {'add_package' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'multipart/form-data'}}},
+                {'all_package' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
             ]
         }

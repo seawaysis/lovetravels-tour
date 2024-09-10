@@ -1,28 +1,28 @@
 import { createSlice /*,current*/} from '@reduxjs/toolkit'
 import getPackage from './agentThunks'
-const initialState = []
+const initialState = {agentPackage : []}
 const packageTour = createSlice({
     name: "setAgentPackageTour",
     initialState,
     reducers: {
-        updatePackage: (state, action) => {
-            state.role = action.payload
+        updateAgentPackage: (state, action) => {
+            state.agentPackage = action.payload
             //console.log('current : '+current(state))
         }
     },
-    // extraReducers: (builder) => {
-    //   builder.addCase(getRole.pending, (state) => {
-    //     //...
-    //   })
-    //   builder.addCase(getRole.rejected, (state) => {
-    //     //...
-    //   })
-    //   builder.addCase(getRole.fulfilled, (state, action) => {
-    //       console.log('extra : '+action.payload)
-    //       state.role = action.payload
-    //     //slice.caseReducers.setData(state, action);
-    //   })
-    // },
+    extraReducers: (builder) => {
+      builder.addCase(getPackage.pending, (state) => {
+        //...
+      })
+      builder.addCase(getPackage.rejected, (state) => {
+        //...
+      })
+      builder.addCase(getPackage.fulfilled, (state, action) => {
+          //console.log(action.payload.data)
+          state.agentPackage = action.payload.data
+        //slice.caseReducers.setData(state, action);
+      })
+    },
   }) 
 
 export const { updateAgentPackage } = packageTour.actions

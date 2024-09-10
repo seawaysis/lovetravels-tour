@@ -51,7 +51,7 @@ function AddPackageTour() {
                 notification.success({
                     message: `Add Package successfully`
                 });
-               //navigate("/agent/package_tour");
+               navigate("/agent/package_tour");
             }
         ).catch(
             err => {
