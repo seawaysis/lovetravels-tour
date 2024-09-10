@@ -10,7 +10,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-db.sequelize.sync({force:false}).then(() => {
+const resetDB = {force:false};
+db.sequelize.sync(resetDB).then(() => {
+    db.extradb(resetDB)
     app.use('/user',userRoutes);
     app.use('/agent',agentRoutes);
     app.listen(process.env.PORT_BE,() =>{

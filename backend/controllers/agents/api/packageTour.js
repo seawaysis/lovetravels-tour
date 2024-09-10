@@ -13,6 +13,7 @@ const addPackageTour = async (req,res) => {
             replacements: [reDecoded.username],
             type: QueryTypes.SELECT,
             });
+            console.log(resultAgent)
             if (!Object.keys(resultAgent).length){
                 res.status(400).send({message : 'Agent not found '})
             }else{
@@ -29,23 +30,21 @@ const addPackageTour = async (req,res) => {
                     username: resultAgent[0].username
 
                 })
-                console.log(resultPackage)
-        //         if(!resultPackage.dataValues.package_id){
-        //             res.status(400).send({message : 'Insert package fail'})
-        //         }else{
-        //             let count = 1
-        //             await Promise.all(pic.map(async (file) => {
-        //                 result = await db.Gallery.create({
-        //                     pic_path: file.originalname,
-        //                     type:count++,
-        //                     update_date: datetime.today(),
-        //                     package_id: resultPackage.dataValues.package_id
-        //                 });
-        //                 //result.dataValues.id
-        //             }));
-        //             res.status(200).send("add package ok !!")
-        // }
-        res.status(200).send("add package ok !!")
+                if(!resultPackage.dataValues.package_id){
+                    res.status(400).send({message : 'Insert package fail'})
+                }else{
+                    let count = 1
+                    await Promise.all(pic.map(async (file) => {
+                        result = await db.Gallery.create({
+                            pic_path: file.originalname,
+                            type:count++,
+                            update_date: datetime.today(),
+                            package_id: resultPackage.dataValues.package_id
+                        });
+                        //result.dataValues.id
+                    }));
+                    res.status(200).send("add package ok !!")
+        }
     }
 }
 const allPackagtTour = async (req,res) => {

@@ -40,4 +40,11 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.extradb = async (resetDB) => {
+  if(resetDB.force){
+    await sequelize.query('ALTER TABLE packageTour ADD CONSTRAINT `packageTour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE',
+      {raw: false}
+    ).then().catch()
+  }
+}
 module.exports = db;

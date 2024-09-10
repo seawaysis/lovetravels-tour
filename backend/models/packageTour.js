@@ -44,20 +44,28 @@ module.exports = (Sequelize , DataTypes) => {
         },
         username: {
             type: DataTypes.STRING(30),
-            foreignKey: true,
-        },
+            allowNull: false
+        }
     },{
         tableName: 'packageTour',
         collate: 'utf8mb4_general_ci',
         timestamps: false,
+        hooks: {
+            afterCreate: async (package, options) => {
+                // options.query('ALTER TABLE packageTour ADD CONSTRAINT `packageTour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE check(expression)',
+                //     {raw: false}
+                // ).then().catch()
+                console.log('packageTour check')
+            },
+        },
     });
     
     model.associate = models => {
         model.hasOne(models.Reservation,{foreignKey:'package_id'}) //one to many
         //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
-        model.hasMany(models.Gallery,{foreignKey:'package_id'}) //one to many
+        //model.hasMany(models.Gallery,{foreignKey:'package_id'}) //one to many
 
-        model.belongsTo(models.Agent, {foreignKey:'username',allowNull: false}) //one to one || one to many
+        //model.belongsTo(models.Agent,{foreignKey: 'username'}) //one to one || one to many
         //model.belongsTo(models.Reservation, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
         //model.belongsToMany(models.Member, {through: models.User}) //many to many
     }

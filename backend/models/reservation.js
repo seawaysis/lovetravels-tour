@@ -43,10 +43,12 @@ module.exports = (Sequelize , DataTypes) => {
         uid: {
             type: DataTypes.INTEGER,
             foreignKey: true,
+            notNull: false
         },
         package_id: {
             type: DataTypes.INTEGER,
             foreignKey: true,
+            notNull: false
         },
     },{
         tableName: 'reservation',

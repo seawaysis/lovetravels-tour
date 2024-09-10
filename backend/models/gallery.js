@@ -20,7 +20,7 @@ module.exports = (Sequelize , DataTypes) => {
         package_id: {
             type: DataTypes.INTEGER,
             foreignKey: true,
-            notNull: true
+            notNull: false
         },
     },{
         tableName: 'gallery',

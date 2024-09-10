@@ -7,9 +7,8 @@ module.exports = (Sequelize , DataTypes) => {
         },
         username: {
             type: DataTypes.STRING(30),
-            foreignKey: true,
             unique: true,
-            notNull: true
+            allowNull: false
         },
         password: {
             type: DataTypes.TEXT,
@@ -18,7 +17,6 @@ module.exports = (Sequelize , DataTypes) => {
         email: {
             type: DataTypes.STRING,
             notNull: true,
-            unique: true
         },
         conf_email: {
             type: DataTypes.TEXT,
@@ -49,7 +47,7 @@ module.exports = (Sequelize , DataTypes) => {
     model.associate = models => {
     //     //model.hasOne(models.Reservation,{foreignKey:'uid'}) //one to one
     //     //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
-        model.hasMany(models.PackageTour,{foreignKey:'username'}) //one to many
+        //model.hasMany(models.PackageTour,{foreignKey:{ name: 'username', field: 'username' }}) //one to many
 
     //     //model.belongsTo(models.PackageTour, {foreignKey: 'license_id',allowNull: false}) //one to one || one to many
     //     //model.belongsTo(models.Reservation, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
