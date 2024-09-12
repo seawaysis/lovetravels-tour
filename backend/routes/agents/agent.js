@@ -40,7 +40,7 @@ router.post('/register',uploadRegister.array('payment',1),Middlewares.formRegis(
 router.post('/confirm_email',Middlewares.checkRefreshToken,Middlewares.formConfirmEmail(),Middlewares.validationForm,userControllers.confEmailAgent);
 router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTPAgent);
 
-router.post('/add_package',Middlewares.checkAccessToken,uploadPackage.array('pic_package',5),Middlewares.formAddPackage(),Middlewares.validationForm,packageControllers.addPackageTour);
+router.post('/add_package',uploadPackage.array('pic_package',5),Middlewares.checkAccessToken,Middlewares.formAddPackage(),Middlewares.validationForm,packageControllers.addPackageTour);
 router.get('/all_package',Middlewares.checkAccessToken,packageControllers.allPackagtTour)
 router.post('/booking',bookingControllers.getAllBooking);
 router.get('/upload',bookingControllers.uploadPic);

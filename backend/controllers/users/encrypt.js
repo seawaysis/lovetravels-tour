@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const options = {expiresIn: '10m',algorithm: 'RS256'};
-const reOptions = {expiresIn: '1h',algorithm: 'RS256'};
+const options = {expiresIn: '1h',algorithm: 'RS256'};
+const reOptions = {expiresIn: '2h',algorithm: 'RS256'};
 
 const encoded = async (payload) => {
     const privateKey = await fs.readFileSync('./src/encrypt/privateKey.key','utf-8');

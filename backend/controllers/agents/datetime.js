@@ -1,6 +1,5 @@
-const today = () => {
+const todayThai = () => {
     const today = new Date().toLocaleString('th-TH')
-    console.log(today)
     const formatData = (input) => {
         if (input > 9) {
             return input;
@@ -15,8 +14,12 @@ const today = () => {
 
     return  format.thai;
 }
+const today = () => {
+    return new Date().toString().replace(/T/, ':').replace(/\.\w*/, '')
+}
 const datetimeForImg = () => {
-    return new Date().toLocaleString('th-TH')
+    //return new Date().toLocaleString('th-TH')
+    return new Date().toString().replace(/T/, ':').replace(/\.\w*/, '')
 }
 module.exports = {
     today,

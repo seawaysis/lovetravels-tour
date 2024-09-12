@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { updateRole } from '../../../services/store/Reducer'
 
- import './allStyle.css';
+import './allStyle.css';
 const layout = {
     labelCol: { xs: 24, sm: 5, md: 4, lg: 5, xl: 4, xxl: 3 },
     wrapperCol: { xs: 24, sm: 19, md: 20, lg: 19, xl: 20, xxl: 21 },
@@ -97,10 +97,10 @@ function Login(props) {
                         >
                             <Input.Password />
                         </Form.Item>
-                        <Flex gap="middle" justify="right" horizontal>
-                            <Button onClick={toRegis} className="Button button_link_style" htmlType="button" type="link" size="large">Sign up</Button>
-                            <Button className="Button button_style" htmlType="submit" size="large">Login</Button>
-                        </Flex>
+                        <Row gap="middle" justify="end" horizontal>
+                            <Col span={5}><Button onClick={toRegis} className="Button button_link_style" htmlType="button" type="link" size="large">Sign up</Button></Col>
+                            <Col span={5}><Button className="Button button_style" htmlType="submit" size="large">Login</Button></Col>
+                        </Row>
                     </Form>
                 </div>
                 <Divider
@@ -112,8 +112,8 @@ function Login(props) {
                     <span style={{fontSize:'14px',fontWeight:'regular',color:'gray'}}>OR</span>
                 </Divider>
                 <Row justify={'center'}>
-                    <Button className="Button button_style" htmlType="button" size="large" style={{margin : '0px 5px'}} onClick={toSearch}>Find Package Tour</Button>
-                    <Button className="Button button_style" htmlType="button" size="large" style={{margin : '0px 5px'}} onClick={toAgent}>Agent</Button>
+                    <Col span={10} offset={1}><Button className="Button button_style" htmlType="button" size="large" style={{margin : '0px 5px'}} onClick={toSearch}>Find Package Tour</Button></Col>
+                    <Col span={10} offset={1}><Button className="Button button_style" htmlType="button" size="large" style={{margin : '0px 5px'}} onClick={toAgent}>Agent</Button></Col>
                 </Row>
             </Col>
         </Row>

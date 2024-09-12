@@ -102,9 +102,9 @@ function Login(props) {
                         >
                             <Input.Password />
                         </Form.Item>
-                        <Flex gap="middle" justify="right" horizontal style={{}}>
-                            <Button onClick={toRegis} className="Button button_link_style" htmlType="button" type="link" size="large">Sign up</Button>
-                            <Button className="Button button_style" htmlType="submit" size="large">Login</Button>
+                        <Flex gap="middle" justify="end" horizontal style={{}}>
+                            <Col span={5}><Button onClick={toRegis} className="Button button_link_style" htmlType="button" type="link" size="large">Sign up</Button></Col>
+                            <Col span={5}><Button className="Button button_style" htmlType="submit" size="large">Login</Button></Col>
                         </Flex>
                     </Form>
                 </div>
@@ -116,8 +116,8 @@ function Login(props) {
                     >
                     <span style={{fontSize:'14px',fontWeight:'regular',color:'gray'}}>OR</span>
                 </Divider>
-                <Row justify={'center'}>
-                    <Button className="Button button_style" htmlType="button" size="large" style={{margin : '0px 5px'}} onClick={toSearch}>Find Package Tour</Button>
+                <Row justify='center'>
+                    <Col span={7}><Button className="Button button_style" htmlType="button" size="large" style={{margin : '0px 5px'}} onClick={toSearch}>Find Package Tour</Button></Col>
                 </Row>
             </Col>
         </Row>

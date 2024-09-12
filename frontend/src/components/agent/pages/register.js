@@ -202,11 +202,11 @@ function Register(props) {
                         </Form.Item>
                         
                         <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'payment',label:'QRcode Payment'},upload: {maxCount: 1}}}/>
-                        <Row style={{float: 'right'}}>
-                            <Button onClick={toLogin} className="Button button_link_style" htmlType="button" size="large" type="link">Sign in</Button>
-                            <Button className="Button button_style " type="primary" size="large" htmlType="submit">
+                        <Row justify="end">
+                            <Col span={5}><Button onClick={toLogin} className="Button button_link_style" htmlType="button" size="large" type="link">Sign in</Button></Col>
+                            <Col span={5}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
                                 Register
-                            </Button>
+                            </Button></Col>
                         </Row>
                     </Form>
                 </div>
