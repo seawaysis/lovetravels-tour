@@ -1,98 +1,120 @@
-
-
 @media (max-width: 601px) {
     .headerMenu {
         display: none;
     }
 }
+
 @media (min-width: 600px) {
     .iconMenu {
         display: none;
     }
 }
-body{
+
+body {
     background-color: #c7c7c7;
 }
-textarea,input,input[type] {
-    height:40px !important;
-    border-color: none; 
+
+textarea,
+input,
+input[type] {
+    height: 40px !important;
+    border-color: none;
     background-color: lightgray !important;
 }
-textarea,input[type]:hover {
+
+textarea,
+input[type]:hover {
     height: 40px !important;
     border-color: #7BBCB0;
     background-color: lightgray !important;
 }
-textarea,input[type]:focus {
+
+textarea,
+input[type]:focus {
     height: 40px !important;
     border-color: #7BBCB0;
     background-color: lightgray !important;
 }
-textarea,input[type]:after {
+
+textarea,
+input[type]:after {
     height: 40px !important;
     border-color: #7BBCB0;
     background-color: lightgray !important;
 }
-.label_style{
+
+.label_style {
     font-size: 16px;
     font-weight: bold;
 }
+
 .ant-input-affix-wrapper {
     background-color: lightgray !important;
     padding: 4px 10px !important;
 }
-.bg_color{
-    background-color: #7BBCB0;
-    color:white;
-    border-radius: 3px;
-}
-.button_style{
+
+.bg_color {
     background-color: #7BBCB0;
     color: white;
     border-radius: 3px;
-    width:100%;
 }
+
+.button_style {
+    background-color: #7BBCB0;
+    color: white;
+    border-radius: 3px;
+    width: 100%;
+}
+
 .button_link_style {
-    color:#7BBCB0;
+    color: #7BBCB0;
     text-decoration: underline;
 }
-.card_bg{
-    margin:20px 0;
-    padding : 20px 20px ;
+
+.card_bg {
+    margin: 20px 0;
+    padding: 20px 20px;
     border-radius: 3px;
     box-shadow: 3px 3px 5px #888888;
 }
+
 .card_bg .header_main {
     color: #888888;
     font-size: 18px;
     font-weight: bold;
 }
-.card_bg .header_sub{
+
+.card_bg .header_sub {
     color: #888888;
     font-size: 18px;
     font-weight: bold;
     margin: 5px 0;
 }
+
 .card_bg .text_main {
     color: #888888;
     font-size: 18px;
     font-weight: bold;
 }
+
 .card_bg .text_sub {
     color: #888888;
     font-size: 18px;
     font-weight: bold;
 }
+
 .card_bg .value_style {
     color: #000;
     font-size: 20px;
     font-weight: bold;
 }
+
 .card_bg .price {
     color: #7BBCB0;
     font-size: 22px;
     font-weight: light;
 }
+
 .card_bg .price_sum {
     color: #7BBCB0;
     font-size: 22px;
@@ -126,9 +148,10 @@ textarea,input[type]:after {
     width: 100%;
 }
 
-.card_bg .tag_confirm{
+.card_bg .tag_confirm {
     background-color: #00FF0A;
 }
+
 .card_bg .tag_pending {
     background-color: #FFC700;
 }

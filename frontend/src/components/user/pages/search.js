@@ -1,12 +1,29 @@
 import React from 'react';
 import {Row,Col,Form,Input,InputNumber,Button,DatePicker} from 'antd'
+import axios from 'axios'
 
 import Header from './header';
 import './allStyle.css';
 
 function Search(props) {
     const onFinish = values => {
-        console.log(values)
+        const body = {
+            search : values.search,
+            checkIn : values.checkIn,
+            checkOut : values.checkOut,
+            amount : values.amount
+        }
+        const formData = new FormData()
+        Object.keys(body).forEach(key=>{
+            formData.append(key, body[key])
+        })
+        axios.post("user/search_package",formData).then(res => {
+
+            }
+        ).catch(
+            err => {
+            }
+        );
     }
     return (
         <><Header/> 
@@ -18,49 +35,39 @@ function Search(props) {
                         onFinish={onFinish}
                         style={{ width: "100%" }}
                     >
+                        <span className="label_style">Search</span>
                         <Form.Item
                             name="search"
-                            type="text"
                         >
-                            <span className="label_style">Search</span>
                             <Input placeholder="Where did you go ?"/>
                         </Form.Item>
                         <Row>
                             <Col span={11}>
+                                <span className="label_style">Check in</span>
                                 <Form.Item
-                                    name="checkin"
+                                    name="checkIn"
                                     rules={[
                                         {
                                             required: true,
                                             message: 'require check in date',
-                                        },
-                                        {
-                                            pattern: new RegExp(/^\d{4}-\d{2}-\d{2}$/),
-                                            message: 'Invalid format check in date',
                                         }
                                     ]}
                                 >
-                                    <span className="label_style">Check in</span>
                                     <DatePicker style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                             <Col span={11} offset={2}>
+                                <span className="label_style">Check out</span>
                                 <Form.Item
-                                    name="checkout"
-                                    rules={[
-                                        {
-                                            pattern: new RegExp(/^\d{4}-\d{2}-\d{2}$/),
-                                            message: 'Invalid format check in date',
-                                        }
-                                    ]}
+                                    name="checkOut"
                                 >
-                                    <span className="label_style">Check out</span>
                                     <DatePicker style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={11}>
+                                <span className="label_style">Amount</span>
                                 <Form.Item
                                     name="amount"
                                     rules={[
@@ -74,15 +81,11 @@ function Search(props) {
                                         }
                                     ]}
                                 >
-                                <span className="label_style">Amount</span>
-                                <InputNumber
-                                min={0}
-                                max={90}
-                                style={{ width: "100%" }}/>
+                                <InputNumber placeholder="Amount persons" style={{width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                             <Col span={11} offset={2}>
-                                <Button className="Button button_style " style={{marginTop:'25px'}} type="primary" size="large" htmlType="submit">
+                                <Button className="Button button_style" htmlType="submit" size="large" style={{marginTop:'23px'}}>
                                     Search
                                 </Button>
                             </Col>
