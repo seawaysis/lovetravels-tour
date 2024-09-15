@@ -3,14 +3,15 @@ import {Row,Col,Form,Input,InputNumber,Button,DatePicker} from 'antd'
 import axios from 'axios'
 
 import Header from './header';
+import configDate from '../configDate';
 import './allStyle.css';
 
 function Search(props) {
     const onFinish = values => {
         const body = {
-            search : values.search,
-            checkIn : values.checkIn,
-            checkOut : values.checkOut,
+            search : values.search ? values.search : null,
+            checkIn : configDate.adaptpickerDate(values.checkIn),
+            checkOut : configDate.adaptpickerDate(values.checkOut),
             amount : values.amount
         }
         const formData = new FormData()
@@ -38,6 +39,12 @@ function Search(props) {
                         <span className="label_style">Search</span>
                         <Form.Item
                             name="search"
+                            rules={[
+                                        {
+                                            pattern: new RegExp(/^[a-zA-Z0-9ก-๛ ]*$/),
+                                            message: 'Not allow special characters',
+                                        }
+                                    ]}
                         >
                             <Input placeholder="Where did you go ?"/>
                         </Form.Item>
@@ -53,7 +60,7 @@ function Search(props) {
                                         }
                                     ]}
                                 >
-                                    <DatePicker style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
+                                    <DatePicker format="YYYY-MM-DD" style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                             <Col span={11} offset={2}>
@@ -61,13 +68,13 @@ function Search(props) {
                                 <Form.Item
                                     name="checkOut"
                                 >
-                                    <DatePicker style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
+                                    <DatePicker format="YYYY-MM-DD" style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={11}>
-                                <span className="label_style">Amount</span>
+                                <span className="label_style">Amount  adult</span>
                                 <Form.Item
                                     name="amount"
                                     rules={[
@@ -76,8 +83,8 @@ function Search(props) {
                                             message: 'Please input amount days trip',
                                         },
                                         {
-                                            pattern: new RegExp(/^[0-9]{1,2}$/),
-                                            message: 'The amount days trip must number',
+                                            pattern: new RegExp(/^([0-9]{1,2})$/),
+                                            message: 'The amount adult must number',
                                         }
                                     ]}
                                 >

@@ -70,11 +70,20 @@ const formConfirmEmail = () => {
     .isLength({min:8,max:8}).withMessage('The OTP length is 8 number')
   ]
 }
+const formSearchPackage = () => {
+  return [
+    body('search').matches(/^[a-zA-Z0-9ก-๛ ]*$/).withMessage('Not allow special characters'),
+    body('checkIn').matches(/^([0-9-]{10})*$/).withMessage('format date is invalid'),
+    body('checkOut').matches(/^([0-9- ])*$/).withMessage('format date is invalid'),
+    body('amount').matches(/^([0-9]{1,2})*$/).withMessage('Only number'),
+  ]
+}
 module.exports = {
     checkAccessToken,
     checkRefreshToken,
     formLogin,
     formRegis,
     formConfirmEmail,
+    formSearchPackage,
     validationForm,
 };

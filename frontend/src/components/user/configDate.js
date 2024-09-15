@@ -11,7 +11,11 @@ const adaptRangepickerDate = (rawDate) => {
     }
     return getDate
 }
+const adaptpickerDate = (rawDate) => {
+    return rawDate ? new Date(rawDate['$d']).toISOString().split('T')[0].toString() : null
+}
 const configDate = {
     adaptRangepickerDate,
+    adaptpickerDate
 }
 export default configDate
