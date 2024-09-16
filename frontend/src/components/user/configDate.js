@@ -1,8 +1,16 @@
+const adaptpickerDate = (rawDate) => {
+    const date = new Date(rawDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate
+}
 const adaptRangepickerDate = (rawDate) => {
     const fillter = {
-        fillStartDate : new Date(rawDate[0]['$d']).toISOString().split('T')[0],
+        fillStartDate : adaptpickerDate(rawDate[0]['$d']),
         fillStartTime : rawDate[0]['$d'].toString().split(' ')[4].slice(0,5),
-        fillEndDate : new Date(rawDate[1]['$d']).toISOString().split('T')[0],
+        fillEndDate : adaptpickerDate(rawDate[1]['$d']),
         fillEndTime : rawDate[1]['$d'].toString().split(' ')[4].slice(0,5)
     }
     const getDate = {
@@ -10,9 +18,6 @@ const adaptRangepickerDate = (rawDate) => {
         endDate : (fillter.fillEndDate+' '+fillter.fillEndTime).toString()
     }
     return getDate
-}
-const adaptpickerDate = (rawDate) => {
-    return rawDate ? new Date(rawDate['$d']).toISOString().split('T')[0].toString() : null
 }
 const configDate = {
     adaptRangepickerDate,

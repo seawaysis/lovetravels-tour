@@ -10,14 +10,13 @@ const searchPackage = async (req,res) => {
         searchAmount : ''
     }
     const arrSearch= []
-    console.log(body)
     if(body.search){
-        searchSQL.searchWord = '(p.package_name LIKE ? OR p.description LIKE ?)'
+        searchSQL.searchWord = '(p.package_name LIKE ? OR p.description LIKE ?) AND'
         arrSearch.push('%'+body.search+'%')
         arrSearch.push('%'+body.search+'%')
     }
     arrSearch.push(body.checkIn)
-    if(body.checkout){
+    if(body.checkOut){
         searchSQL.searchDate = '(p.start_date <= ? AND p.end_date >= ?)'
         arrSearch.push(body.checkOut)
     }else{
@@ -26,9 +25,7 @@ const searchPackage = async (req,res) => {
     arrSearch.push(body.amount)
     arrSearch.push('active')
     searchSQL.searchAmount = 'p.max_amount > ?';
-    const queryText = `SELECT p.package_name,p.description,p.company_name,p.price_person,p.discount,g.pic_path,g.package_id FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE ${searchSQL.searchWord} AND ${searchSQL.searchDate} AND ${searchSQL.searchAmount} AND p.status = ?`;
-    console.log(queryText)
-    console.log(arrSearch)
+    const queryText = `SELECT p.package_name,p.description,p.company_name,p.price_person,p.discount,g.pic_path,g.package_id FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE ${searchSQL.searchWord} ${searchSQL.searchDate} AND ${searchSQL.searchAmount} AND p.status = ?`;
     const result = await sequelize.query(queryText, {
         replacements: arrSearch,
         type: QueryTypes.SELECT,

@@ -14,11 +14,7 @@ function Search(props) {
             checkOut : configDate.adaptpickerDate(values.checkOut),
             amount : values.amount
         }
-        const formData = new FormData()
-        Object.keys(body).forEach(key=>{
-            formData.append(key, body[key])
-        })
-        axios.post("user/search_package",formData).then(res => {
+        axios.post("user/search_package",body).then(res => {
 
             }
         ).catch(
@@ -67,6 +63,12 @@ function Search(props) {
                                 <span className="label_style">Check out</span>
                                 <Form.Item
                                     name="checkOut"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'require check out date',
+                                        }
+                                    ]}
                                 >
                                     <DatePicker format="YYYY-MM-DD" style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
                                 </Form.Item>

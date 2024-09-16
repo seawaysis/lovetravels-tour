@@ -74,7 +74,7 @@ const formSearchPackage = () => {
   return [
     body('search').matches(/^[a-zA-Z0-9ก-๛ ]*$/).withMessage('Not allow special characters'),
     body('checkIn').matches(/^([0-9-]{10})*$/).withMessage('format date is invalid'),
-    body('checkOut').matches(/^([0-9- ])*$/).withMessage('format date is invalid'),
+    body('checkOut').matches(/^([0-9-]{10})*$/).withMessage('format date is invalid'),
     body('amount').matches(/^([0-9]{1,2})*$/).withMessage('Only number'),
   ]
 }
