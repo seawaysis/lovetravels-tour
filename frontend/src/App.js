@@ -1,4 +1,4 @@
-import PermissionsRoutes from './components/permissions-routes/permissions';
+import PermissionsRoutes from './public/permissions-routes/permissions';
 import { Provider } from 'react-redux';
 import store from './services/store/Store';
 

@@ -1,19 +1,19 @@
-import UserRegisterPage from '../components/user/pages/register';
-import UserConfEmail from '../components/user/pages/confEmail';
-import UserLoginPage from '../components/user/pages/login';
-import UserSearchPage from '../components/user/pages/search';
-import UserDetailPage from '../components/user/pages/detail';
-import UserPaymentPage from '../components/user/pages/payment';
-import UserConfirmPaymentPage from '../components/user/pages/confirmPayment';
-import UserBookingPage from '../components/user/pages/booking';
-import UserProfilePage from '../components/user/pages/profile';
+import UserRegisterPage from '../public/user/pages/register';
+import UserConfEmail from '../public/user/pages/confEmail';
+import UserLoginPage from '../public/user/pages/login';
+import UserSearchPage from '../public/user/pages/search';
+import UserDetailPage from '../public/user/pages/detail';
+import UserPaymentPage from '../public/user/pages/payment';
+import UserConfirmPaymentPage from '../public/user/pages/confirmPayment';
+import UserBookingPage from '../public/user/pages/booking';
+import UserProfilePage from '../public/user/pages/profile';
 
-import AgentRegisterPage from '../components/agent/pages/register';
-import AgentConfEmail from '../components/agent/pages/confEmail';
-import AgentLoginPage from '../components/agent/pages/login';
-import AgentBookingPage from '../components/agent/pages/booking';
-import AgentPackageTourPage from '../components/agent/pages/packageTour';
-import AgentAddPackageTourPage from '../components/agent/pages/addPackageTour';
+import AgentRegisterPage from '../public/agent/pages/register';
+import AgentConfEmail from '../public/agent/pages/confEmail';
+import AgentLoginPage from '../public/agent/pages/login';
+import AgentBookingPage from '../public/agent/pages/booking';
+import AgentPackageTourPage from '../public/agent/pages/packageTour';
+import AgentAddPackageTourPage from '../public/agent/pages/addPackageTour';
 
 const components = {
     userLogin: {
