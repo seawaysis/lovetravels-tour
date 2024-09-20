@@ -1,9 +1,9 @@
-import { createSlice /*,current*/} from '@reduxjs/toolkit'
-import getPackage from './agentThunks'
-const initialState = {agentPackage : []}
+import { createSlice /*,current*/} from '@reduxjs/toolkit';
+import getPackage from './agentThunks';
+
 const packageTour = createSlice({
     name: "setAgentPackageTour",
-    initialState,
+    initialState : {agentPackage : []},
     reducers: {
         updateAgentPackage: (state, action) => {
             state.agentPackage = action.payload

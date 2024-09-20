@@ -80,13 +80,13 @@ input[type]:after {
 
 .card_bg .header_main {
     color: #888888;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
 }
 
 .card_bg .header_sub {
     color: #888888;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
     margin: 5px 0;
 }
@@ -154,4 +154,8 @@ input[type]:after {
 
 .card_bg .tag_pending {
     background-color: #FFC700;
+}
+
+.card_bg .package_list:hover{
+    background-color: #828282 !important;
 }

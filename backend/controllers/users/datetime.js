@@ -15,6 +15,14 @@ const today = () => {
 
     return  format.thai;
 }
+const countDay = (arrDate) => {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate = new Date(arrDate.startDate);
+    const secondDate = new Date(arrDate.endDate);
+
+    return Math.round(Math.abs((firstDate - secondDate) / oneDay));
+}
 module.exports = {
-    today
+    today,
+    countDay
 };

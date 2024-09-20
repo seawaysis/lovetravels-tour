@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import LocalStorages from '../localStorages'
+import LocalStorages from '../localStorages';
 
 const getRole = createAsyncThunk("setRole/getRole",async () => {
     const token = LocalStorages.getToken()
@@ -10,7 +10,7 @@ const getRole = createAsyncThunk("setRole/getRole",async () => {
         .catch(err => {return 'user'})
         return auth_token
     }else{
-        console.log('no en setrole : ')
+        //console.log('no en setrole : ')
         return 'user'
     } 
 })

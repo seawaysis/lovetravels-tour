@@ -1,12 +1,21 @@
 import React from 'react';
-import {Row,Col,Form,Input,InputNumber,Button,DatePicker} from 'antd'
+import {Row,Col,Form,Input,InputNumber,Button,DatePicker, Empty, Divider} from 'antd'
 import axios from 'axios'
+import { useSelector,useDispatch } from 'react-redux';
+import {updatePackageSearch} from '../../../services/store/userPackageTourReducer'
 
-import Header from './header';
+import Header from '../components/header';
 import configDate from '../configDate';
-import './allStyle.css';
+import '../allStyle.css';
 
 function Search(props) {
+    const dispatch = useDispatch();
+    const { packageSearch } = useSelector((state) => state.PackageSearch) 
+    const refetch = async (body) => {
+        return await axios.post("user/search_package",body)
+            .then(res => {console.log(res.data); dispatch(updatePackageSearch(res.data))})
+            .catch(err => {return []});
+    };
     const onFinish = values => {
         const body = {
             search : values.search ? values.search : null,
@@ -14,13 +23,7 @@ function Search(props) {
             checkOut : configDate.adaptpickerDate(values.checkOut),
             amount : values.amount
         }
-        axios.post("user/search_package",body).then(res => {
-
-            }
-        ).catch(
-            err => {
-            }
-        );
+        refetch(body)
     }
     return (
         <><Header/> 
@@ -101,6 +104,31 @@ function Search(props) {
                         </Row>
                     </Form>
             </Col>
+        </Row>
+        <Row justify="center">
+            {packageSearch.length <= 0 ? (
+                <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
+                    <Empty />
+                </Col>
+            ) : (
+                packageSearch.map((v,k) => (
+                <Col className="card_bg package_list" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
+                    <Row>
+                        <Col span={24} md={12}><img src={v.pic_path[0]} alt={v.package_name} style={{height: '250px',width: '100%'}}/></Col>
+                    </Row>
+                    <Row>
+                        <Col span={16} className="header_sub">{v.package_name}</Col>
+                        <Col span={8} className="header_sub" style={{textAlign: 'right'}}>{v.company_name}</Col>
+                        <Col span={24} className="text_sub">{v.description}</Col>
+                    </Row>
+                    <Divider />
+                    <Row>
+                        <Col span={24} className="price" style={{textAlign: 'right'}}>{v.discount > 0 ? <div><span style={{textDecorationLine : 'line-through'}}>{v.price_person}</span><br /><span className="price_sum">THB {v.price_person - (v.price_person*v.discount/100)}</span></div> : <div><span className="price_sum">{v.price_person}</span></div>}<span style={{fontSize: '14px',color:'#888'}}>(per persons)</span></Col>
+                    </Row>
+                    
+                </Col>
+                
+            )))}
         </Row>
         </>
     )
