@@ -20,7 +20,7 @@ const countDay = (arrDate) => {
     const firstDate = new Date(arrDate.startDate);
     const secondDate = new Date(arrDate.endDate);
 
-    return Math.round(Math.abs((firstDate - secondDate) / oneDay));
+    return Math.round(Math.abs((firstDate - secondDate) / oneDay))+1;
 }
 module.exports = {
     today,

@@ -26,10 +26,20 @@ function Login(props) {
                 notification.success({
                     message: `Login successfully by ${values.email}`
                 });
-                LocalStorages.removeToken('all')
-                LocalStorages.setToken(res.data)
-                dispatch(updateRole(res.data.typeRole))
-                navigate("/user/search");
+                // LocalStorages.removeToken(['accessToken','refreshToken'])
+                // LocalStorages.setToken(res.data)
+                // dispatch(updateRole(res.data.typeRole))
+                const result = LocalStorages.getToken('tempBooking');
+                console.log('test : ');
+                console.log(JSON.parse(result));
+                setTimeout(function(){
+                    
+                //     if(result){
+                //         navigate("/user/payment");
+                //     }else{
+                //         navigate("/user/search");
+                //     }
+                },500);
             }
         ).catch(
             err => {

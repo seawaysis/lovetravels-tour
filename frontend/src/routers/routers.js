@@ -4,7 +4,6 @@ import UserLoginPage from '../public/user/pages/login';
 import UserSearchPage from '../public/user/pages/search';
 import UserDetailPage from '../public/user/pages/detail';
 import UserPaymentPage from '../public/user/pages/payment';
-import UserConfirmPaymentPage from '../public/user/pages/confirmPayment';
 import UserBookingPage from '../public/user/pages/booking';
 import UserProfilePage from '../public/user/pages/profile';
 
@@ -39,10 +38,6 @@ const components = {
     userPayment: {
         url: "user/payment",
         component: UserPaymentPage
-    },
-    userConfirmPayment: {
-        url: "user/confirm_Payment",
-        component: UserConfirmPaymentPage
     },
     userBooking: {
         url: "user/booking",
@@ -86,13 +81,6 @@ const permissions = {
             components.userConfEmail,
             components.userSearch,
             components.userDetail,
-            components.userPayment,
-            components.userConfirmPayment,
-            components.userBooking,
-            components.userProfile,
-            components.agentLogin,
-            components.agentRegister,
-            components.agentConfEmail,
         ],
         redirectRoutes: "user/login"
     },
@@ -101,7 +89,6 @@ const permissions = {
             components.userSearch,
             components.userDetail,
             components.userPayment,
-            components.userConfirmPayment,
             components.userBooking,
             components.userProfile
         ],

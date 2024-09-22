@@ -65,6 +65,13 @@ input[type]:after {
     border-radius: 3px;
     width: 100%;
 }
+.button_style:hover {
+    background-color: #7BBCB0 !important;
+    color: white !important;
+    border-color: #7BBCB0 !important;
+    border-radius: 3px;
+    width: 100%;
+}
 
 .button_link_style {
     color: #7BBCB0;
@@ -79,20 +86,20 @@ input[type]:after {
 }
 
 .card_bg .header_main {
-    color: #888888;
+    color: #000;
     font-size: 24px;
     font-weight: bold;
 }
 
 .card_bg .header_sub {
-    color: #888888;
+    color: #000;
     font-size: 22px;
     font-weight: bold;
     margin: 5px 0;
 }
 
 .card_bg .text_main {
-    color: #888888;
+    color: #000;
     font-size: 18px;
     font-weight: bold;
 }

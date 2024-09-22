@@ -2,11 +2,11 @@ import React,{useState} from 'react';
 import { Drawer,Menu,Flex,Divider,notification } from 'antd';
 // import Title from 'antd/lib/typography/Title';
 // import axios from '../../../routers/axios';
-import LocalStorages from '../../../services/localStorages'
+import LocalStorages from '../../../services/localStorages';
 import { useNavigate } from 'react-router-dom';
 import {MenuOutlined} from '@ant-design/icons';
-import {useDispatch,useSelector} from 'react-redux'
-import { updateRole } from '../../../services/store/Reducer'
+import {useDispatch,useSelector} from 'react-redux';
+import { updateRole } from '../../../services/store/Reducer';
 import '../allStyle.css';
 
 function Header(props) {
@@ -36,7 +36,7 @@ function Header(props) {
 function AppMenu({isInline=false}){
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { role } = useSelector((state) => state.Roles) 
+    const { role } = useSelector((state) => state.Roles); 
     const Logout = () => {
         LocalStorages.removeToken('all');
         dispatch(updateRole('user'))

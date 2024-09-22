@@ -5,11 +5,15 @@ const setToken = (data) => {
         localStorage.setItem("accessToken",data.accessToken)
         localStorage.setItem("refreshToken",data.refreshToken)
         localStorage.setItem("initRole",data.typeRole)
+    }else if(data.tempBooking){
+        localStorage.setItem("tempBooking",data);
     }
 }
 const getToken = (data) => {
     if(data === 'confirmToken'){
         return {'confirmToken': localStorage.getItem("confirmToken")}
+    }else if(data === 'tempBooking'){
+        return {'tempBooking' : localStorage.getItem("tempBooking")}
     }else{
         return {'accessToken': localStorage.getItem("accessToken"),'refreshToken':localStorage.getItem("refreshToken")}
     }
@@ -19,9 +23,6 @@ const getToken = (data) => {
 const getAllToken = () => {
     return {...localStorage};
 }
-// const getReToken = () => {
-//     return localStorage.getItem("refreshToken");
-// }
 const getInitRole = () => {
     let initRole = localStorage.getItem("initRole")
     if(initRole !== 'member' && initRole !== 'agent'){ removeToken('all'); initRole = 'user' }
