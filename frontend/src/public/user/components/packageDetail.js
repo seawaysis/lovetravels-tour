@@ -23,10 +23,10 @@ function PackageDetail(props) {
     const toPayment = (() => {
         LocalStorages.removeToken(["tempBooking"]);
         LocalStorages.setToken({tempBooking : JSON.stringify({dataSearch : search,dataDetail : detail})});
-        if(role === 'user'){
-            navigate("/user/login");
+        if(role === 'member'){
+            navigate("/user/payment");
         }else{
-            navigate("/user/confirm_payment");
+            navigate("/user/login");
         }
     });
     return (

@@ -81,6 +81,9 @@ const permissions = {
             components.userConfEmail,
             components.userSearch,
             components.userDetail,
+            components.agentLogin,
+            components.agentRegister,
+            components.agentConfEmail
         ],
         redirectRoutes: "user/login"
     },

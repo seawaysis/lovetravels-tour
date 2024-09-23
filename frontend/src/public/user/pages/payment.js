@@ -1,8 +1,9 @@
 import React,{ useState} from "react";
-import {Row,Col, Divider} from 'antd'
+import {Row,Col,Tabs,Divider} from 'antd'
 import LocalStorages from '../../../services/localStorages';
 
 import Header from '../components/header';
+import PaymentQrcodeForm from '../components/paymentQrcodeForm';
 import '../allStyle.css';
 
 function Confirm_payment () {
@@ -11,21 +12,34 @@ function Confirm_payment () {
         return result.tempBooking ? JSON.parse(result.tempBooking) : null;
     }
     const [items, setItems] = useState(setDetail());
-    //     const result = setDetail();
     //     setItems(prevItems => ({
     //         ...prevItems,...JSON.parse(result.tempBooking)
     //     }));
+
+    const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
+     const tabsBar = [
+    {
+        key: '1',
+        label: 'QRcode Payment',
+        children: <PaymentQrcodeForm items={items}/>,
+    },
+    {
+        key: '2',
+        label: 'Credit Card',
+        children: 'creditcard is coming soon',
+    }
+    ];
     return (<>
     <Header />
     <Row>
-        <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
+        <Col className="card_bg" {...wrapSpan}>
             <Row>
                 <Col span={12}><img src={items.dataDetail.pic_path[0]} alt={items.dataDetail.package_name} style={{width : '100%',height:'150px'}}/></Col>
                 <Col span={12}><span className="text_main">{items.dataDetail.package_name}</span><br /><span className="text_sub">{items.dataDetail.company_name}</span></Col>
             </Row>
             <Divider />
-            {/* <Row>
-                <Col span={8}>
+            <Row style={{textAlign: 'center'}}>
+                    <Col span={8}>
                         <span className="text_sub" style={{fontWeight : 'normal'}}>Check-In</span><br />
                         <span className="text_main">{items.dataSearch.checkIn}</span>
                     </Col>
@@ -37,10 +51,15 @@ function Confirm_payment () {
                         <span className="text_sub" style={{fontWeight : 'normal'}}>Amount</span><br />
                         <span className="text_main">{items.dataSearch.amount}</span>
                     </Col>
-            </Row> */}
+            </Row>
         </Col>
     </Row>
-
+    <Row>
+        <Col className="card_bg"  {...wrapSpan}>
+            <span className="header_main">Payment method</span>
+            <Tabs defaultActiveKey="1" items={tabsBar} /*onChange={onChangeTabs}*/ />
+        </Col>
+    </Row>
     </>);
 }
 

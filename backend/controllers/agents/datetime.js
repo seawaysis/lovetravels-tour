@@ -1,5 +1,6 @@
-const todayThai = () => {
+const today = () => {
     const today = new Date().toLocaleString('th-TH')
+
     const formatData = (input) => {
         if (input > 9) {
             return input;
@@ -14,14 +15,14 @@ const todayThai = () => {
 
     return  format.thai;
 }
-const today = () => {
-    return new Date().toString().replace(/T/, ':').replace(/\.\w*/, '')
-}
-const datetimeForImg = () => {
-    //return new Date().toLocaleString('th-TH')
-    return new Date().toString().replace(/T/, ':').replace(/\.\w*/, '')
+const countDay = (arrDate) => {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate = new Date(arrDate.startDate);
+    const secondDate = new Date(arrDate.endDate);
+
+    return Math.round(Math.abs((firstDate - secondDate) / oneDay))+1;
 }
 module.exports = {
     today,
-    datetimeForImg
+    countDay
 };

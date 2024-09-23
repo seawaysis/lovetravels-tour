@@ -7,7 +7,7 @@ const encryptToken = require('../encrypt');
 const email = require('../email')
 
 const loginAgent = async (req,res) => {
-    datetime.today()
+    datetime.today();
     const body = req.body;
     const result = await sequelize.query('SELECT * FROM agent WHERE username = ?', {
         replacements: [body.user],
@@ -36,6 +36,7 @@ const loginAgent = async (req,res) => {
 }
 const registerAgent = async (req,res) => {
     const body = req.body;
+    console.log(datetime.today());
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(body.email)) {
         return res.status(400).send({

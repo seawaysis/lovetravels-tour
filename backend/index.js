@@ -23,10 +23,10 @@ db.sequelize.sync(resetDB).then(() => {
 
     app.get('/package_tour/:filename', (req, res) => {
         res.sendFile(path.join(__dirname, "/src/images/package_tour/"+req.params.filename));
-    })
+    });
     app.get('/qr_code/:filename', (req, res) => {
-        res.sendFile(path.join(__dirname, "/src/images/qrcode/"+req.params.filename));
-    })
+        res.sendFile(path.join(__dirname, "/src/images/qr_code/"+req.params.filename));
+    });
 
     app.listen(process.env.PORT_BE,() =>{
         console.log('Server on port ',process.env.PORT_BE)

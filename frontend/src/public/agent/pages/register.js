@@ -25,7 +25,7 @@ function Register(props) {
             conf_pass: values.conf_pass,
             phone: values.phone
         }
-        const formData = new FormData()
+        const formData = new FormData();
         Object.keys(body).forEach(key=>{
             formData.append(key, body[key])
         })
