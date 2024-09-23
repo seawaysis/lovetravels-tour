@@ -6,7 +6,7 @@ const setToken = (data) => {
         localStorage.setItem("refreshToken",data.refreshToken)
         localStorage.setItem("initRole",data.typeRole)
     }else if(data.tempBooking){
-        localStorage.setItem("tempBooking",data);
+        localStorage.setItem("tempBooking",data.tempBooking);
     }
 }
 const getToken = (data) => {

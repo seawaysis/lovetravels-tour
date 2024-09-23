@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{ useState} from "react";
 import {Row,Col, Divider} from 'antd'
 import LocalStorages from '../../../services/localStorages';
 
@@ -6,12 +6,15 @@ import Header from '../components/header';
 import '../allStyle.css';
 
 function Confirm_payment () {
-    const [items, setItems] = useState([]);
+    const setDetail = () => {
         const result = LocalStorages.getToken('tempBooking');
-        if (result) {
-            setItems(JSON.parse(result));
-        }
-    console.log(result.tempBooking)
+        return result.tempBooking ? JSON.parse(result.tempBooking) : null;
+    }
+    const [items, setItems] = useState(setDetail());
+    //     const result = setDetail();
+    //     setItems(prevItems => ({
+    //         ...prevItems,...JSON.parse(result.tempBooking)
+    //     }));
     return (<>
     <Header />
     <Row>
