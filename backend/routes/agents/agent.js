@@ -13,7 +13,7 @@ const storageRegister = multer.diskStorage({
   filename: function (req, file, callback) {
     callback(null, file.originalname)
   }
-})
+});
 const storagePackage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, 'src/images/package_tour/')
@@ -21,19 +21,19 @@ const storagePackage = multer.diskStorage({
   filename: function (req, file, callback) {
     callback(null, file.originalname)
   }
-})
+});
 const fileFillter = {fileFilter: (req, file, cb) => {
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
             cb(null, true);
         } else {
             cb(null, false);
-            const err = new Error('Only .png, .jpg and .jpeg format allowed!')
+            const err = new Error('Only .png, .jpg and .jpeg format allowed!');
             err.name = 'ExtensionError'
             return cb(err);
         }
-    },}
-const uploadRegister = multer({ storage:storageRegister,fileFillter })
-const uploadPackage = multer({ storage:storagePackage,fileFillter })
+    },};
+const uploadRegister = multer({ storage:storageRegister,fileFillter });
+const uploadPackage = multer({ storage:storagePackage,fileFillter });
 
 router.post('/login',Middlewares.formLogin(),Middlewares.validationForm,userControllers.loginAgent);
 router.post('/register',uploadRegister.array('payment',1),Middlewares.formRegis(),Middlewares.validationForm,userControllers.registerAgent);

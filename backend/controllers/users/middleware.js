@@ -78,6 +78,27 @@ const formSearchPackage = () => {
     body('amount').matches(/^([0-9]{1,2})*$/).withMessage('Only number'),
   ]
 }
+const formBooking = () => {
+  return [
+  body('amount').matches(/^([0-9]{1,2})*$/).withMessage('Only number'),
+  body('pricePerson').not().isEmpty().withMessage('Invalid price dose not empty')
+    .exists({checkFalsy: true}).withMessage('You must type a number')
+    .isLength({min:1}).withMessage('The minimum price length is 1 number')
+    .isLength({max:6}).withMessage('The maximum price length is 6 number'),
+  body('discount').not().isEmpty().withMessage('Invalid discount dose not empty')
+    .exists({checkFalsy: true}).withMessage('You must type a number')
+    .isLength({min:1}).withMessage('The minimum discount length is 1 number')
+    .isLength({max:2}).withMessage('The maximum discount length is 2 number'),
+  body('checkIn').not().isEmpty().withMessage('Invalid startDate dose not empty')
+    .isLength({min:10,max:10}).withMessage('The date length is 10 only')
+    .matches(/^\d{4}-\d{2}-\d{2}$/).withMessage('The date format invalid'),
+  body('checkOut').not().isEmpty().withMessage('Invalid startDate dose not empty')
+    .isLength({min:10,max:10}).withMessage('The date length is 10 only')
+    .matches(/^\d{4}-\d{2}-\d{2}$/).withMessage('The date format invalid'),
+  body('packageId').not().isEmpty().withMessage('Invalid days_trip dose not empty')
+    .exists({checkFalsy: true}).withMessage('You must type a number')
+  ]
+}
 module.exports = {
     checkAccessToken,
     checkRefreshToken,
@@ -85,5 +106,6 @@ module.exports = {
     formRegis,
     formConfirmEmail,
     formSearchPackage,
+    formBooking,
     validationForm,
 };

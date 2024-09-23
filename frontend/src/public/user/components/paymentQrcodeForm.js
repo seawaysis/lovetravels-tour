@@ -26,12 +26,12 @@ function PaymentQrcodeForm (props) {
             formData.append(key, body[key])
         })
         for(let i=0;i < fileList.length;i++){
-           formData.append('payment',fileList[i]);
+           formData.append('slip',fileList[i]);
         }
-        axios.post('user/e_slip',formData).then(
+        axios.post('user/create_booking',formData).then(
             res => {
                 notification.success({
-                    message: `Register successfully by ${values.email}`
+                    message: `Booking successfully by ${values.email}`
                 });
                //navigate("/user/booking");
             }
