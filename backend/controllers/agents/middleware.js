@@ -1,31 +1,30 @@
 
 const encryptToken = require('./encrypt');
-const {body,check,validationResult} = require('express-validator')
-const datetime = require('./datetime')
+const {body,check,validationResult} = require('express-validator');
 
 const checkAccessToken = async (req, res, next) => {
     if(!req.headers.authorization){
-        return res.status(401).send({message : 'No authorization Token'})
+        return res.status(401).send({message : 'No authorization Token'});
     }else{
-        const decoded = await encryptToken.decoded(req.headers.authorization.split(' ')[1])
+        const decoded = await encryptToken.decoded(req.headers.authorization.split(' ')[1]);
         if(decoded.err){
-            res.status(401).send({message : decoded.err})
+            res.status(401).send({message : decoded.err});
         }else{
-          req.decodeToken = decoded
-          next()
+          req.decodeToken = decoded;
+          next();
         }
     }
 }
 const checkRefreshToken = async (req, res, next) => {
   if(!req.headers.authorization){
-        return res.status(401).send({message : 'No authorization Token'})
+        return res.status(401).send({message : 'No authorization Token'});
     }else{
-        const reDecoded = await encryptToken.reDecoded(req.headers.authorization.split(' ')[1])
+        const reDecoded = await encryptToken.reDecoded(req.headers.authorization.split(' ')[1]);
         if(reDecoded.err){
-            res.status(401).send({message : reDecoded.err})
+            res.status(401).send({message : reDecoded.err});
         }else{
-          req.decodeToken = reDecoded
-          next()
+          req.decodeToken = reDecoded;
+          next();
         }
     }
 }
@@ -34,7 +33,7 @@ const validationForm = (req,res,next) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }else{
-      next()
+      next();
     }
 }
 const formLogin = () => {

@@ -2,12 +2,13 @@ const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const bcryptjs = require('bcryptjs');
-const datetime = require('../datetime');
+const dateTime = require('../datetime');
 const encryptToken = require('../encrypt');
 const email = require('../email')
 
 const loginUser = async (req,res) => {
     const body = req.body;
+    const datetime = dateTime.today();
     const result = await sequelize.query('SELECT * FROM member WHERE email = ?', {
         replacements: [body.email],
         type: QueryTypes.SELECT,
@@ -25,7 +26,7 @@ const loginUser = async (req,res) => {
             const encoded = await encryptToken.encoded({email: result[0].email,typeRole: 'member'})
             const reEncoded = await encryptToken.reEncoded({email: result[0].email,typeRole: 'member'})
             await db.Member.update({
-                update_date: datetime.today()
+                update_date: datetime.normal
             },{
                 where: {uid:result[0].uid,email:result[0].email}
             })
@@ -35,6 +36,7 @@ const loginUser = async (req,res) => {
 };
 const registerUser = async (req,res) => {
     const body = req.body;
+    const datetime = dateTime.today();
     let result = await sequelize.query('SELECT uid FROM member WHERE email = ?', {
         replacements: [body.email],
         type: QueryTypes.SELECT,
@@ -47,7 +49,7 @@ const registerUser = async (req,res) => {
             email: body.email,
             password: bcryptjs.hashSync(body.conf_pass,bcryptjs.genSaltSync(12)),
             conf_email: bcryptjs.hashSync(numOTP,bcryptjs.genSaltSync(12)),
-            update_date: datetime.today()
+            update_date: datetime.normal
         });
         const confEncoded = await getConfirmToken(body.email)
         const status = await email.sender({receive: body.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
@@ -55,44 +57,46 @@ const registerUser = async (req,res) => {
     }
 }
 const confEmailUser = async (req,res) => {
-        const body = req.body
-        const reDecoded = req.decodeToken
+        const body = req.body;
+        const reDecoded = req.decodeToken;
+        const datetime = dateTime.today();
         const result = await sequelize.query('SELECT email,conf_email FROM member WHERE email = ?', {
                 replacements: [reDecoded.email],
                 type: QueryTypes.SELECT,
             });
             if (!Object.keys(result).length){
-                res.status(400).send({message :`member not found !!`})
+                res.status(400).send({message :`member not found !!`});
             }else{
             const dePass = bcryptjs.compareSync(body.otp,result[0].conf_email);
                 if(!dePass){
                     res.status(400).send({message: "OTP is wrong !!"})
                 }else{
-                    const encoded = await encryptToken.encoded({email: result[0].email,typeRole: 'member'})
-                    const reEncoded = await encryptToken.reEncoded({email: result[0].email,typeRole: 'member'})
+                    const encoded = await encryptToken.encoded({email: result[0].email,typeRole: 'member'});
+                    const reEncoded = await encryptToken.reEncoded({email: result[0].email,typeRole: 'member'});
                     const update = await db.Member.update({
                         conf_email: body.otp,
-                        update_date: datetime.today(),
+                        update_date: datetime.normal,
                     },{
                         where: {email:result[0].email}
-                    }).then(res => {return res}).catch(err => {return {error : err}})
-                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'member',message: 'Verify Email successfully !!'})
+                    }).then(res => {return res}).catch(err => {return {error : err}});
+                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'member',message: 'Verify Email successfully !!'});
                 }
             }
     }
 const resendOTPUser = async (req,res) => {
-            const reDecoded = req.decodeToken
-            const numOTP = await getOTPNum(8)
-            const confEncoded = await getConfirmToken(reDecoded.email)
-            const status = await email.sender({receive: reDecoded.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
+            const reDecoded = req.decodeToken;
+            const numOTP = await getOTPNum(8);
+            const datetime = dateTime.today();
+            const confEncoded = await getConfirmToken(reDecoded.email);
+            const status = await email.sender({receive: reDecoded.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`});
             if(status.error){res.status(400).send({message : status.error})}else{
                 const update = await db.Member.update({
                         conf_email: bcryptjs.hashSync(numOTP,bcryptjs.genSaltSync(12)),
-                        update_date: datetime.today(),
+                        update_date: datetime.normal,
                     },{
                         where: {email:reDecoded.email}
-                    }).then(res => {return res}).catch(err => {return {error : err}})
-                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({confirmToken:confEncoded,message: 'Resend OTP successfully !!'})
+                    }).then(res => {return res}).catch(err => {return {error : err}});
+                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({confirmToken:confEncoded,message: 'Resend OTP successfully !!'});
             }
         }
 const authToken = async (req,res) => {

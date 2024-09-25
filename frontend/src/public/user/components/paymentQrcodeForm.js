@@ -6,6 +6,7 @@ import axios from "axios";
 import Upload from "../components/upload";
 import '../allStyle.css';
 function PaymentQrcodeForm (props) {
+    console.log(props.items.dataDetail);
     const layout = {
         labelCol: { xs: 24, sm: 5, md: 4, lg: 5, xl: 4, xxl: 3 },
         wrapperCol: { xs: 24, sm: 19, md: 20, lg: 19, xl: 20, xxl: 21 },
@@ -19,7 +20,7 @@ function PaymentQrcodeForm (props) {
             discount : props.items.dataDetail.discount,
             checkIn : props.items.dataSearch.checkIn,
             checkOut : props.items.dataSearch.checkOut,
-            packageId : props.items.dataDetail.package_id
+            packageId : props.items.dataDetail.packageId
         }
         const formData = new FormData();
         Object.keys(body).forEach(key=>{
@@ -31,7 +32,7 @@ function PaymentQrcodeForm (props) {
         axios.post('user/create_booking',formData).then(
             res => {
                 notification.success({
-                    message: `Booking successfully by ${values.email}`
+                    message: `Booking successfully by`
                 });
                //navigate("/user/booking");
             }

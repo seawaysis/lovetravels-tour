@@ -10,7 +10,8 @@ const today = () => {
     const arr = today.split(' ') // dd/mm/yyyy hh:ii:ss
     const getDate = arr[0].split('/') 
     const format = {
-        thai: `${formatData(getDate[2])}-${formatData(getDate[1])}-${formatData(getDate[0])} ${arr[1]}`
+        normal: `${parseInt(getDate[2]) - 543}-${formatData(getDate[1])}-${formatData(getDate[0])} ${arr[1]}`,
+        thai: `${getDate[2]}-${formatData(getDate[1])}-${formatData(getDate[0])} ${arr[1]}`
     }
 
     return  format.thai;

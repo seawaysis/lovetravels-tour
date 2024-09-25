@@ -2,12 +2,12 @@ const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const bcryptjs = require('bcryptjs');
-const datetime = require('../datetime');
+const dateTime = require('../datetime');
 const encryptToken = require('../encrypt');
 const email = require('../email')
 
 const loginAgent = async (req,res) => {
-    datetime.today();
+    const datetime = dateTime.today();
     const body = req.body;
     const result = await sequelize.query('SELECT * FROM agent WHERE username = ?', {
         replacements: [body.user],
@@ -26,7 +26,7 @@ const loginAgent = async (req,res) => {
             const encoded = await encryptToken.encoded({username: result[0].username,typeRole: 'agent'})
             const reEncoded = await encryptToken.reEncoded({username: result[0].username,typeRole: 'agent'})
             await db.Agent.update({
-                update_date: datetime.today()
+                update_date: datetime.normal
             },{
                 where: {username:result[0].username}
             })
@@ -36,7 +36,7 @@ const loginAgent = async (req,res) => {
 }
 const registerAgent = async (req,res) => {
     const body = req.body;
-    console.log(datetime.today());
+    const datetime = dateTime.today();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(body.email)) {
         return res.status(400).send({
@@ -60,7 +60,7 @@ const registerAgent = async (req,res) => {
             company_name: body.company,
             tel: body.phone,
             pic_payment_path: req.files[0].originalname,
-            update_date: datetime.today()
+            update_date: datetime.normal
         });
         const confEncoded = await getConfirmToken(body.email)
         const status = await email.sender({receive: body.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
@@ -72,7 +72,7 @@ const registerAgent = async (req,res) => {
 const confEmailAgent = async (req,res) => {
     const body = req.body
     const reDecoded = req.decodeToken
-    
+    const datetime = dateTime.today();
             const result = await sequelize.query('SELECT username,email,conf_email FROM agent WHERE email = ?', {
                 replacements: [reDecoded.email],
                 type: QueryTypes.SELECT,
@@ -88,7 +88,7 @@ const confEmailAgent = async (req,res) => {
                     const reEncoded = await encryptToken.reEncoded({username: result[0].username,typeRole: 'agent'})
                     const update = await db.Agent.update({
                         conf_email: body.otp,
-                        update_date: datetime.today(),
+                        update_date: datetime.normal,
                     },{
                         where: {email:result[0].email}
                     }).then(res => {return res}).catch(err => {return {error : err}})
@@ -97,6 +97,7 @@ const confEmailAgent = async (req,res) => {
             }
         }
 const resendOTPAgent = async (req,res) => {
+    const datetime = dateTime.today();
     const reDecoded = req.decodeToken
             const numOTP = await getOTPNum(8)
             const confEncoded = await getConfirmToken(reDecoded.email)
@@ -104,7 +105,7 @@ const resendOTPAgent = async (req,res) => {
             if(status.error){res.status(400).send({message : status.error})}else{
                 const update = await db.Agent.update({
                         conf_email: bcryptjs.hashSync(numOTP,bcryptjs.genSaltSync(12)),
-                        update_date: datetime.today(),
+                        update_date: datetime.normal,
                     },{
                         where: {email:reDecoded.email}
                     }).then(res => {return res}).catch(err => {return {error : err}})

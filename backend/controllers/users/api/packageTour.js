@@ -1,7 +1,7 @@
 const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
-const dateTime = require('../datetime')
+const dateTime = require('../datetime');
 
 const searchPackage = async (req,res) => {
     const body = req.body
@@ -38,6 +38,7 @@ const searchPackage = async (req,res) => {
         if(v.sum_amount <= v.max_amount){
             if(v.package_id !== arrCheck.package_id){
                 result.push({
+                    packageId : v.package_id,
                     package_name : v.package_name,
                     description : v.description,
                     price_person : v.price_person,

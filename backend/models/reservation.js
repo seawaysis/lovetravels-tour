@@ -17,11 +17,11 @@ module.exports = (Sequelize , DataTypes) => {
             len: [0,100],
         },
         check_in_date: {
-            type: DataTypes.DATE(6),
+            type: DataTypes.DATEONLY,
             notNull: true
         },
         check_out_date: {
-            type: DataTypes.DATE(6),
+            type: DataTypes.DATEONLY,
             notNull: true
         },
         status: {

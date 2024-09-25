@@ -3,9 +3,10 @@ const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const encryptToken = require('../encrypt');
-const datetime = require('../datetime');
+const dateTime = require('../datetime');
 
 const addPackageTour = async (req,res) => {
+    const datetime = dateTime.today();
     const body = req.body;
     const pic = req.files
     const decodeToken = req.decodeToken
@@ -27,7 +28,7 @@ const addPackageTour = async (req,res) => {
             start_date:body.startDate,
             end_date:body.endDate,
             status:'active',
-            update_date: datetime.today(),
+            update_date: datetime.normal,
             username: resultAgent[0].username
         })
         if(!resultPackage.dataValues.package_id){
@@ -38,7 +39,7 @@ const addPackageTour = async (req,res) => {
                 result = await db.Gallery.create({
                     pic_path: file.originalname,
                     type:count++,
-                    update_date: datetime.today(),
+                    update_date: datetime.normal,
                     package_id: resultPackage.dataValues.package_id
                 });
                 //result.dataValues.id
