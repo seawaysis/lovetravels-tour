@@ -121,13 +121,23 @@ input[type]:after {
     font-size: 22px;
     font-weight: light;
 }
-
+.card_bg .price_discount {
+    color: #7BBCB0;
+    font-size: 22px;
+    font-weight: light;
+    text-decoration-line: line-through;
+}
 .card_bg .price_sum {
     color: #7BBCB0;
     font-size: 22px;
     font-weight: bolder;
+    text-decoration-line: underline;
 }
-
+.card_bg .sub_description {
+    color: #888888;
+    font-size: 16px;
+    font-weight: lighter;
+}
 .card_bg .button_success {
     background-color: #7BBCB0;
     color: white;

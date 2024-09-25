@@ -4,6 +4,8 @@ import LocalStorages from '../../../services/localStorages';
 
 import Header from '../components/header';
 import PaymentQrcodeForm from '../components/paymentQrcodeForm';
+
+import formatMoney from '../formatMoney';
 import '../allStyle.css';
 
 function Confirm_payment () {
@@ -29,6 +31,11 @@ function Confirm_payment () {
         children: 'creditcard is coming soon',
     }
     ];
+    const arrPrice = {
+        price : items.dataDetail.price_person*items.dataSearch.amount,
+        discountPrice : (items.dataDetail.price_person*items.dataSearch.amount)*items.dataDetail.discount/100,
+        netPrice : (items.dataDetail.price_person*items.dataSearch.amount)-((items.dataDetail.price_person*items.dataSearch.amount)*items.dataDetail.discount/100)
+    }
     return (<>
     <Header />
     <Row>
@@ -51,6 +58,10 @@ function Confirm_payment () {
                         <span className="text_sub" style={{fontWeight : 'normal'}}>Amount</span><br />
                         <span className="text_main">{items.dataSearch.amount}</span>
                     </Col>
+            </Row>
+            <Row justify="space-around" style={{marginTop : '20px'}}>
+                <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(items.dataDetail.price_person)}</span></Col>
+                <Col span={8} style={{textAlign: 'right'}}><span className="text_main">Sum Price</span><br /><span className="price_discount">{formatMoney(arrPrice.price)}</span><br /><span className="price" style={{fontSize : '18px'}}>{formatMoney(arrPrice.discountPrice)}</span><br /><span className="price_sum">{formatMoney(arrPrice.netPrice)}</span><br /><span className="sub_description"> * text includes</span></Col>
             </Row>
         </Col>
     </Row>

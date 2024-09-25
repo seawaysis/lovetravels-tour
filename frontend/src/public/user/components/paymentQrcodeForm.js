@@ -12,7 +12,7 @@ function PaymentQrcodeForm (props) {
         wrapperCol: { xs: 24, sm: 19, md: 20, lg: 19, xl: 20, xxl: 21 },
     };
     const [fileList, setFileList] = useState([])
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const onFinish = values => {
         const body = {
             amount: props.items.dataSearch.amount,
