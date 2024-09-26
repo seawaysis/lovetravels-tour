@@ -32,8 +32,8 @@ router.post('/search_package',Middlewares.formSearchPackage(),Middlewares.valida
 router.post('/confirm_email',Middlewares.checkRefreshToken,Middlewares.formConfirmEmail(),Middlewares.validationForm,userControllers.confEmailUser);
 router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTPUser);
 
-router.get('/auth_token',Middlewares.checkRefreshToken,userControllers.authToken)
+router.get('/auth_token',Middlewares.checkRefreshToken,userControllers.authToken);
 router.post('/create_booking',Middlewares.checkAccessToken,uploadSlip.array('slip',1),Middlewares.formBooking(),Middlewares.validationForm,bookingControllers.createBooking);
-router.post('/booking',Middlewares.checkAccessToken,bookingControllers.allBooking)
+router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBooking);
 
 module.exports = router;

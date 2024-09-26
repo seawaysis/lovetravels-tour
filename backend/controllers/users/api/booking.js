@@ -3,8 +3,17 @@ const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
 
-const allBooking = (req,res) => {
-    res.status(200).send({message : 'get booking ok '})
+const allBooking = async (req,res) => {
+    const queryText = `SELECT r.* FROM reservation AS r INNER JOIN member AS m ON  r.uid = m.uid WHERE m.email = ? ORDER BY r.update_date DESC`;
+    const result = await sequelize.query(queryText, {
+        replacements: [req.decodeToken.email],
+        type: QueryTypes.SELECT,
+    });
+    if(!result[0].uid || !result[0].package_id){
+        res.status(200).send({message : 'No member or package !!s'});
+    }else{
+        res.status(200).send(result);
+    }
 }
 const createBooking = async (req,res) => {
     const body = req.body;

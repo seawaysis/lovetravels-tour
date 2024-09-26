@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import {updatePackageSearch} from '../../../services/store/userPackageTourReducer';
 import configDate from '../configDate';
+import formatMoney from '../formatMoney';
+
 function PackageSearch (props){
     const dateFormat = "YYYY-MM-DD";
     const [body,setBody] = useState({});
@@ -134,7 +136,7 @@ function PackageSearch (props){
                     </Row>
                     <Divider />
                     <Row>
-                        <Col span={24} className="price" style={{textAlign: 'right'}}>{v.discount > 0 ? <div><span style={{textDecorationLine : 'line-through'}}>{v.price_person}</span><br /><span className="price_sum">THB {v.price_person - (v.price_person*v.discount/100)}</span></div> : <div><span className="price_sum">{v.price_person}</span></div>}<span style={{fontSize: '14px',color:'#888'}}>(per persons)</span></Col>
+                        <Col span={24} className="price" style={{textAlign: 'right'}}>{v.discount > 0 ? <div><span style={{textDecorationLine : 'line-through'}}>{formatMoney(v.price_person)}</span><br /><span className="price_sum">THB {formatMoney(v.price_person - (v.price_person*v.discount/100))}</span></div> : <div><span className="price_sum">{formatMoney(v.price_person)}</span></div>}<span style={{fontSize: '14px',color:'#888'}}>(per persons)</span></Col>
                     </Row>
                     
                 </Col>

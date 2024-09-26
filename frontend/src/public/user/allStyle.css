@@ -171,8 +171,24 @@ input[type]:after {
 
 .card_bg .tag_pending {
     background-color: #FFC700;
+    text-align: center;
+    color : white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 3px;
+    padding : 5px 0;
 }
 
 .card_bg .package_list:hover{
     background-color: #828282 !important;
+}
+.multiline-truncate {
+display: -webkit-box;
+    /* Use flexbox */
+    -webkit-box-orient: vertical;
+    /* Set box orientation */
+    -webkit-line-clamp: 6;
+    /* Number of lines to display */
+    overflow: hidden;
+    /* Hides overflow text */
 }
