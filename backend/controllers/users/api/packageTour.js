@@ -31,7 +31,7 @@ const searchPackage = async (req,res) => {
         replacements: arrSearch,
         type: QueryTypes.SELECT,
     });
-    let result = []
+    let result = [];
     const arrPicPath = {packageTour : `${req.protocol}://${req.get('host')}/package_tour/`,qrcode : `${req.protocol}://${req.get('host')}/qr_code/`};
     let arrCheck = {countIndex : 0,package_id : ''}
     temp.forEach((v,k) => {

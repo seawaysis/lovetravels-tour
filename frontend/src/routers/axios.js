@@ -13,6 +13,7 @@ axios.interceptors.request.use(
                 {'login' : {headers: {'Content-Type': 'application/json'}}},
                 {'register' : {headers: {'Content-Type': 'application/json'}}},
                 {'search_package' : {headers: {'Content-Type': 'application/json'}}},
+                {'all_booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'create_booking' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'multipart/form-data'}}},
                 {'auth_token' : {headers: {authorization : `Bearer ${token.refreshToken}`}}},
                 {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
