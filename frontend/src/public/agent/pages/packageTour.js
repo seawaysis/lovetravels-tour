@@ -34,7 +34,7 @@ function PackageTour() {
         </Col>
       </Row>
       <Row justify="center">
-        {agentPackage.lenght <= 0 ?  (
+        {!agentPackage[0] ?  (
             <Col className="card_bg" {...cardCol}><Empty /></Col>
         ) : ( 
             agentPackage.map((v,k) => (

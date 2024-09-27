@@ -44,7 +44,7 @@ const Booking = ()=>{
             <Title level={4} className="Title">All Booking</Title>
         </Col>
     </Row>
-    {allBooking.lenght <= 0 ? (
+    {!allBooking[0] ? (
         <Col className="card_bg" {...wrapSpan}><Empty /></Col>
     ) : ( allBooking.map((v) => ( 
     <Row justify="center">

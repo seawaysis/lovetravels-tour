@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LocalStorages from '../../../services/localStorages';
 
+import formatMoney from '../formatMoney';
 import '../allStyle.css';
 
 function PackageDetail(props) {
@@ -67,7 +68,7 @@ function PackageDetail(props) {
                     </Row>
                 <Divider />
                 <Row justify="center">
-                    <Col span={11} className="price">{detail.discount > 0 ? <div><span className="price_discount">{detail.price_person}</span><br /><span className="price_sum">THB {detail.price_person - (detail.price_person*detail.discount/100)}</span></div> : <div><span className="price_sum">{detail.price_person}</span></div>}<span style={{fontSize: '14px',color:'#888'}}>(per persons)</span></Col>
+                    <Col span={11} className="price">{detail.discount > 0 ? <div><span className="price_discount">{formatMoney(detail.price_person)}</span><br /><span className="price_sum">THB {formatMoney(detail.price_person - (detail.price_person*detail.discount/100))}</span></div> : <div><span className="price_sum">{detail.price_person}</span></div>}<span style={{fontSize: '14px',color:'#888'}}>(per persons)</span></Col>
                     <Col span={11} style={{textAlign: 'right'}}><Button onClick={toPayment} className="Button button_style" size="large">Payment</Button></Col>
                 </Row>
                 <Button className="Button button_style" size="large" onClick={toPackageSearch} style={{marginTop : '20px'}}>Back to search</Button>

@@ -119,7 +119,7 @@ function PackageSearch (props){
             </Col>
         </Row>
         <Row justify="center">
-            {props.packageSearch.length <= 0 ? (
+            {!props.packageSearch[0] ? (
                 <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                     <Empty />
                 </Col>

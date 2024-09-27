@@ -9,7 +9,7 @@ const allBooking = async (req,res) => {
         replacements: [],
         type: QueryTypes.SELECT,
     });
-    if(!result[0].package_id){
+    if(!result){
         res.status(200).send([]);
     }else{
         res.status(200).send(result);
