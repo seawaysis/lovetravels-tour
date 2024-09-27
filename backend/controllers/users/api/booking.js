@@ -38,7 +38,7 @@ const createBooking = async (req,res) => {
             discount:body.discount,
             check_in_date:body.checkIn,
             check_out_date:body.checkOut,
-            status:'pendding',
+            status:'pending',
             pic_receipt_path:req.files[0].originalname,
             since_date:datetime.normal,
             update_date:datetime.normal,

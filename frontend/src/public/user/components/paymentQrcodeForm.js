@@ -6,7 +6,6 @@ import axios from "axios";
 import Upload from "../components/upload";
 import '../allStyle.css';
 function PaymentQrcodeForm (props) {
-    console.log(props.items.dataDetail);
     const layout = {
         labelCol: { xs: 24, sm: 5, md: 4, lg: 5, xl: 4, xxl: 3 },
         wrapperCol: { xs: 24, sm: 19, md: 20, lg: 19, xl: 20, xxl: 21 },
@@ -34,7 +33,7 @@ function PaymentQrcodeForm (props) {
                 notification.success({
                     message: `Booking successfully by`
                 });
-               //navigate("/user/booking");
+               navigate("/user/booking");
             }
         ).catch(
             err => {

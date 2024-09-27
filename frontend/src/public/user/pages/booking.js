@@ -10,11 +10,13 @@ import formatMoney from '../formatMoney';
 const Booking = (props)=>{
     const dispatch = useDispatch();
     useEffect(() => {dispatch(getAllBooking())}, [dispatch]);
-    const { allBooking } = useSelector((state) => state.AllBooking);
+    const { allBooking } = useSelector((state) => state.AllUserBooking);
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     
     const arrStatusTag = {
-        pendding : {class : 'tag_pending'},
+        pending : {class : 'tag_pending'},
+        confirmed : {class : 'tag_confirmed'},
+        refunded : {class : 'tag_refunded'}
     };
     
     return (

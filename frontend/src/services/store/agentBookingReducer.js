@@ -1,12 +1,12 @@
-import { createSlice /*,current*/} from '@reduxjs/toolkit'
-import getAllBooking from './userThunks';
+import { createSlice ,current} from '@reduxjs/toolkit'
+import getAllBooking from './agentThunks';
 
 const allBooking = createSlice({
   name: "setAllBooking",
   initialState : {allBooking : []},
   reducers: {
     updateAllBooking: (state, action) => {
-      //console.log(current(state));
+      console.log(current(state));
       state.allBooking = action.payload;
     }
   },

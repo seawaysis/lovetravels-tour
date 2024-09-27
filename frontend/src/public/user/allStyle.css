@@ -164,9 +164,25 @@ input[type]:after {
     border-radius: 3px;
     width: 100%;
 }
-
-.card_bg .tag_confirm {
+.card_bg .tag_refunded {
+    background-color: #9F7BBC;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 5px 0;
+    margin-bottom: 15px;
+}
+.card_bg .tag_confirmed {
     background-color: #00FF0A;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 5px 0;
+    margin-bottom: 15px;
 }
 
 .card_bg .tag_pending {
@@ -177,6 +193,7 @@ input[type]:after {
     font-weight: bold;
     border-radius: 3px;
     padding : 5px 0;
+    margin-bottom: 15px;
 }
 
 .card_bg .package_list:hover{

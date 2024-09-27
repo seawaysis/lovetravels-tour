@@ -14,23 +14,23 @@ const loginAgent = async (req,res) => {
         type: QueryTypes.SELECT,
     });
     if (!Object.keys(result).length){
-        res.status(400).send({message : 'Username or Password is exist'})
+        res.status(400).send({message : 'Username or Password is exist'});
     }else{
         const dePass = bcryptjs.compareSync(body.pass,result[0].password);
         if(!dePass){
-            res.status(400).send({message: "Username or Password is wrong !!"})
+            res.status(400).send({message: "Username or Password is wrong !!"});
         }else if(result[0].conf_email.length !== 8){
             const confEncoded = await getConfirmToken(result[0].email)
-            res.status(200).send({confirmToken : confEncoded,redirect : 'confirm_email'})
+            res.status(200).send({confirmToken : confEncoded,redirect : 'confirm_email'});
         }else{
-            const encoded = await encryptToken.encoded({username: result[0].username,typeRole: 'agent'})
-            const reEncoded = await encryptToken.reEncoded({username: result[0].username,typeRole: 'agent'})
+            const encoded = await encryptToken.encoded({username: result[0].username,typeRole: 'agent'});
+            const reEncoded = await encryptToken.reEncoded({username: result[0].username,typeRole: 'agent'});
             await db.Agent.update({
                 update_date: datetime.normal
             },{
                 where: {username:result[0].username}
             })
-            res.status(200).json({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message :`agent => ${result[0].username} login OK !!`})
+            res.status(200).json({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message :`agent => ${result[0].username} login OK !!`});
         }
     }
 }
@@ -48,7 +48,7 @@ const registerAgent = async (req,res) => {
         type: QueryTypes.SELECT,
     });
     if (Object.keys(result).length){
-        return res.status(400).send({message : `Have ${body.email} already !!`})
+        return res.status(400).send({message : `Have ${body.email} already !!`});
     }else{
         const numOTP = await getOTPNum(8)
         result = await db.Agent.create({
@@ -62,9 +62,9 @@ const registerAgent = async (req,res) => {
             pic_payment_path: req.files[0].originalname,
             update_date: datetime.normal
         });
-        const confEncoded = await getConfirmToken(body.email)
-        const status = await email.sender({receive: body.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
-        return status.error ? res.status(400).send({message : status.error}) : res.status(201).send({confirmToken:confEncoded,message: 'Register successfully !!'})
+        const confEncoded = await getConfirmToken(body.email);
+        const status = await email.sender({receive: body.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`});
+        return status.error ? res.status(400).send({message : status.error}) : res.status(201).send({confirmToken:confEncoded,message: 'Register successfully !!'});
         //return res.status(201).send({confirmToken:confEncoded,message: 'Register successfully !!'})
         
     }
@@ -84,15 +84,15 @@ const confEmailAgent = async (req,res) => {
                 if(!dePass){
                     res.status(400).send({message: "OTP is wrong !!"})
                 }else{
-                    const encoded = await encryptToken.encoded({username: result[0].username,typeRole: 'agent'})
-                    const reEncoded = await encryptToken.reEncoded({username: result[0].username,typeRole: 'agent'})
+                    const encoded = await encryptToken.encoded({username: result[0].username,typeRole: 'agent'});
+                    const reEncoded = await encryptToken.reEncoded({username: result[0].username,typeRole: 'agent'});
                     const update = await db.Agent.update({
                         conf_email: body.otp,
                         update_date: datetime.normal,
                     },{
                         where: {email:result[0].email}
-                    }).then(res => {return res}).catch(err => {return {error : err}})
-                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message: 'Verify Email successfully !!'})
+                    }).then(res => {return res}).catch(err => {return {error : err}});
+                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message: 'Verify Email successfully !!'});
                 }
             }
         }
@@ -108,20 +108,20 @@ const resendOTPAgent = async (req,res) => {
                         update_date: datetime.normal,
                     },{
                         where: {email:reDecoded.email}
-                    }).then(res => {return res}).catch(err => {return {error : err}})
-                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({confirmToken:confEncoded,message: 'Resend OTP successfully !!'})
+                    }).then(res => {return res}).catch(err => {return {error : err}});
+                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({confirmToken:confEncoded,message: 'Resend OTP successfully !!'});
             }
         }
 function getConfirmToken(UEmail){
-    const confEncoded = encryptToken.reEncoded({email: UEmail,typeRole: 'pendding'})
-    return confEncoded
+    const confEncoded = encryptToken.reEncoded({email: UEmail,typeRole: 'pendding'});
+    return confEncoded;
 }
 function getOTPNum(numLenght){
     let numOTP = ""
         for(let i = 0;i < numLenght;i++){
-            numOTP = numOTP + (Math.floor(Math.random() * (9 - 1) + 1)).toString()
+            numOTP = numOTP + (Math.floor(Math.random() * (9 - 1) + 1)).toString();
         }
-    return numOTP
+    return numOTP;
 }
 module.exports = {
     loginAgent,
