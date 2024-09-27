@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {Row,Col,Form,Input,InputNumber,Button,DatePicker, Empty, Divider} from 'antd'
 import axios from 'axios';
-//import moment from 'moment';
+import moment from 'moment';
 
 import {updatePackageSearch} from '../../../services/store/userPackageTourReducer';
 import configDate from '../configDate';
@@ -11,6 +11,7 @@ function PackageSearch (props){
     const dateFormat = "YYYY-MM-DD";
     const [body,setBody] = useState({});
     const onFinish = values => {
+        console.log(values.checkOut)
         const getBody = {
             search : values.search ? values.search : null,
             checkIn : configDate.adaptpickerDate(values.checkIn),
@@ -71,7 +72,7 @@ function PackageSearch (props){
                                         }
                                     ]}
                                 >
-                                    <DatePicker format={dateFormat} style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
+                                    <DatePicker format={dateFormat} style={{backgroundColor:'lightgray',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                             <Col span={11} offset={2}>
@@ -86,7 +87,7 @@ function PackageSearch (props){
                                     ]}
                                 >
                                     {/* defaultValue={moment("2024-09-01",dateFormat)} */}
-                                    <DatePicker format={dateFormat} style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}/>
+                                    <DatePicker defaultValue={moment("2024-09-01",dateFormat)} format={dateFormat} style={{backgroundColor:'lightgray',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                         </Row>

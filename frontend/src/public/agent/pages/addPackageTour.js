@@ -198,7 +198,7 @@ function AddPackageTour() {
                                 format: 'HH:mm',
                             }}
                             format={'YYYY/MM/DD HH:mm'}
-                            style={{backgroundColor:'rgb(240, 240, 240)',width:'100%'}}
+                            style={{backgroundColor:'lightgrey',width:'100%'}}
                             />
                         </Form.Item>
 

@@ -36,7 +36,7 @@ function Login(props) {
                     }else{
                         navigate("/user/search");
                     }
-                },1000);
+                },50);
             }
         ).catch(
             err => {
