@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ConfigDate from '../configDate'
 import Upload from './upload'
 import Header from './header'
-import './allStyle.css';
+import '../allStyle.css';
 
 const { RangePicker } = DatePicker;
 const layout = {

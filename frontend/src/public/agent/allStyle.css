@@ -13,7 +13,6 @@
 body {
     background-color: #fafafa;
 }
-
 textarea,
 input,
 input[type] {
@@ -65,6 +64,7 @@ input[type]:after {
     border-radius: 3px;
     width: 100%;
 }
+
 .button_style:hover {
     background-color: #7BBCB0 !important;
     color: white !important;
@@ -79,6 +79,7 @@ input[type]:after {
 }
 
 .card_bg {
+    background-color: white;
     margin: 20px 0;
     padding: 20px 20px;
     border-radius: 3px;
@@ -121,23 +122,27 @@ input[type]:after {
     font-size: 22px;
     font-weight: light;
 }
+
 .card_bg .price_discount {
     color: #7BBCB0;
     font-size: 22px;
     font-weight: light;
     text-decoration-line: line-through;
 }
+
 .card_bg .price_sum {
     color: #7BBCB0;
     font-size: 22px;
     font-weight: bolder;
     text-decoration-line: underline;
 }
+
 .card_bg .sub_description {
     color: #888888;
     font-size: 16px;
     font-weight: lighter;
 }
+
 .card_bg .button_success {
     background-color: #7BBCB0;
     color: white;
@@ -146,7 +151,6 @@ input[type]:after {
     border-radius: 3px;
     width: 100%;
 }
-
 .card_bg .button_refund {
     background-color: #9F7BBC;
     color: white;
@@ -164,6 +168,7 @@ input[type]:after {
     border-radius: 3px;
     width: 100%;
 }
+
 .card_bg .tag_cancelled {
     background-color: #BC7B7B;
     text-align: center;
@@ -184,6 +189,7 @@ input[type]:after {
     padding: 5px 0;
     margin-bottom: 15px;
 }
+
 .card_bg .tag_confirmed {
     background-color: #00FF0A;
     text-align: center;
@@ -198,19 +204,20 @@ input[type]:after {
 .card_bg .tag_pending {
     background-color: #FFC700;
     text-align: center;
-    color : white;
+    color: white;
     font-size: 20px;
     font-weight: bold;
     border-radius: 3px;
-    padding : 5px 0;
+    padding: 5px 0;
     margin-bottom: 15px;
 }
 
-.card_bg .package_list:hover{
+.card_bg .package_list:hover {
     background-color: #828282 !important;
 }
+
 .multiline-truncate {
-display: -webkit-box;
+    display: -webkit-box;
     /* Use flexbox */
     -webkit-box-orient: vertical;
     /* Set box orientation */

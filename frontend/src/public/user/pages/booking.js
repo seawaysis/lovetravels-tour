@@ -6,15 +6,16 @@ import Title from 'antd/lib/typography/Title';
 import getAllBooking from '../../../services/store/userThunks';
 import Header from '../components/header';
 import formatMoney from '../formatMoney';
-
+import '../allStyle.css';
 const Booking = (props)=>{
     const dispatch = useDispatch();
     useEffect(() => {dispatch(getAllBooking())}, [dispatch]);
-    const { allBooking } = useSelector((state) => state.AllUserBooking);
+    const { allBooking } = useSelector((state) => state.AgentBooking);
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     
     const arrStatusTag = {
         pending : {class : 'tag_pending'},
+        cancelled : {class : 'tag_cancelled'},
         confirmed : {class : 'tag_confirmed'},
         refunded : {class : 'tag_refunded'}
     };

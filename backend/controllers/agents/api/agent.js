@@ -18,7 +18,7 @@ const loginAgent = async (req,res) => {
     }else{
         const dePass = bcryptjs.compareSync(body.pass,result[0].password);
         if(!dePass){
-            res.status(400).send({message: "Username or Password is wrong !!"});
+            res.status(400).send({message: "Username or Password is wrong !!"})
         }else if(result[0].conf_email.length !== 8){
             const confEncoded = await getConfirmToken(result[0].email)
             res.status(200).send({confirmToken : confEncoded,redirect : 'confirm_email'});
@@ -78,11 +78,11 @@ const confEmailAgent = async (req,res) => {
                 type: QueryTypes.SELECT,
             });
             if (!Object.keys(result).length){
-                res.status(400).send({message :`agent not found !!`})
+                res.status(400).send({message :`agent not found !!`});
             }else{
             const dePass = bcryptjs.compareSync(body.otp,result[0].conf_email);
                 if(!dePass){
-                    res.status(400).send({message: "OTP is wrong !!"})
+                    res.status(400).send({message: "OTP is wrong !!"});
                 }else{
                     const encoded = await encryptToken.encoded({username: result[0].username,typeRole: 'agent'});
                     const reEncoded = await encryptToken.reEncoded({username: result[0].username,typeRole: 'agent'});
@@ -99,9 +99,9 @@ const confEmailAgent = async (req,res) => {
 const resendOTPAgent = async (req,res) => {
     const datetime = dateTime.today();
     const reDecoded = req.decodeToken
-            const numOTP = await getOTPNum(8)
-            const confEncoded = await getConfirmToken(reDecoded.email)
-            const status = await email.sender({receive: reDecoded.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
+            const numOTP = await getOTPNum(8);
+            const confEncoded = await getConfirmToken(reDecoded.email);
+            const status = await email.sender({receive: reDecoded.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`});
             if(status.error){res.status(400).send({message : status.error})}else{
                 const update = await db.Agent.update({
                         conf_email: bcryptjs.hashSync(numOTP,bcryptjs.genSaltSync(12)),
@@ -117,7 +117,7 @@ function getConfirmToken(UEmail){
     return confEncoded;
 }
 function getOTPNum(numLenght){
-    let numOTP = ""
+    let numOTP = "";
         for(let i = 0;i < numLenght;i++){
             numOTP = numOTP + (Math.floor(Math.random() * (9 - 1) + 1)).toString();
         }

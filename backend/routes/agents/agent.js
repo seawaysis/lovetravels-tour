@@ -41,7 +41,7 @@ router.post('/confirm_email',Middlewares.checkRefreshToken,Middlewares.formConfi
 router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTPAgent);
 
 router.post('/add_package',uploadPackage.array('pic_package',5),Middlewares.checkAccessToken,Middlewares.formAddPackage(),Middlewares.validationForm,packageControllers.addPackageTour);
-router.get('/all_package',Middlewares.checkAccessToken,packageControllers.allPackagtTour)
+router.get('/all_package',Middlewares.checkAccessToken,packageControllers.allPackagtTour);
 router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBooking);
-
+router.post('/change_status_booking',bookingControllers.changeStatusBooking);
 module.exports = router;

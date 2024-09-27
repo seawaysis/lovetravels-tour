@@ -1,24 +1,25 @@
-import React,{useEffect} from 'react'
-import { Button, Empty ,Row, Col,Divider} from 'antd'
+import React,{useEffect} from 'react';
+import { Button, Empty ,Row, Col,Divider} from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import getAgentPackage from '../../../services/store/agentThunks';
+import agentThunks from '../../../services/store/agentThunks';
 
-import Header from './header'
-import './allStyle.css';
+import Header from './header';
+import formatMoney from '../formatMoney';
+import '../allStyle.css';
 function PackageTour() {
   const dispatch = useDispatch();
   useEffect(() => {
     const dispatchGetAgentPackage = () => {
-      dispatch(getAgentPackage())
+      dispatch(agentThunks.getPackage());
     }
-    dispatchGetAgentPackage()
+    dispatchGetAgentPackage();
   },[dispatch]);
-  const {agentPackage} = useSelector((state) => state.AgentPackage) 
+  const {agentPackage} = useSelector((state) => state.AgentPackage);
   const navigate = useNavigate();
   const toAddPackage = () => {
-    navigate("/agent/add_package_tour")
+    navigate("/agent/add_package_tour");
   }
   const cardCol = { xs: 23, sm: 23, md: 23, lg: 14, xl: 14, xxl: 12 }
   return (
@@ -55,19 +56,19 @@ function PackageTour() {
                     <div className='header_sub'>End Date : <br /><span className='value_style'>{v.end_date}</span></div>
                   </Col>
                   <Col span={9} offset={2} >
-                    <div className='header_sub'>Price Per Person : <span className='price'>{v.price_person}</span> Baht</div>
+                    <div className='header_sub'>Price Per Person : <span className='price'>{formatMoney(v.price_person)}</span> Baht</div>
                   </Col>
                   <Col span={5} offset={1} >
                     <div className='header_sub'>discount : <span className='value_style'>{v.discount}</span> %</div>
                   </Col>
                   <Col span={6} offset={1} >
-                    <div className='header_sub'>Net Price : <span className='price_sum'>{parseInt(v.price_person) - (parseFloat(v.price_person)*parseInt(v.discount)/100)}</span> Baht</div>
+                    <div className='header_sub'>Net Price : <span className='price_sum'>{formatMoney(parseInt(v.price_person) - (parseFloat(v.price_person)*parseInt(v.discount)/100))}</span> Baht</div>
                   </Col>
                   <Col span={10} offset={2}>
                     <div className='header_sub'>Days Trip : <span className='value_style'>{v.days_trip}</span> Days</div>
                   </Col>
                   <Col span={10} offset={2}>
-                    <div className='header_sub'>Max Capacity Persons : <span className='value_style'>{v.max_amount}</span></div>
+                    <div className='header_sub'>Max Capacity Persons : <span className='value_style'>{formatMoney(v.max_amount)}</span></div>
                   </Col>
                 </Row>
                 <Divider className="Divider" />

@@ -1,5 +1,5 @@
 import { createSlice ,current} from '@reduxjs/toolkit'
-import getAllBooking from './agentThunks';
+import agentThunks from './agentThunks';
 
 const allBooking = createSlice({
   name: "setAllBooking",
@@ -11,13 +11,13 @@ const allBooking = createSlice({
     }
   },
   extraReducers: (builder) => {
-      builder.addCase(getAllBooking.pending, (state) => {
+      builder.addCase(agentThunks.getAllBooking.pending, (state) => {
         //...
       })
-      builder.addCase(getAllBooking.rejected, (state) => {
+      builder.addCase(agentThunks.getAllBooking.rejected, (state) => {
         //...
       })
-      builder.addCase(getAllBooking.fulfilled, (state, action) => {
+      builder.addCase(agentThunks.getAllBooking.fulfilled, (state, action) => {
           //console.log('extra : '+action.payload)
           state.allBooking = action.payload
         //slice.caseReducers.setData(state, action);

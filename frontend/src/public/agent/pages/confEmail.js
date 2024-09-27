@@ -7,7 +7,7 @@ import LocalStorages from '../../../services/localStorages'
 import { useNavigate } from 'react-router-dom';
 import { updateRole } from '../../../services/store/Reducer'
 
-import './allStyle.css';
+import '../allStyle.css';
 
 const layout = {
     labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },

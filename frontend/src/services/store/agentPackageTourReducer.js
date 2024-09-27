@@ -1,5 +1,5 @@
 import { createSlice /*,current*/} from '@reduxjs/toolkit';
-import getPackage from './agentThunks';
+import agentThunks from './agentThunks';
 
 const packageTour = createSlice({
     name: "setAgentPackageTour",
@@ -11,13 +11,13 @@ const packageTour = createSlice({
         }
     },
     extraReducers: (builder) => {
-      builder.addCase(getPackage.pending, (state) => {
+      builder.addCase(agentThunks.getPackage.pending, (state) => {
         //...
       })
-      builder.addCase(getPackage.rejected, (state) => {
+      builder.addCase(agentThunks.getPackage.rejected, (state) => {
         //...
       })
-      builder.addCase(getPackage.fulfilled, (state, action) => {
+      builder.addCase(agentThunks.getPackage.fulfilled, (state, action) => {
           //console.log(action.payload.data)
           state.agentPackage = action.payload.data
         //slice.caseReducers.setData(state, action);

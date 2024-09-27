@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import {MenuOutlined} from '@ant-design/icons';
 import {useDispatch} from 'react-redux'
 import { updateRole } from '../../../services/store/Reducer'
-import './allStyle.css';
+import '../allStyle.css';
 
 function Header(props) {
     const [openMenu,setOpenMenu] = useState(false);
