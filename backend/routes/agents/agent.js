@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userControllers = require('../../controllers/agents/api/agent');
 const bookingControllers = require('../../controllers/agents/api/booking');
-const packageControllers = require('../../controllers/agents/api/packageTour')
+const packageControllers = require('../../controllers/agents/api/packageTour');
+const accountControllers = require('../../controllers/agents/api/account')
 const multer = require('multer');
 const Middlewares = require('../../controllers/agents/middleware');
 
@@ -45,4 +46,5 @@ router.get('/all_package',Middlewares.checkAccessToken,packageControllers.allPac
 router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBooking);
 router.post('/change_status_booking',Middlewares.checkAccessToken,Middlewares.changeStatusBooking(),Middlewares.validationForm,bookingControllers.changeStatusBooking);
 router.post('/change_status_package',Middlewares.checkAccessToken,Middlewares.changeStatusPackage(),Middlewares.validationForm,packageControllers.changeStatusPackage);
+router.post('/summary_account',Middlewares.checkAccessToken,Middlewares.formSummaryAccount(),Middlewares.validationForm,accountControllers.summaryAccount);
 module.exports = router;

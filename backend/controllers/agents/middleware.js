@@ -139,6 +139,16 @@ const changeStatusPackage = () => {
     .exists({checkFalsy: true}).withMessage('You must type a text'),
   ];
 }
+const formSummaryAccount = () =>{
+  return [
+    body('startDate').not().isEmpty().withMessage('Invalid startDate dose not empty')
+    .isLength({min:10,max:10}).withMessage('The date length is 10 only')
+    .matches(/^\d{4}-\d{2}-\d{2}$/).withMessage('The date format invalid'),
+    body('endDate').not().isEmpty().withMessage('Invalid endDate dose not empty')
+    .isLength({min:10,max:10}).withMessage('The date length is 10 only')
+    .matches(/^\d{4}-\d{2}-\d{2}$/).withMessage('The date format invalid'),
+  ];
+}
 module.exports = {
     checkAccessToken,
     checkRefreshToken,
@@ -148,5 +158,6 @@ module.exports = {
     formAddPackage,
     changeStatusBooking,
     changeStatusPackage,
+    formSummaryAccount,
     validationForm,
 };
