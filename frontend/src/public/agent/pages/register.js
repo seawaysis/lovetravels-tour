@@ -78,6 +78,10 @@ function Register(props) {
                                     required: true,
                                     message: 'Please input your License ID!',
                                 },
+                                {
+                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_./\-=()* ]*$/),
+                                    message: 'Not allow special characters',
+                                }
                             ]}
                         >
                         <Input />
@@ -90,6 +94,10 @@ function Register(props) {
                                     required: true,
                                     message: 'Please input your Company Name!',
                                 },
+                                {
+                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/),
+                                    message: 'Not allow special characters',
+                                }
                             ]}
                         >
                         <Input />

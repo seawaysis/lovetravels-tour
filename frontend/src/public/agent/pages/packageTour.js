@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
-import { Button, Empty ,Row, Col,Divider} from 'antd';
+import { Button, Empty ,Row, Col,Divider,notification} from 'antd';
 import Title from 'antd/lib/typography/Title';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import agentThunks from '../../../services/store/agentThunks';
@@ -11,15 +12,27 @@ import '../allStyle.css';
 function PackageTour() {
   const dispatch = useDispatch();
   useEffect(() => {
-    const dispatchGetAgentPackage = () => {
-      dispatch(agentThunks.getPackage());
-    }
-    dispatchGetAgentPackage();
+    dispatch(agentThunks.getPackage());
   },[dispatch]);
   const {agentPackage} = useSelector((state) => state.AgentPackage);
   const navigate = useNavigate();
   const toAddPackage = () => {
     navigate("/agent/add_package_tour");
+  }
+  const statusChange = (values) => {
+    axios.post('agent/change_status_package',values).then(
+      res => {
+        dispatch(agentThunks.getPackage());
+        notification.success({
+                    message: `Change status ${values.id} successfully !!`
+                });
+      }
+    ).catch(err => {
+                notification.error({
+                    message: `status : ${err.response.status} fail message : ${err.response.data.message}`
+                });
+            }
+    );
   }
   const cardCol = { xs: 23, sm: 23, md: 23, lg: 14, xl: 14, xxl: 12 }
   return (
@@ -73,7 +86,7 @@ function PackageTour() {
                 </Row>
                 <Divider className="Divider" />
                 <Row>
-                  <Col span={10} offset={1}>{v.status === 'active' ? <Button className='button_delete' type='button'>Close</Button> : <Button className='button_success' type='button'>Open</Button>}</Col>
+                  <Col span={10} offset={1}>{v.status === 'active' ? <Button onClick={() => statusChange({ status : "closed",id : v.package_id})} className='button_delete' type='button'>Close</Button> : <Button onClick={() => statusChange({ status : "active",id : v.package_id})} className='button_success' type='button'>Open</Button>}</Col>
                   <Col span={10} offset={1}><Button className='button_success' type='button'>Edit</Button></Col>
                 </Row>
               </Col>

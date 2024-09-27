@@ -53,9 +53,10 @@ const formRegis = () => {
   return [
     body('license').trim().not().isEmpty().withMessage('Invalid license does not empty')
     .exists({checkFalsy: true}).withMessage('You must type a text'),
-    body('username').trim().not().isEmpty().withMessage('Invalid Email does not empty')
+    body('username').trim().not().isEmpty().withMessage('Invalid username does not empty')
     .isLength({min:5}).withMessage('The minimum username length is 5 characters')
     .isLength({max:15}).withMessage('The maximum username length is 15 characters')
+    .matches(/^[a-zA-Z0-9_.-]*$/).withMessage('The Usrename allow just characters and number only.')
     .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('email').trim().not().isEmpty().withMessage('Invalid Email does not empty')
     .isEmail().withMessage('Invalid Email Address')
@@ -71,6 +72,7 @@ const formRegis = () => {
     .custom((value, {req}) => value === req.body.pass).withMessage("The passwords do not match"),
     body('company').trim().not().isEmpty().withMessage('Invalid company does not empty')
     .isLength({max:50}).withMessage('The maximum username length is 50 characters')
+    .matches(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/).withMessage('Not allow special characters')
     .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('phone').trim().not().isEmpty().withMessage('Invalid phone does not empty')
     .matches(/^[0-9]{9,10}$/).withMessage('The phone is number and lenght number is between 9 - 10')
@@ -88,9 +90,11 @@ const formConfirmEmail = () => {
 const formAddPackage = () => {
   return [
     body('packageName').not().isEmpty().withMessage('Invalid package name dose not empty')
+    .matches(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/).withMessage('Not allow special characters')
     .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('description').not().isEmpty().withMessage('Invalid description dose not empty')
-    .exists({checkFalsy: true}).withMessage('You must type a text'),
+    .exists({checkFalsy: true}).withMessage('You must type a text')
+    .matches(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/).withMessage('Not allow special characters'),
     body('daysTrip').not().isEmpty().withMessage('Invalid days_trip dose not empty')
     .exists({checkFalsy: true}).withMessage('You must type a number')
     .isLength({min:1}).withMessage('The minimum days length is 1 number')
@@ -115,6 +119,26 @@ const formAddPackage = () => {
     .matches(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/).withMessage('The date format invalid')
   ]
 }
+const changeStatusBooking = () => {
+  return [
+    body('status').not().isEmpty().withMessage('Invalid status dose not empty')
+    .matches(/^[a-zA-Z]*$/).withMessage('Not allow special characters')
+    .exists({checkFalsy: true}).withMessage('You must type a text'),
+    body('id').not().isEmpty().withMessage('Invalid status dose not empty')
+    .matches(/^[a-zA-Z0-9]*$/).withMessage('Not allow special characters')
+    .exists({checkFalsy: true}).withMessage('You must type a text'),
+  ];
+}
+const changeStatusPackage = () => {
+  return [
+    body('status').not().isEmpty().withMessage('Invalid status dose not empty')
+    .matches(/^[a-zA-Z]*$/).withMessage('Not allow special characters')
+    .exists({checkFalsy: true}).withMessage('You must type a text'),
+    body('id').not().isEmpty().withMessage('Invalid status dose not empty')
+    .matches(/^[a-zA-Z0-9]*$/).withMessage('Not allow special characters')
+    .exists({checkFalsy: true}).withMessage('You must type a text'),
+  ];
+}
 module.exports = {
     checkAccessToken,
     checkRefreshToken,
@@ -122,5 +146,7 @@ module.exports = {
     formRegis,
     formConfirmEmail,
     formAddPackage,
+    changeStatusBooking,
+    changeStatusPackage,
     validationForm,
 };

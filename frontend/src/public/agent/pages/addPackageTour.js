@@ -87,6 +87,10 @@ function AddPackageTour() {
                                     required: true,
                                     message: 'Please input your package Name!',
                                 },
+                                {
+                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/),
+                                    message: 'Not allow special characters',
+                                }
                             ]}
                         >
                         <Input />
@@ -99,6 +103,10 @@ function AddPackageTour() {
                                     required: true,
                                     message: 'Please input your description!',
                                 },
+                                {
+                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/),
+                                    message: 'Not allow special characters',
+                                }
                             ]}
                         >
                         <TextArea rows={4} placeholder="maxLength is 200" maxLength={200} />

@@ -29,7 +29,6 @@ const Booking = ()=>{
                     message: `Change status ${values.id} successfully !!`
                 });
         }).catch(err => {
-                console.log(err)
                 notification.error({
                     message: `status : ${err.response.status} fail message : ${err.response.data.message}`
                 });

@@ -59,7 +59,27 @@ const allPackagtTour = async (req,res) => {
             .catch(err => {return err});
    result.parent ? res.status(400).json({message : result.parent.code}) : res.status(200).json(result)
 }
+const changeStatusPackage = async (req,res) => {
+    const body = req.body;
+    const datetime = dateTime.today();
+    const result = await sequelize.query('SELECT package_id FROM packageTour WHERE package_id = ? LIMIT ?', {
+                replacements: [body.id,1],
+                type: QueryTypes.SELECT,
+            });
+            if (!Object.keys(result).length){
+                res.status(400).send({message :`Package tour not found !!`});
+            }else{
+    const update = await db.PackageTour.update({
+                status: body.status,
+                update_date: datetime.normal,
+            },{
+                where: {package_id:result[0].package_id}
+            }).then(res => {return res}).catch(err => {return {error : err}});
+        update.error ? res.status(400).send({message : update.error}) : res.status(200).send({message: 'Change status booking successfully !!'});
+    }
+}
 module.exports = {
     addPackageTour,
-    allPackagtTour
+    allPackagtTour,
+    changeStatusPackage
 }
