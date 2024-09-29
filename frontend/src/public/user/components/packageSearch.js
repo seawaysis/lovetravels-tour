@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {Row,Col,Form,Input,InputNumber,Button,DatePicker, Empty, Divider} from 'antd'
 import axios from 'axios';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import {updatePackageSearch} from '../../../services/store/userPackageTourReducer';
 import configDate from '../configDate';
@@ -47,6 +47,24 @@ function PackageSearch (props){
                         span={24}
                         onFinish={onFinish}
                         style={{ width: "100%" }}
+                        fields={[
+                            {
+                                name : ["search"],
+                                value : props.dataSearch.search? props.dataSearch.search : body.search
+                            },
+                            {
+                                name : ["checkIn"],
+                                value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs()
+                            },
+                            {
+                                name : ["checkOut"],
+                                value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs().add(2, 'day')
+                            },
+                            {
+                                name : ["amount"],
+                                value : props.dataSearch.amount? props.dataSearch.amount : body.amount
+                            }
+                        ]}
                     >
                         <span className="label_style">Search</span>
                         <Form.Item
@@ -87,7 +105,7 @@ function PackageSearch (props){
                                     ]}
                                 >
                                     {/* defaultValue={moment("2024-09-01",dateFormat)} */}
-                                    <DatePicker defaultValue={moment("2024-09-01",dateFormat)} format={dateFormat} style={{backgroundColor:'lightgray',width:'100%'}}/>
+                                    <DatePicker format={dateFormat} style={{backgroundColor:'lightgray',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                         </Row>
