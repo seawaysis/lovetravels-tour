@@ -14,9 +14,15 @@ const adaptRangepickerDate = (rawDate) => {
         fillEndTime : rawDate[1]['$d'].toString().split(' ')[4].slice(0,5)
     }
     const getDate = {
-        startDate : (fillter.fillStartDate+' '+fillter.fillStartTime).toString(),
-        endDate : (fillter.fillEndDate+' '+fillter.fillEndTime).toString()
-    }
+        dateTime : {
+            startDate : (fillter.fillStartDate+' '+fillter.fillStartTime).toString(),
+            endDate : (fillter.fillEndDate+' '+fillter.fillEndTime).toString()
+        },
+        date : {
+            startDate : (fillter.fillStartDate).toString(),
+            endDate : (fillter.fillEndDate).toString()
+        }
+    };
     return getDate
 }
 const configDate = {

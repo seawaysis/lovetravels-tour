@@ -45,8 +45,11 @@ function PaymentQrcodeForm (props) {
     };
     return (
         <>
-            <img src={props.items.dataDetail.pic_payment} alt={props.items.dataDetail.company_name} style={{width : '100%'}}/>
-            <Divider />
+        <Row>
+            <Col span={11}>
+            <img src={props.items.dataDetail.pic_payment} alt={props.items.dataDetail.company_name} style={{width : '100%',height : '80%'}}/>
+            </Col>
+            <Col span={12} offset={1}>
             <Form 
             {...layout}
             onFinish={onFinish}
@@ -55,11 +58,13 @@ function PaymentQrcodeForm (props) {
                 <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'slip',label:'E-slip'},upload: {maxCount: 1}}}/>
 
                 <Row justify="end">
-                            <Col span={12}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
+                            <Col span={24}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
                                 Send
                             </Button></Col>
                         </Row>
             </Form>
+            </Col>
+        </Row>
         </>
     );
 }

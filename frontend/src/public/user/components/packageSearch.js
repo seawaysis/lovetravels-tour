@@ -90,7 +90,7 @@ function PackageSearch (props){
                                         }
                                     ]}
                                 >
-                                    <DatePicker format={dateFormat} style={{backgroundColor:'lightgray',width:'100%'}}/>
+                                    <DatePicker format={dateFormat} minDate={dayjs(dayjs(), dateFormat)} style={{backgroundColor:'lightgray',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                             <Col span={11} offset={2}>
@@ -105,7 +105,7 @@ function PackageSearch (props){
                                     ]}
                                 >
                                     {/* defaultValue={moment("2024-09-01",dateFormat)} */}
-                                    <DatePicker format={dateFormat} style={{backgroundColor:'lightgray',width:'100%'}}/>
+                                    <DatePicker format={dateFormat} minDate={dayjs(dayjs(), dateFormat)} style={{backgroundColor:'lightgray',width:'100%'}}/>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -137,7 +137,7 @@ function PackageSearch (props){
                     </Form>
             </Col>
         </Row>
-        <Row justify="center">
+        <Row justify="space-around">
             {!props.packageSearch[0] ? (
                 <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                     <Empty />

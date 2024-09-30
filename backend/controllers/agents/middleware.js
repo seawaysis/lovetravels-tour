@@ -90,11 +90,11 @@ const formConfirmEmail = () => {
 const formAddPackage = () => {
   return [
     body('packageName').not().isEmpty().withMessage('Invalid package name dose not empty')
-    .matches(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/).withMessage('Not allow special characters')
+    .matches(/^[a-zA-Z0-9ก-๛_,.\-=()* ]*$/).withMessage('Not allow special characters')
     .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('description').not().isEmpty().withMessage('Invalid description dose not empty')
     .exists({checkFalsy: true}).withMessage('You must type a text')
-    .matches(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/).withMessage('Not allow special characters'),
+    .matches(/^[a-zA-Z0-9ก-๛_,.\-=()* ]*$/).withMessage('Not allow special characters'),
     body('daysTrip').not().isEmpty().withMessage('Invalid days_trip dose not empty')
     .exists({checkFalsy: true}).withMessage('You must type a number')
     .isLength({min:1}).withMessage('The minimum days length is 1 number')

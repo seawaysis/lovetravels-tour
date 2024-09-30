@@ -30,6 +30,7 @@ axios.interceptors.request.use(
                 {'all_booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'change_status_booking' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
                 {'change_status_package' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
+                {'summary_account' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
             ]
         }
             arrPath[urlSplit[0]].forEach((v) => {

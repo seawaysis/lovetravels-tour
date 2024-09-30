@@ -51,9 +51,9 @@ function PackageDetail(props) {
             </Col>
         </Row>
         <Row justify="center">
-            <Col span={23} className="card_bg">
-                    <Row justify="center">
-                        {detail.pic_path.map((v,k) => (<Col {...arrSpan[0]}><img src={v} alt={detail.package_name} style={{width : '100%',height : '200px'}}/></Col>))}
+            <Col xs={23} sm={23} md={20} className="card_bg">
+                    <Row justify="space-around">
+                        {detail.pic_path.map((v,k) => (<Col {...arrSpan[0]} style={{padding : '0 10px'}}><img src={v} alt={detail.package_name} style={{width : '100%',height : '200px'}}/></Col>))}
                     </Row>
                     <Row justify="center">
                         <Col span={11} className="header_sub">

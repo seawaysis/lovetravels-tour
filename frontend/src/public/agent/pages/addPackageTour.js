@@ -3,14 +3,16 @@ import { Form,Input,InputNumber,Button, Row, Col, notification,DatePicker} from 
 import Title from 'antd/lib/typography/Title';
 import axios from '../../../routers/axios';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 //import LocalStorages from '../../../services/localStorages'
 
-import ConfigDate from '../configDate'
-import Upload from './upload'
-import Header from './header'
+import ConfigDate from '../configDate';
+import Upload from './upload';
+import Header from './header';
 import '../allStyle.css';
 
 const { RangePicker } = DatePicker;
+const dateFormat = 'YYY-MM-DD';
 const layout = {
     labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
     wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
@@ -29,8 +31,8 @@ function AddPackageTour() {
             maxPersons: values.maxPersons,
             price: values.price,
             priceDiscount: values.priceDiscount,
-            startDate: getDate.startDate,
-            endDate: getDate.endDate
+            startDate: getDate.dateTime.startDate,
+            endDate: getDate.dateTime.endDate
         }
         
         const formData = new FormData()
@@ -55,10 +57,9 @@ function AddPackageTour() {
             }
         ).catch(
             err => {
-                console.log(err)
-                // notification.error({
-                //     message: `Add Package fail status : ${err.response.status} Message : ${err.response.data.message}`
-                // });
+                notification.error({
+                    message: `Add Package fail status : ${err.response.status} Message : ${err.response.data.message}`
+                });
             }
         );
   }
@@ -88,7 +89,7 @@ function AddPackageTour() {
                                     message: 'Please input your package Name!',
                                 },
                                 {
-                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/),
+                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_,.\-=()* ]*$/),
                                     message: 'Not allow special characters',
                                 }
                             ]}
@@ -104,7 +105,7 @@ function AddPackageTour() {
                                     message: 'Please input your description!',
                                 },
                                 {
-                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_.\-=()* ]*$/),
+                                    pattern: new RegExp(/^[a-zA-Z0-9ก-๛_,.\-=()* ]*$/),
                                     message: 'Not allow special characters',
                                 }
                             ]}
@@ -197,7 +198,7 @@ function AddPackageTour() {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input amount Price Discount',
+                                    message: 'Please input Range Date',
                                 }
                             ]}
                         >
@@ -205,7 +206,8 @@ function AddPackageTour() {
                             showTime={{
                                 format: 'HH:mm',
                             }}
-                            format={'YYYY/MM/DD HH:mm'}
+                            format={dateFormat+' HH:mm'}
+                            minDate={dayjs(dayjs(), dateFormat)}
                             style={{backgroundColor:'lightgrey',width:'100%'}}
                             />
                         </Form.Item>

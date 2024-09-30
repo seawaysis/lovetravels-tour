@@ -49,7 +49,7 @@ const Booking = ()=>{
     <Row justify="center">
         <Col className="card_bg" {...wrapSpan}>
             <Row justify="space-around">
-                <Col span={12}><span className="text_main">{v.email}</span><br /><span className="text_sub">{v.package_name}</span></Col>
+                <Col span={12}><span className="text_main">{v.booking_id}</span><br /><span className="text_main">{v.email}</span><br /><span className="text_sub">{v.package_name}</span></Col>
                 <Col span={8}><div className={arrStatusTag[v.status].class}>{v.status}</div></Col>
             </Row>
             <Divider />

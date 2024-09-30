@@ -34,15 +34,10 @@ const Booking = (props)=>{
     <Row justify="center">
         <Col className="card_bg" {...wrapSpan}>
             <Row>
-                <Col span={12}><img src={v.pic_path} alt={v.package_name} style={{width : '100%',height:'150px'}}/></Col>
-                <Col span={12}><span className="text_main">{v.package_name}</span><br /><span className="text_sub">{v.company_name}</span></Col>
+                <Col span={11}><img src={v.pic_path} alt={v.package_name} style={{width : '100%',height:'150px'}}/></Col>
+                <Col span={12} offset={1}><span className="text_main">{v.package_name}</span><br /><span className="text_sub">{v.company_name}</span><br /><div className={arrStatusTag[v.status].class} style={{margin:'10px 0'}}>{v.status}</div></Col>
             </Row>
             <Divider />
-            <Row justify="end">
-                <Col span={12}>
-                    <div className={arrStatusTag[v.status].class}>{v.status}</div>
-                </Col>
-            </Row>
             <Row style={{textAlign: 'center'}}>
                     <Col span={8}>
                         <span className="text_sub" style={{fontWeight : 'normal'}}>Check-In</span><br />

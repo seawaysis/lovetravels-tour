@@ -1,9 +1,56 @@
-import React from 'react';
-import {Row,Col} from 'antd';
+import React, { useState } from 'react';
+import {Row,Col,Form,Button,DatePicker,notification,Flex,Table} from 'antd';
+import axios from 'axios';
 import Title from 'antd/lib/typography/Title';
+import dayjs from 'dayjs';
 
+import ConfigDate from '../configDate';
 import Header from '../pages/header';
-const SumAccount = (req,res) => {
+
+const { RangePicker } = DatePicker;
+const dateFormat = 'YYYY-MM-DD';
+const columns = [
+  {
+    title: 'Package',
+    dataIndex: 'package',
+  },
+  {
+    title: 'Amount',
+    dataIndex: 'amount',
+  },
+  {
+    title: 'Price',
+    dataIndex: 'price',
+  },
+];
+// const dataSource = Array.from({
+//   length: 2,
+// }).map((_, i) => ({
+//   key: i,
+//   name: `Edward King ${i}`,
+//   age: 32,
+//   address: `London, Park Lane no. ${i}`,
+// }));
+function SumAccount (){
+    const [rangeDate,setRangeDate] = useState({startDate : dayjs(),endDate : dayjs().add(1,'month')}); 
+    const onFinish = values => {
+        const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate);
+        console.log(getDate.date);
+        axios.post('agent/summary_account',getDate.date).then(
+            res => {
+                console.log(res)
+                notification.success({
+                    message: `Search successfully`
+                });
+            }
+        ).catch(
+            err => {
+                notification.error({
+                    message: `Add Package fail status : ${err.response.status} Message : ${err.response.data.message}`
+                });
+            }
+        );
+    }
     return (
         <><Header />
         <Row justify="center">
@@ -13,11 +60,52 @@ const SumAccount = (req,res) => {
         </Row>
         <Row justify="center">
             <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
-                <div className="Form">
-                    test
-                    </div>
+                <Form
+                        className="App"
+                        span={24}
+                        onFinish={onFinish}
+                        style={{ width: "100%" }}
+                        fields={[
+                            {
+                                name : ["rangeDate"],
+                                value : [rangeDate.startDate? rangeDate.startDate : dayjs(),rangeDate.endDate? rangeDate.endDate : dayjs()]
+                            }
+                        ]}
+                    >
+                        <Row>
+                        <Col span={17}>
+                    <Form.Item
+                            name="rangeDate"
+                            label="Start Date - End Date"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input Range Date',
+                                }
+                            ]}
+                        >
+                        <RangePicker
+                            format={dateFormat}
+                            defaultValue={[dayjs(dayjs(), dateFormat), dayjs(dayjs().add(1,'month'), dateFormat)]}
+                            style={{backgroundColor:'lightgrey',width:'100%'}}
+                            />
+                        </Form.Item>
+                        </Col>
+                        <Col span={6} offset={1}>
+                                <Button className="Button button_style" htmlType="submit" size="large" style={{marginTop:'40px', height : '50px'}}>
+                                    Search
+                                </Button>
+                            </Col>
+                            </Row>
+                        </Form>
             </Col>            
         </Row>
+        {/* <Flex gap="middle" vertical>
+            <Flex align="center" gap="middle">
+
+            </Flex>
+            <Table rowSelection={rowSelection} columns={columns} dataSource={dataSource} />
+        </Flex> */}
         </>
     );
 } 
