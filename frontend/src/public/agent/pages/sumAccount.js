@@ -7,34 +7,9 @@ import dayjs from 'dayjs';
 import ConfigDate from '../configDate';
 import Header from '../pages/header';
 
+import formatMoney from '../formatMoney';
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
-const columns = [
-  {
-    title: 'Package',
-    dataIndex: 'packageName',
-  },
-  {
-    title: 'Amount',
-    dataIndex: 'sumAmount',
-  },
-  {
-    title: 'Price',
-    dataIndex: 'sumPrice',
-  },
-  {
-    title: 'Net Price',
-    dataIndex: 'sumNetPrice',
-  },
-];
-const pagesDataSource = Array.from({
-  length: 2,
-}).map((_, i) => ({
-  key: i,
-  name: `Edward King ${i}`,
-  age: 32,
-  address: `London, Park Lane no. ${i}`,
-}));
 function SumAccount (){
     const [rangeDate,setRangeDate] = useState({startDate : dayjs(),endDate : dayjs().add(1,'month')}); 
     const [dataSource,setDataSource] = useState([]);
@@ -56,6 +31,26 @@ function SumAccount (){
             }
         );
     }
+    const columns = [
+  {
+    title: 'Package',
+    dataIndex: 'packageName',
+  },
+  {
+    title: 'Amount',
+    dataIndex: 'sumAmount',
+  },
+  {
+    title: 'Price',
+    dataIndex: 'sumPrice',
+    render: text => formatMoney(text)
+  },
+  {
+    title: 'Net Price',
+    dataIndex: 'sumNetPrice',
+    render: text => formatMoney(text)
+  },
+];
     return (
         <><Header />
         <Row justify="center">
@@ -109,7 +104,11 @@ function SumAccount (){
             <Flex align="center" gap="middle">
 
             </Flex>
-            <Table /*rowSelection={rowSelection} */ columns={columns} dataSource={dataSource} />
+            <Table /*rowSelection={rowSelection} */ columns={columns} dataSource={dataSource} pagination={{ defaultPageSize: 1, showSizeChanger: true, pageSizeOptions: ['1', '10', '50'], locale: {items_per_page: "package / page"}}} onRow={(record, rowIndex) => {
+    return {
+      onClick: event => {console.log(record)}, // click row
+    };
+  }}/>
         </Flex>
         </>
     );

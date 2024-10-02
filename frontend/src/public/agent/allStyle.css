@@ -215,7 +215,9 @@ input[type]:after {
 .card_bg .package_list:hover {
     background-color: #828282 !important;
 }
-
+.ant-select-selection-item,.ant-select-selection-search-input {
+    background-color: white !important;
+}
 .multiline-truncate {
     display: -webkit-box;
     /* Use flexbox */

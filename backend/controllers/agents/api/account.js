@@ -21,13 +21,21 @@ const summaryAccount = async (req,res) => {
                     packageName : v.package_name,
                     sumAmount : v.amount,
                     sumPrice : v.sum_price,
-                    sumNetPrice : v.sum_net_price
+                    sumNetPrice : v.sum_net_price,
+                    detail : []
                 };
             }else if(setResult[v.package_id].packageId === v.package_id){
                 setResult[v.package_id].sumAmount += v.amount;
                 setResult[v.package_id].sumPrice += v.sum_price;
                 setResult[v.package_id].sumNetPrice += v.sum_net_price;
             }
+            setResult[v.package_id].detail.push({
+                bookingId : v.booking_id,
+                amount : v.amount,
+                price : v.sum_price,
+                netPrice : v.sum_net_price
+
+            })
         })};
         res.status(200).json(setResult.filter(n => n));
     }
