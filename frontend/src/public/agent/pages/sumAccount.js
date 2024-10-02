@@ -12,33 +12,38 @@ const dateFormat = 'YYYY-MM-DD';
 const columns = [
   {
     title: 'Package',
-    dataIndex: 'package',
+    dataIndex: 'packageName',
   },
   {
     title: 'Amount',
-    dataIndex: 'amount',
+    dataIndex: 'sumAmount',
   },
   {
     title: 'Price',
-    dataIndex: 'price',
+    dataIndex: 'sumPrice',
+  },
+  {
+    title: 'Net Price',
+    dataIndex: 'sumNetPrice',
   },
 ];
-// const dataSource = Array.from({
-//   length: 2,
-// }).map((_, i) => ({
-//   key: i,
-//   name: `Edward King ${i}`,
-//   age: 32,
-//   address: `London, Park Lane no. ${i}`,
-// }));
+const pagesDataSource = Array.from({
+  length: 2,
+}).map((_, i) => ({
+  key: i,
+  name: `Edward King ${i}`,
+  age: 32,
+  address: `London, Park Lane no. ${i}`,
+}));
 function SumAccount (){
     const [rangeDate,setRangeDate] = useState({startDate : dayjs(),endDate : dayjs().add(1,'month')}); 
+    const [dataSource,setDataSource] = useState([]);
     const onFinish = values => {
         const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate);
-        console.log(getDate.date);
+        setRangeDate({startDate : dayjs(getDate.date.startDate,dateFormat),endDate : dayjs(getDate.date.endDate,dateFormat)});
         axios.post('agent/summary_account',getDate.date).then(
             res => {
-                console.log(res)
+                setDataSource(res.data);
                 notification.success({
                     message: `Search successfully`
                 });
@@ -46,7 +51,7 @@ function SumAccount (){
         ).catch(
             err => {
                 notification.error({
-                    message: `Add Package fail status : ${err.response.status} Message : ${err.response.data.message}`
+                    message: `Search fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }
         );
@@ -100,12 +105,12 @@ function SumAccount (){
                         </Form>
             </Col>            
         </Row>
-        {/* <Flex gap="middle" vertical>
+        <Flex gap="middle" vertical>
             <Flex align="center" gap="middle">
 
             </Flex>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={dataSource} />
-        </Flex> */}
+            <Table /*rowSelection={rowSelection} */ columns={columns} dataSource={dataSource} />
+        </Flex>
         </>
     );
 } 
