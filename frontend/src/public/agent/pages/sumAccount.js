@@ -18,6 +18,7 @@ function SumAccount (){
         setRangeDate({startDate : dayjs(getDate.date.startDate,dateFormat),endDate : dayjs(getDate.date.endDate,dateFormat)});
         axios.post('agent/summary_account',getDate.date).then(
             res => {
+                console.log(res.data);
                 setDataSource(res.data);
                 notification.success({
                     message: `Search successfully`
@@ -32,25 +33,61 @@ function SumAccount (){
         );
     }
     const columns = [
-  {
-    title: 'Package',
-    dataIndex: 'packageName',
-  },
-  {
-    title: 'Amount',
-    dataIndex: 'sumAmount',
-  },
-  {
-    title: 'Price',
-    dataIndex: 'sumPrice',
-    render: text => formatMoney(text)
-  },
-  {
-    title: 'Net Price',
-    dataIndex: 'sumNetPrice',
-    render: text => formatMoney(text)
-  },
-];
+        {
+            title: 'Package',
+            dataIndex: 'packageName',
+        },
+        {
+            title: 'Amount',
+            dataIndex: 'sumAmount',
+            align: 'center'
+        },
+        {
+            title: 'Price',
+            dataIndex: 'sumPrice',
+            align: 'center',
+            render: text => formatMoney(text)
+        },
+        {
+            title: 'Net Price',
+            dataIndex: 'sumNetPrice',
+            align: 'center',
+            render: text => formatMoney(text)
+        },
+    ];
+    const subColumns = [
+        {
+            title: 'booking Id',
+            dataIndex: 'bookingId',
+        },
+        {
+            title: 'Amount',
+            dataIndex: 'amount',
+            align: 'center',
+        },
+        {
+            title: 'Price',
+            dataIndex: 'price',
+            align: 'center',
+            render: text => formatMoney(text)
+        },
+        {
+            title: 'Net Price',
+            dataIndex: 'netPrice',
+            align: 'center',
+            render: text => formatMoney(text)
+        }
+    ];
+const expandedRow = row => {
+return <Table columns={subColumns} dataSource={row.detail} pagination={false} />;
+};
+const onRow = (record, rowIndex) => {
+                return {
+                onClick: event => {
+                    console.log(record);
+                    }, // click row
+                };
+            }
     return (
         <><Header />
         <Row justify="center">
@@ -104,11 +141,7 @@ function SumAccount (){
             <Flex align="center" gap="middle">
 
             </Flex>
-            <Table /*rowSelection={rowSelection} */ columns={columns} dataSource={dataSource} pagination={{ defaultPageSize: 1, showSizeChanger: true, pageSizeOptions: ['1', '10', '50'], locale: {items_per_page: "package / page"}}} onRow={(record, rowIndex) => {
-    return {
-      onClick: event => {console.log(record)}, // click row
-    };
-  }}/>
+            <Table /*rowSelection={rowSelection} */ columns={columns} expandedRowRender={expandedRow} dataSource={dataSource} pagination={{ defaultPageSize: 1, showSizeChanger: true, pageSizeOptions: ['1', '10'], locale: {items_per_page: "package / page"}}} /*onRow={onRow}*/ bordered/>
         </Flex>
         </>
     );

@@ -13,10 +13,12 @@ const summaryAccount = async (req,res) => {
         res.status(400).json({message : result.code});
     }else{
         let setResult = [];
+        let countKey = 1;
         if(result[0]){
         result.forEach((v,k) => {
             if(!setResult[v.package_id]){
                 setResult[v.package_id] = {
+                    key : countKey,
                     packageId : v.package_id,
                     packageName : v.package_name,
                     sumAmount : v.amount,
@@ -24,6 +26,7 @@ const summaryAccount = async (req,res) => {
                     sumNetPrice : v.sum_net_price,
                     detail : []
                 };
+                countKey++;
             }else if(setResult[v.package_id].packageId === v.package_id){
                 setResult[v.package_id].sumAmount += v.amount;
                 setResult[v.package_id].sumPrice += v.sum_price;
@@ -34,7 +37,6 @@ const summaryAccount = async (req,res) => {
                 amount : v.amount,
                 price : v.sum_price,
                 netPrice : v.sum_net_price
-
             })
         })};
         res.status(200).json(setResult.filter(n => n));
