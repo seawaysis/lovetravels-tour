@@ -59,6 +59,10 @@ const allPackagtTour = async (req,res) => {
             .catch(err => {return err});
    result.parent ? res.status(400).json({message : result.parent.code}) : res.status(200).json(result)
 }
+const oncePackageTour =async (req,res) => {
+    const packageId = req.params.id;
+    res.status(200).send({message : 'get ok : '+packageId});
+}
 const changeStatusPackage = async (req,res) => {
     const body = req.body;
     const datetime = dateTime.today();
@@ -81,5 +85,6 @@ const changeStatusPackage = async (req,res) => {
 module.exports = {
     addPackageTour,
     allPackagtTour,
+    oncePackageTour,
     changeStatusPackage
 }

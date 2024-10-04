@@ -35,6 +35,10 @@ function PackageTour() {
     );
   }
   const cardCol = { xs: 23, sm: 23, md: 23, lg: 14, xl: 14, xxl: 12 }
+
+  const toEditPackage = () => {
+    navigate('/agent/edit_package_tour');
+  }
   return (
     <div>
       <Header/>
@@ -87,7 +91,7 @@ function PackageTour() {
                 <Divider className="Divider" />
                 <Row>
                   <Col span={10} offset={1}>{v.status === 'active' ? <Button onClick={() => statusChange({ status : "closed",id : v.package_id})} className='button_delete' type='button'>Close</Button> : <Button onClick={() => statusChange({ status : "active",id : v.package_id})} className='button_success' type='button'>Open</Button>}</Col>
-                  <Col span={10} offset={1}><Button className='button_success' type='button'>Edit</Button></Col>
+                  <Col span={10} offset={1}><Button onClick={toEditPackage} className='button_success' type='button'>Edit</Button></Col>
                 </Row>
               </Col>
             ))

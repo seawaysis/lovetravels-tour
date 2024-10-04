@@ -13,6 +13,7 @@ import AgentLoginPage from '../public/agent/pages/login';
 import AgentBookingPage from '../public/agent/pages/booking';
 import AgentPackageTourPage from '../public/agent/pages/packageTour';
 import AgentAddPackageTourPage from '../public/agent/pages/addPackageTour';
+import AgentEditPackageTour from '../public/agent/components/editPackageTour';
 import AgentSumAccountPage from '../public/agent/pages/sumAccount';
 
 const components = {
@@ -71,7 +72,12 @@ const components = {
     agentAddPackageTour: {
         url: "agent/add_package_tour",
         component: AgentAddPackageTourPage
-    },agentSumAccount: {
+    },
+    agentEditPackageTour: {
+        url: "agent/edit_package_tour",
+        component: AgentEditPackageTour
+    },
+    agentSumAccount: {
         url: "agent/account",
         component: AgentSumAccountPage
     },
@@ -106,6 +112,7 @@ const permissions = {
             components.agentBooking,
             components.agentPackageTour,
             components.agentAddPackageTour,
+            components.agentEditPackageTour,
             components.agentSumAccount
         ],
         redirectRoutes: "agent/booking"

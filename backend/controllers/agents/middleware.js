@@ -1,6 +1,6 @@
 
 const encryptToken = require('./encrypt');
-const {body,check,validationResult} = require('express-validator');
+const {body,param,check,validationResult} = require('express-validator');
 
 const checkAccessToken = async (req, res, next) => {
     if(!req.headers.authorization){
@@ -119,6 +119,13 @@ const formAddPackage = () => {
     .matches(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/).withMessage('The date format invalid')
   ]
 }
+const paramIdPackageTour = () => {
+  return [
+    param('id').not().isEmpty().withMessage('Invalid package id dose not empty')
+    .exists({checkFalsy: true}).withMessage('You must type a number')
+    .matches(/^[0-9]{1,}$/).withMessage('The package id is number only')
+  ];
+}
 const changeStatusBooking = () => {
   return [
     body('status').not().isEmpty().withMessage('Invalid status dose not empty')
@@ -156,6 +163,7 @@ module.exports = {
     formRegis,
     formConfirmEmail,
     formAddPackage,
+    paramIdPackageTour,
     changeStatusBooking,
     changeStatusPackage,
     formSummaryAccount,
