@@ -1,28 +1,38 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form,Input,InputNumber,Button, Row, Col, notification,DatePicker} from 'antd'
 import Title from 'antd/lib/typography/Title';
 import axios from '../../../routers/axios';
-import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 //import LocalStorages from '../../../services/localStorages'
 
 import ConfigDate from '../configDate';
-import Upload from './upload';
-import Header from './header';
+import Upload from '../pages/upload';
+import Header from '../pages/header';
 import '../allStyle.css';
 
 const { RangePicker } = DatePicker;
-const dateFormat = 'YYY-MM-DD';
+const dateFormat = 'YYYY-MM-DD';
 const layout = {
     labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
     wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
 };
 const { TextArea } = Input;
-function AddPackageTour() {
-  const navigate = useNavigate();
+function EditPackageTour(props) {
+    useEffect(() => {
+        axios.get('agent/once_package/'+props.idForEdit).then(
+            res => {
+                console.log(res);
+            }
+            ).catch(
+                err => {
+                    notification.error({
+                        message: `Edit Package fail status : ${err.response.status} Message : ${err.response.data.message}`
+                    });
+                }
+            );
+    });
   const [fileList, setFileList] = useState([])
   const onFinish = values => {
-    //console.log(new Date(values.rangeDate[0]['$d']).toISOString().split('T')[0])
     const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate)
     const body = {
             packageName: values.packageName,
@@ -43,35 +53,34 @@ function AddPackageTour() {
            formData.append('pic_package',fileList[i])
         }
         notification.warning({
-                    message: `Add Package Progress`,
+                    message: `Edit Package Progress`,
                     showProgress: true,
                 });
 
-        axios.post('agent/add_package',formData).then(
+        axios.post('agent/edit_package',formData).then(
             res => {
                 console.log(res)
                 notification.success({
-                    message: `Add Package successfully`
+                    message: `Edit Package successfully`
                 });
-               navigate("/agent/package_tour");
             }
         ).catch(
             err => {
                 notification.error({
-                    message: `Add Package fail status : ${err.response.status} Message : ${err.response.data.message}`
+                    message: `Edit Package fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }
         );
   }
   const toPackage = () => {
-        navigate("/agent/package_tour");
+        props.setView(null);
     }
   return (
     <div>
       <Header/>
       <Row justify="center">
         <Col span={22} offset={2} align='left'>
-                        <Title level={2} className="Title">Add Package Tour</Title>
+                        <Title level={2} className="Title">Edit Package Tour</Title>
                     </Col>
             <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                 <div className="Form">
@@ -214,11 +223,11 @@ function AddPackageTour() {
 
 
                         <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'pic_package',label:'Pictures Package'},upload: {maxCount: 5}}}/>
-                        <Row style={{float: 'right'}}>
-                            <Button onClick={toPackage} className="Button button_link_style" htmlType="button" size="large" type="link">package</Button>
-                            <Button className="Button button_style " type="primary" size="large" htmlType="submit">
-                                Add
-                            </Button>
+                        <Row justify="space-between" style={{float: 'right'}}>
+                            <Col span={12}><Button onClick={toPackage} className="Button button_link_style" htmlType="button" size="large" type="link">package</Button></Col>
+                            <Col span={10} offset={2}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
+                                Edit
+                            </Button></Col>
                         </Row>
                     </Form>
                   </div>
@@ -228,4 +237,4 @@ function AddPackageTour() {
   )
 }
 
-export default AddPackageTour
+export default EditPackageTour

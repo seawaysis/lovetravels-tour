@@ -27,6 +27,7 @@ axios.interceptors.request.use(
                 {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
                 {'add_package' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'multipart/form-data'}}},
                 {'all_package' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
+                {'once_package' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'all_booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'change_status_booking' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
                 {'change_status_package' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
