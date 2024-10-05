@@ -50,8 +50,8 @@ const addPackageTour = async (req,res) => {
 }
 const allPackagtTour = async (req,res) => {
     const body = req.body;
-    const decodeToken = req.decodeToken
-    const fullHost = `${req.protocol}://${req.get('host')}/package_tour/`
+    const decodeToken = req.decodeToken;
+    const fullHost = `${req.protocol}://${req.get('host')}/package_tour/`;
     const result = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,CONCAT(?,g.pic_path) AS pic_url FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? GROUP BY p.package_name ORDER BY p.package_id DESC,p.update_date DESC`, {
             replacements: [fullHost,decodeToken.username],
             type: QueryTypes.SELECT})
@@ -61,7 +61,35 @@ const allPackagtTour = async (req,res) => {
 }
 const oncePackageTour =async (req,res) => {
     const packageId = req.params.id;
-    res.status(200).send({message : 'get ok : '+packageId});
+    const decodeToken = req.decodeToken;
+    const fullHost = `${req.protocol}://${req.get('host')}/package_tour/`;
+    const temp = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,CONCAT(?,g.pic_path) AS pic_url FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?`, {
+            replacements: [fullHost,decodeToken.username,packageId],
+            type: QueryTypes.SELECT})
+            .then(r => {return r})
+            .catch(err => {return err});
+    if(temp.parent){
+        res.status(400).json({message : temp.parent.code});
+    }else{
+        let result = [];
+        temp.forEach((v,k) => {
+            if(k === 0){
+                result.push({
+                    packageId : v.package_id,
+                    packageName : v.package_name,
+                    description : v.description,
+                    maxPersons : v.max_amount,
+                    price : v.price_person,
+                    priceDiscount : v.discount,
+                    startDate : v.start_date,
+                    endDate : v.end_date,
+                    picPath : []
+                });
+            }
+            result[0]['picPath'].push(v.pic_url);
+    });
+        res.status(200).json(result);
+    }
 }
 const changeStatusPackage = async (req,res) => {
     const body = req.body;
