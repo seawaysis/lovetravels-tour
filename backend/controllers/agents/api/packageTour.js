@@ -71,22 +71,23 @@ const oncePackageTour =async (req,res) => {
     if(temp.parent){
         res.status(400).json({message : temp.parent.code});
     }else{
-        let result = [];
+        let result = {};
         temp.forEach((v,k) => {
             if(k === 0){
-                result.push({
+                result = {
                     packageId : v.package_id,
                     packageName : v.package_name,
                     description : v.description,
+                    daysTrip : v.days_trip,
                     maxPersons : v.max_amount,
                     price : v.price_person,
                     priceDiscount : v.discount,
                     startDate : v.start_date,
                     endDate : v.end_date,
                     picPath : []
-                });
+                };
             }
-            result[0]['picPath'].push(v.pic_url);
+            result['picPath'].push(v.pic_url);
     });
         res.status(200).json(result);
     }

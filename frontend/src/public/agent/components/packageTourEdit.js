@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useCallback } from 'react'
 import { Form,Input,InputNumber,Button, Row, Col, notification,DatePicker} from 'antd'
 import Title from 'antd/lib/typography/Title';
 import axios from '../../../routers/axios';
@@ -11,27 +11,37 @@ import Header from '../pages/header';
 import '../allStyle.css';
 
 const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY-MM-DD';
+const dateFormat = 'YYYY-MM-DD HH:mm';
 const layout = {
     labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
     wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
 };
 const { TextArea } = Input;
 function EditPackageTour(props) {
+    const [fileList, setFileList] = useState([]);
+    const [fields, setFields] = useState([]);
+    const getEditPackageTour = useCallback(async () => {
+        try {
+            const res = await axios.get('agent/once_package/' + props.idForEdit);
+            console.log(res.data);
+            setFields([
+                { name: ['packageName'], value: res.data.packageName },
+                { name: ['description'], value: res.data.description },
+                { name: ['daysTrip'], value: res.data.daysTrip},
+                { name: ['maxPersons'], value: res.data.maxPersons},
+                { name: ['price'], value: res.data.price},
+                { name: ['priceDiscount'], value: res.data.priceDiscount},
+                { name: ['rangeDate'], value: [dayjs(res.data.startDate, dateFormat),dayjs(res.data.endDate, dateFormat)]},
+            ]);
+        } catch (err) {
+            notification.error({
+                message: `Edit Package fail status : ${err.response?.status} Message : ${err.response?.data?.message || err.message}`,
+            });
+        }
+    },[props.idForEdit]);
     useEffect(() => {
-        axios.get('agent/once_package/'+props.idForEdit).then(
-            res => {
-                console.log(res);
-            }
-            ).catch(
-                err => {
-                    notification.error({
-                        message: `Edit Package fail status : ${err.response.status} Message : ${err.response.data.message}`
-                    });
-                }
-            );
-    });
-  const [fileList, setFileList] = useState([])
+       getEditPackageTour();
+    },[getEditPackageTour]);
   const onFinish = values => {
     const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate)
     const body = {
@@ -88,6 +98,7 @@ function EditPackageTour(props) {
                         {...layout}
                         onFinish={onFinish}
                         style={{ width: "100%" }}
+                        fields={fields}
                     >   
                     <Form.Item
                             name="packageName"
@@ -215,7 +226,7 @@ function EditPackageTour(props) {
                             showTime={{
                                 format: 'HH:mm',
                             }}
-                            format={dateFormat+' HH:mm'}
+                            format={dateFormat}
                             minDate={dayjs(dayjs(), dateFormat)}
                             style={{backgroundColor:'lightgrey',width:'100%'}}
                             />

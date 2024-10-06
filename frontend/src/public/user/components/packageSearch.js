@@ -11,7 +11,6 @@ function PackageSearch (props){
     const dateFormat = "YYYY-MM-DD";
     const [body,setBody] = useState({});
     const onFinish = values => {
-        console.log(values.checkOut)
         const getBody = {
             search : values.search ? values.search : null,
             checkIn : configDate.adaptpickerDate(values.checkIn),
