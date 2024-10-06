@@ -20,10 +20,10 @@ const { TextArea } = Input;
 function EditPackageTour(props) {
     const [fileList, setFileList] = useState([]);
     const [fields, setFields] = useState([]);
+    const [picPath,setPicPath] = useState([]);
     const getEditPackageTour = useCallback(async () => {
         try {
             const res = await axios.get('agent/once_package/' + props.idForEdit);
-            console.log(res.data);
             setFields([
                 { name: ['packageName'], value: res.data.packageName },
                 { name: ['description'], value: res.data.description },
@@ -31,8 +31,9 @@ function EditPackageTour(props) {
                 { name: ['maxPersons'], value: res.data.maxPersons},
                 { name: ['price'], value: res.data.price},
                 { name: ['priceDiscount'], value: res.data.priceDiscount},
-                { name: ['rangeDate'], value: [dayjs(res.data.startDate, dateFormat),dayjs(res.data.endDate, dateFormat)]},
+                { name: ['rangeDate'], value: [dayjs(res.data.startDate, dateFormat),dayjs(res.data.endDate, dateFormat)]}
             ]);
+            setPicPath(res.data.picPath);
         } catch (err) {
             notification.error({
                 message: `Edit Package fail status : ${err.response?.status} Message : ${err.response?.data?.message || err.message}`,
@@ -231,9 +232,9 @@ function EditPackageTour(props) {
                             style={{backgroundColor:'lightgrey',width:'100%'}}
                             />
                         </Form.Item>
-
-
-                        <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'pic_package',label:'Pictures Package'},upload: {maxCount: 5}}}/>
+                        
+                        
+                        <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'pic_package',label:'Pictures Package'},upload: {maxCount: 5}}} setNull={true}/>
                         <Row justify="space-between" style={{float: 'right'}}>
                             <Col span={12}><Button onClick={toPackage} className="Button button_link_style" htmlType="button" size="large" type="link">package</Button></Col>
                             <Col span={10} offset={2}><Button className="Button button_style " type="primary" size="large" htmlType="submit">

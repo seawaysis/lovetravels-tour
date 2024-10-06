@@ -63,7 +63,7 @@ const UploadImg = (props) => {
                             {...props.inputUpload.formItem}
                             rules={[
                                 {
-                                    required: true,
+                                    required: !props.setNull ? true : false,
                                     message: 'Please upload img!',
                                 }
                             ]}
@@ -78,7 +78,7 @@ const UploadImg = (props) => {
         {...props.inputUpload.upload}
         //maxCount={2}
       >
-        {fileList.length > props.inputUpload.upload.maxCount ? null : uploadButton}
+        {fileList.length > props.inputUpload.maxCount ? null : uploadButton}
       </Upload>
       </Form.Item>
       {previewImage && (
