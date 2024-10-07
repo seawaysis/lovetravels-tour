@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useCallback } from 'react'
-import { Form,Input,InputNumber,Button, Row, Col, notification,DatePicker} from 'antd'
+import { Form,Input,InputNumber,Button,Checkbox, Row, Col, notification,DatePicker} from 'antd'
 import Title from 'antd/lib/typography/Title';
 import axios from '../../../routers/axios';
 import dayjs from 'dayjs';
@@ -24,6 +24,7 @@ function EditPackageTour(props) {
     const getEditPackageTour = useCallback(async () => {
         try {
             const res = await axios.get('agent/once_package/' + props.idForEdit);
+            let checkboxPic = [];
             setFields([
                 { name: ['packageName'], value: res.data.packageName },
                 { name: ['description'], value: res.data.description },
@@ -33,7 +34,14 @@ function EditPackageTour(props) {
                 { name: ['priceDiscount'], value: res.data.priceDiscount},
                 { name: ['rangeDate'], value: [dayjs(res.data.startDate, dateFormat),dayjs(res.data.endDate, dateFormat)]}
             ]);
-            setPicPath(res.data.picPath);
+            res.data.picPath.forEach(v => {
+                checkboxPic.push({
+                    label: <img src={v} alt={res.data.packageName} style={{height:'100px',width:'100px'}} />,
+                    value: v
+                });
+            });
+            setPicPath(checkboxPic);
+            console.log(picPath);
         } catch (err) {
             notification.error({
                 message: `Edit Package fail status : ${err.response?.status} Message : ${err.response?.data?.message || err.message}`,
@@ -44,7 +52,8 @@ function EditPackageTour(props) {
        getEditPackageTour();
     },[getEditPackageTour]);
   const onFinish = values => {
-    const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate)
+    const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate);
+    console.log(values);;
     const body = {
             packageName: values.packageName,
             description: values.description,
@@ -232,8 +241,11 @@ function EditPackageTour(props) {
                             style={{backgroundColor:'lightgrey',width:'100%'}}
                             />
                         </Form.Item>
-                        
-                        
+                         <Form.Item 
+                            name="selectPic"
+                            >
+                        <Checkbox.Group options={picPath}/>
+                        </Form.Item>
                         <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'pic_package',label:'Pictures Package'},upload: {maxCount: 5}}} setNull={true}/>
                         <Row justify="space-between" style={{float: 'right'}}>
                             <Col span={12}><Button onClick={toPackage} className="Button button_link_style" htmlType="button" size="large" type="link">package</Button></Col>
