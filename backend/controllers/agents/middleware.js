@@ -152,7 +152,7 @@ const formEditPackage = () => {
     body('startDate').not().isEmpty().withMessage('Invalid startDate dose not empty')
     .isLength({min:16,max:16}).withMessage('The date length is 16 only')
     .matches(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/).withMessage('The date format invalid'),
-    body('deletePic').matches(/^[a-zA-Z0-9ก-๛_,.\- ]*$/).withMessage('Not allow special characters')
+    body('deletePic').matches(/^[a-zA-Z0-9ก-๛_,\-.]*$/).withMessage('Not allow special characters')
     .exists({checkFalsy: true}).withMessage('You must type a text')
   ]
 }

@@ -9,18 +9,18 @@ const Middlewares = require('../../controllers/agents/middleware');
 
 const storageRegister = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, 'src/images/qrcode/')
+    callback(null, 'src/images/qrcode/');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname)
+    callback(null, file.originalname.replace(/[&\/\\#,+()$~%^'":*?<>{} ]/g,''));
   }
 });
 const storagePackage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, 'src/images/package_tour/')
+    callback(null, 'src/images/package_tour/');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname)
+    callback(null, file.originalname.replace(/[&\/\\#,+()$~%^'":*?<>{} ]/g,''));
   }
 });
 const fileFillter = {fileFilter: (req, file, cb) => {

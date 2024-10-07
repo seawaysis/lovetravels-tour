@@ -54,7 +54,6 @@ function EditPackageTour(props) {
     },[getEditPackageTour]);
   const onFinish = values => {
     const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate);
-    console.log(values);;
     const body = {
             packageId : props.idForEdit,
             packageName: values.packageName,

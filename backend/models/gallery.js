@@ -9,10 +9,6 @@ module.exports = (Sequelize , DataTypes) => {
             type: DataTypes.TEXT,
             notNull: true
         },
-        type: {
-            type: DataTypes.INTEGER(3),
-            notNull: true
-        },
         update_date: {
             type: DataTypes.DATE,
             notNull: true

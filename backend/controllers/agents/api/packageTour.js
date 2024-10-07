@@ -4,6 +4,8 @@ const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const encryptToken = require('../encrypt');
 const dateTime = require('../datetime');
+const fs = require('fs');
+const path = require('path');
 
 const addPackageTour = async (req,res) => {
     const datetime = dateTime.today();
@@ -34,11 +36,9 @@ const addPackageTour = async (req,res) => {
         if(!resultPackage.dataValues.package_id){
             res.status(400).send({message : 'Insert package fail'})
         }else{
-            let count = 1
             await Promise.all(pic.map(async (file) => {
                 result = await db.Gallery.create({
                     pic_path: file.originalname,
-                    type:count++,
                     update_date: datetime.normal,
                     package_id: resultPackage.dataValues.package_id
                 });
@@ -94,9 +94,10 @@ const oncePackageTour =async (req,res) => {
 }
 const editPackageTour = async (req,res) => {
     const body = req.body;
+    const pic = req.files
     const decodeToken = req.decodeToken;
     const datetime = dateTime.today();
-    const result= await sequelize.query('SELECT package_id FROM packageTour WHERE username = ? AND package_id = ? LIMIT 1', {
+    const result= await sequelize.query('SELECT p.package_id,g.id,g.pic_path FROM packageTour AS p  LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?', {
         replacements: [decodeToken.username,body.packageId],
         type: QueryTypes.SELECT,
     });
@@ -119,7 +120,42 @@ const editPackageTour = async (req,res) => {
         if(update.error){
             res.status(400).send({message : update.error});
         }else{
-            res.status(200).send({message: 'Update package tour successfully !!'});
+            //delete picture files and path in db
+            const arrPic = body.deletePic.split(',');
+            if(arrPic[0] !== 'undefined'){
+                const arrId = [];
+                result.forEach(v => {
+                    arrPic.filter(c => {c === v.pic_path ? arrId.push(v.id) : null});
+                });
+                arrPic.forEach(n => {
+                    fs.unlink(path.join(__dirname, "../../../src/images/package_tour/"+n), (err) => {
+                        if (err) {
+                            console.error(`Error deleting the file ${n}:`, err);
+                        }
+                    });
+                });
+                const deletePic = await db.Gallery.destroy({ where: { id: arrId }}).then(res => {return res}).catch(err => {return {error : err}});
+                if(deletePic.error){
+                    res.status(400).send({message : deletePic.error});
+                }
+            }
+            //update new pic
+            if(pic){
+                try{
+                await Promise.all(pic.map(async (file) => {
+                    let newPic = await db.Gallery.create({
+                        pic_path: file.originalname,
+                        update_date: datetime.normal,
+                        package_id: result[0].package_id
+                    });
+                //result[0].package_id
+                }));
+            }catch{err => {
+                res.status(400).send({message : err});
+                }
+            }
+            }
+            res.status(200).send({message : 'Edit package tour successfully'});
         }
     }
 }
