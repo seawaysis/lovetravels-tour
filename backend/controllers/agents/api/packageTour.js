@@ -63,7 +63,7 @@ const oncePackageTour =async (req,res) => {
     const packageId = req.params.id;
     const decodeToken = req.decodeToken;
     const fullHost = `${req.protocol}://${req.get('host')}/package_tour/`;
-    const temp = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,CONCAT(?,g.pic_path) AS pic_url FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?`, {
+    const temp = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,g.pic_path,CONCAT(?,g.pic_path) AS pic_url FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?`, {
             replacements: [fullHost,decodeToken.username,packageId],
             type: QueryTypes.SELECT})
             .then(r => {return r})
@@ -87,10 +87,14 @@ const oncePackageTour =async (req,res) => {
                     picPath : []
                 };
             }
-            result['picPath'].push(v.pic_url);
+            result['picPath'].push({namePic : v.pic_path,fullPath : v.pic_url});
     });
         res.status(200).json(result);
     }
+}
+const editPackageTour = async (req,res) => {
+    const body = req.body;
+    res.status(200).json(body);
 }
 const changeStatusPackage = async (req,res) => {
     const body = req.body;
@@ -115,5 +119,6 @@ module.exports = {
     addPackageTour,
     allPackagtTour,
     oncePackageTour,
+    editPackageTour,
     changeStatusPackage
 }

@@ -34,14 +34,15 @@ function EditPackageTour(props) {
                 { name: ['priceDiscount'], value: res.data.priceDiscount},
                 { name: ['rangeDate'], value: [dayjs(res.data.startDate, dateFormat),dayjs(res.data.endDate, dateFormat)]}
             ]);
-            res.data.picPath.forEach(v => {
-                checkboxPic.push({
-                    label: <img src={v} alt={res.data.packageName} style={{height:'100px',width:'100px'}} />,
-                    value: v
+            if(res.data.picPath.length > 0){
+                res.data.picPath.forEach(v => {
+                    checkboxPic.push({
+                        label: <img src={v.fullPath} alt={res.data.packageName} style={{height:'100px',width:'100px'}} />,
+                        value: v.namePic
+                    });
                 });
-            });
+            }
             setPicPath(checkboxPic);
-            console.log(picPath);
         } catch (err) {
             notification.error({
                 message: `Edit Package fail status : ${err.response?.status} Message : ${err.response?.data?.message || err.message}`,
@@ -62,9 +63,9 @@ function EditPackageTour(props) {
             price: values.price,
             priceDiscount: values.priceDiscount,
             startDate: getDate.dateTime.startDate,
-            endDate: getDate.dateTime.endDate
+            endDate: getDate.dateTime.endDate,
+            deletePic: values.deletePic
         }
-        
         const formData = new FormData()
         Object.keys(body).forEach(key=>{
             formData.append(key, body[key])
@@ -112,7 +113,7 @@ function EditPackageTour(props) {
                     >   
                     <Form.Item
                             name="packageName"
-                            label="package Name"
+                            label="Package Name"
                             rules={[
                                 {
                                     required: true,
@@ -224,7 +225,7 @@ function EditPackageTour(props) {
 
                         <Form.Item
                             name="rangeDate"
-                            label="startDate - endDate"
+                            label="Start Date - End Date"
                             rules={[
                                 {
                                     required: true,
@@ -242,7 +243,8 @@ function EditPackageTour(props) {
                             />
                         </Form.Item>
                          <Form.Item 
-                            name="selectPic"
+                            name="deletePic"
+                            label="Current Pictures"
                             >
                         <Checkbox.Group options={picPath}/>
                         </Form.Item>
