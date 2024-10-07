@@ -56,6 +56,7 @@ function EditPackageTour(props) {
     const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate);
     console.log(values);;
     const body = {
+            packageId : props.idForEdit,
             packageName: values.packageName,
             description: values.description,
             daysTrip: values.daysTrip,
@@ -80,7 +81,6 @@ function EditPackageTour(props) {
 
         axios.post('agent/edit_package',formData).then(
             res => {
-                console.log(res)
                 notification.success({
                     message: `Edit Package successfully`
                 });

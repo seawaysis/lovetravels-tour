@@ -121,6 +121,9 @@ const formAddPackage = () => {
 }
 const formEditPackage = () => {
   return [
+    body('packageId').not().isEmpty().withMessage('Invalid package name dose not empty')
+    .matches(/^[0-9]*$/).withMessage('Not allow special characters')
+    .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('packageName').not().isEmpty().withMessage('Invalid package name dose not empty')
     .matches(/^[a-zA-Z0-9ก-๛_,.\-=()* ]*$/).withMessage('Not allow special characters')
     .exists({checkFalsy: true}).withMessage('You must type a text'),

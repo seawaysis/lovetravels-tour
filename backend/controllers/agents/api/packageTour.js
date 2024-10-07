@@ -94,7 +94,34 @@ const oncePackageTour =async (req,res) => {
 }
 const editPackageTour = async (req,res) => {
     const body = req.body;
-    res.status(200).json(body);
+    const decodeToken = req.decodeToken;
+    const datetime = dateTime.today();
+    const result= await sequelize.query('SELECT package_id FROM packageTour WHERE username = ? AND package_id = ? LIMIT 1', {
+        replacements: [decodeToken.username,body.packageId],
+        type: QueryTypes.SELECT,
+    });
+    if(result.parent){
+        res.status(400).json({message : temp.parent.code});
+    }else{
+         const update = await db.PackageTour.update({
+                package_name: body.packageName,
+                description : body.description,
+                days_trip : body.daysTrip,
+                max_amount :body.maxPersons,
+                price_person : body.price,
+                discount : body.priceDiscount,
+                start_date : body.startDate,
+                end_date : body.endDate,
+                update_date: datetime.normal,
+            },{
+                where: {package_id:result[0].package_id}
+            }).then(res => {return res}).catch(err => {return {error : err}});
+        if(update.error){
+            res.status(400).send({message : update.error});
+        }else{
+            res.status(200).send({message: 'Update package tour successfully !!'});
+        }
+    }
 }
 const changeStatusPackage = async (req,res) => {
     const body = req.body;
