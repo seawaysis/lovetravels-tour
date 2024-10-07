@@ -55,7 +55,7 @@ function PaymentQrcodeForm (props) {
             onFinish={onFinish}
             style={{ width: "100%" }}
             >
-                <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'slip',label:'E-slip'},upload: {maxCount: 1}}}/>
+                <Upload fileList={fileList} setFileList={setFileList} inputUpload={{formItem : {name:'slip',label:'E-slip'},upload: {maxCount: 1}}}/>
 
                 <Row justify="end">
                             <Col span={24}><Button className="Button button_style " type="primary" size="large" htmlType="submit">

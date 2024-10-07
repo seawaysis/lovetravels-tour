@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 //import LocalStorages from '../../../services/localStorages'
 
 import ConfigDate from '../configDate';
-import Upload from '../pages/upload';
+import Upload from './upload';
 import Header from '../pages/header';
 import '../allStyle.css';
 
@@ -110,7 +110,7 @@ function AddPackageTour(props) {
                                 }
                             ]}
                         >
-                        <TextArea rows={4} placeholder="maxLength is 200" maxLength={200} />
+                        <TextArea autoSize={{ minRows: 5, maxRows: 10 }} placeholder="maxLength is 200" maxLength={200} />
                         </Form.Item>
                         <Form.Item
                             name="daysTrip"
@@ -213,7 +213,7 @@ function AddPackageTour(props) {
                         </Form.Item>
 
 
-                        <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'pic_package',label:'Pictures Package'},upload: {maxCount: 5}}}/>
+                        <Upload fileList={fileList} setFileList={setFileList} inputUpload={{formItem : {name:'pic_package',label:'Pictures Package'},upload: {maxCount: 5}}}/>
                         <Row justify="space-between" style={{float: 'right'}}>
                             <Col span={12}><Button onClick={toPackage} className="Button button_link_style" htmlType="button" size="large" type="link">package</Button></Col>
                             <Col span={10} offset={2}><Button className="Button button_style " type="primary" size="large" htmlType="submit">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Form,Image, Upload } from 'antd';
 const getBase64 = (file) =>
@@ -11,7 +11,14 @@ const getBase64 = (file) =>
 const UploadImg = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-  const [fileList, setFileList] = useState([]);
+  //const [fileList, setFileList] = useState([]);
+  // useEffect(() => {
+  //   console.log(previewImage+' '+previewOpen);
+  //   if(props.fileList.length === 0){
+  //     setPreviewImage('');
+  //     setPreviewOpen(false);
+  //   }
+  // },[props.fileList]);
   let arrImg = []
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -20,7 +27,7 @@ const UploadImg = (props) => {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
-  //const handleChange = ({ fileList: newFileList }) => {setFileList(newFileList); props.setFileListFromRegis(newFileList[0])} ;
+  //const handleChange = ({ fileList: newFileList }) => {setFileList(newFileList); props.setFileList(newFileList[0])} ;
   const uploadButton = (
     <button
       style={{
@@ -40,7 +47,7 @@ const UploadImg = (props) => {
     </button>
   );
   const handleChange = (e) => {
-        arrImg = fileList
+        arrImg = props.fileList
         const checkL = arrImg.length
         if(checkL <= 0){
           arrImg.push(e)
@@ -52,14 +59,12 @@ const UploadImg = (props) => {
           });
           if(checkL === arrImg.length){arrImg.push(e)}
         }
-        setFileList(arrImg)
-        props.setFileListFromRegis(arrImg)
+        //setFileList(arrImg)
+        props.setFileList(arrImg)
     }
   return (
     <>
     <Form.Item
-                            //name="payment"
-                            //label="QRcode Payment"
                             {...props.inputUpload.formItem}
                             rules={[
                                 {
@@ -70,7 +75,7 @@ const UploadImg = (props) => {
                         >
       <Upload
         //action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-        //fileList={fileList}
+        //fileList={props.fileList}
         beforeUpload={() => false}
         listType="picture-card"
         onPreview={handlePreview}
@@ -78,7 +83,7 @@ const UploadImg = (props) => {
         {...props.inputUpload.upload}
         //maxCount={2}
       >
-        {fileList.length > props.inputUpload.maxCount ? null : uploadButton}
+        {props.fileList.length > props.inputUpload.maxCount ? null : uploadButton}
       </Upload>
       </Form.Item>
       {previewImage && (

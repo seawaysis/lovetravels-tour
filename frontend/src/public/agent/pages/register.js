@@ -5,7 +5,7 @@ import axios from '../../../routers/axios';
 import { useNavigate } from 'react-router-dom';
 import LocalStorages from '../../../services/localStorages'
 
-import Upload from './upload'
+import Upload from '../components/upload'
 import '../allStyle.css';
 
 const layout = {
@@ -209,7 +209,7 @@ function Register(props) {
                             }}/>
                         </Form.Item>
                         
-                        <Upload setFileListFromRegis={setFileList} inputUpload={{formItem : {name:'payment',label:'QRcode Payment'},upload: {maxCount: 1}}}/>
+                        <Upload fileList={fileList} setFileList={setFileList} inputUpload={{formItem : {name:'payment',label:'QRcode Payment'},upload: {maxCount: 1}}}/>
                         <Row justify="end">
                             <Col span={5}><Button onClick={toLogin} className="Button button_link_style" htmlType="button" size="large" type="link">Sign in</Button></Col>
                             <Col span={5}><Button className="Button button_style " type="primary" size="large" htmlType="submit">

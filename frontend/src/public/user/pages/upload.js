@@ -11,7 +11,7 @@ const getBase64 = (file) =>
 const UploadImg = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
-  const [fileList, setFileList] = useState([]);
+  //const [fileList, setFileList] = useState([]);
   let arrImg = []
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -20,7 +20,7 @@ const UploadImg = (props) => {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
-  //const handleChange = ({ fileList: newFileList }) => {setFileList(newFileList); props.setFileListFromRegis(newFileList[0])} ;
+  //const handleChange = ({ fileList: newFileList }) => {setFileList(newFileList); props.setFileList(newFileList[0])} ;
   const uploadButton = (
     <button
       style={{
@@ -40,7 +40,7 @@ const UploadImg = (props) => {
     </button>
   );
   const handleChange = (e) => {
-        arrImg = fileList
+        arrImg = props.fileList
         const checkL = arrImg.length
         if(checkL <= 0){
           arrImg.push(e)
@@ -52,18 +52,16 @@ const UploadImg = (props) => {
           });
           if(checkL === arrImg.length){arrImg.push(e)}
         }
-        setFileList(arrImg)
-        props.setFileListFromRegis(arrImg)
+        //setFileList(arrImg)
+        props.setFileList(arrImg)
     }
   return (
     <>
     <Form.Item
-                            //name="payment"
-                            //label="QRcode Payment"
                             {...props.inputUpload.formItem}
                             rules={[
                                 {
-                                    required: true,
+                                    required: !props.setNull ? true : false,
                                     message: 'Please upload img!',
                                 }
                             ]}
@@ -78,7 +76,7 @@ const UploadImg = (props) => {
         {...props.inputUpload.upload}
         //maxCount={2}
       >
-        {fileList.length > props.inputUpload.upload.maxCount ? null : uploadButton}
+        {props.fileList.length > props.inputUpload.maxCount ? null : uploadButton}
       </Upload>
       </Form.Item>
       {previewImage && (
