@@ -19,7 +19,7 @@ const searchPackage = async (req,res) => {
     }
     arrSearch.push(body.checkIn)
     if(body.checkOut){
-        searchSQL.searchDate = '(p.start_date <= ? AND p.end_date >= ?)';
+        searchSQL.searchDate = '(DATE(p.start_date) <= ? AND DATE(p.end_date) >= ?)';
         arrSearch.push(body.checkOut);
     }else{
         searchSQL.searchDate = 'p.start_date <= ?';

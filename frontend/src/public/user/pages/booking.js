@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import {Row,Col,Divider,Empty} from 'antd';
+import {Row,Col,Image,Divider,Empty} from 'antd';
 import { useSelector,useDispatch } from 'react-redux';
 import Title from 'antd/lib/typography/Title';
 
@@ -53,7 +53,7 @@ const Booking = (props)=>{
                     </Col>
             </Row>
             <Row justify="space-around" style={{marginTop : '20px'}}>
-                <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(v.price_person)}</span></Col>
+                <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(v.price_person)}</span><Image style={{marginTop : '20px',height: '200px'}} width={200} src={v.pic_receipt_path}/></Col>
                 <Col span={8} style={{textAlign: 'right'}}><span className="text_main">Sum Price</span><br /><span className="price_discount">{formatMoney(v.price_person*v.amount)}</span><br /><span className="price" style={{fontSize : '18px'}}>{formatMoney((v.price_person*v.amount)*v.discount/100)}</span><br /><span className="price_sum">{formatMoney((v.price_person*v.amount)-((v.price_person*v.amount)*v.discount/100))}</span><br /><span className="sub_description"> * text includes</span></Col>
             </Row>
         </Col>

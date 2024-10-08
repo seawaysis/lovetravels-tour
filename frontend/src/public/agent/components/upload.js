@@ -12,13 +12,13 @@ const UploadImg = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   //const [fileList, setFileList] = useState([]);
-  // useEffect(() => {
-  //   console.log(previewImage+' '+previewOpen);
-  //   if(props.fileList.length === 0){
-  //     setPreviewImage('');
-  //     setPreviewOpen(false);
-  //   }
-  // },[props.fileList]);
+  useEffect(() => {
+    console.log(previewImage+' '+previewOpen);
+    if(props.fileList.length === 0){
+      setPreviewImage('');
+      setPreviewOpen(false);
+    }
+  },[props.fileList]);
   let arrImg = []
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {

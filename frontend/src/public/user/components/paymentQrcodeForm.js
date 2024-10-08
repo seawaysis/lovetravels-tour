@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { useNavigate } from 'react-router-dom';
-import {Row,Col,Divider,Form,Button,notification} from "antd";
+import {Row,Col,Form,Button,notification} from "antd";
 import axios from "axios";
 
 import Upload from "../components/upload";

@@ -9,12 +9,13 @@ const today = () => {
     
     const arr = today.split(' ') // dd/mm/yyyy hh:ii:ss
     const getDate = arr[0].split('/') 
-    const format = {
+     const format = {
+        microtime: new Date().getTime(),
         normal: `${parseInt(getDate[2]) - 543}-${formatData(getDate[1])}-${formatData(getDate[0])} ${arr[1]}`,
         thai: `${getDate[2]}-${formatData(getDate[1])}-${formatData(getDate[0])} ${arr[1]}`
     }
 
-    return  format.thai;
+    return  format;
 }
 const countDay = (arrDate) => {
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
