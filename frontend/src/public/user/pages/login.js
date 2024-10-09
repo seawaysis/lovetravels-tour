@@ -2,11 +2,11 @@ import React from 'react';
 import { Form, Input, Button, Flex, Row, Col, Divider, notification } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import axios from '../../../routers/axios';
-import LocalStorages from '../../../services/localStorages'
+import LocalStorages from '../../../services/localStorages';
 import { useNavigate } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux'
-import { updateRole } from '../../../services/store/Reducer'
+import { useDispatch } from 'react-redux';
+import { updateRole } from '../../../services/store/Reducer';
 
 import '../allStyle.css';
 const layout = {
@@ -24,6 +24,7 @@ function Login(props) {
         }
         axios.post("user/login",body).then(res => {
                 notification.success({
+                    placement: 'bottomRight',
                     message: `Login successfully by ${values.email}`
                 });
                 LocalStorages.removeToken(['accessToken','refreshToken']);
@@ -41,6 +42,7 @@ function Login(props) {
         ).catch(
             err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `status : ${err.response.status} fail message : ${err.response.data.message}`
                 });
             }

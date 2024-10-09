@@ -33,6 +33,7 @@ function Register(props) {
            formData.append('payment',fileList[i])
         }
         notification.warning({
+                    placement: 'bottomRight',
                     message: `Register Progress`,
                     showProgress: true,
                 });
@@ -41,6 +42,7 @@ function Register(props) {
                 LocalStorages.removeToken('all')
                 LocalStorages.setToken(res.data)
                 notification.success({
+                    placement: 'bottomRight',
                     message: `Register successfully by ${values.email}`
                 });
                navigate("/agent/confirm_email");
@@ -48,6 +50,7 @@ function Register(props) {
         ).catch(
             err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `Register fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }

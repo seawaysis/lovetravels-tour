@@ -69,6 +69,22 @@ const formConfirmEmail = () => {
     .isLength({min:8,max:8}).withMessage('The OTP length is 8 number')
   ]
 }
+const formUpdateInfo = () => {
+  return [
+    body('email').trim().not().isEmpty().withMessage('Invalid Email does not Empty')
+    .isEmail().withMessage('Invalid Email Address')
+    .exists({checkFalsy: true}).withMessage('You must type a email'),
+    body('password').trim().not().isEmpty().withMessage('Invalid Password does not Empty')
+    .isLength({min:5}).withMessage('The minimum password length is 5 characters')
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/).withMessage('The Password must have lowwerletter,upperletter,number least once')
+    .exists({checkFalsy: true}).withMessage('You must type a password'),
+    body('confirm').trim().not().isEmpty().withMessage('Invalid Password does not Empty')
+    .isLength({min:5}).withMessage('The minimum password length is 5 characters')
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/).withMessage('The Password must have lowwerletter,upperletter,number least once')
+    .exists({checkFalsy: true}).withMessage('You must type a password')
+    .custom((value, {req}) => value === req.body.password).withMessage("The passwords do not match"),
+  ]
+}
 const formSearchPackage = () => {
   return [
     body('search').matches(/^[a-zA-Z0-9ก-๛ ]*$/).withMessage('Not allow special characters'),
@@ -104,6 +120,7 @@ module.exports = {
     formLogin,
     formRegis,
     formConfirmEmail,
+    formUpdateInfo,
     formSearchPackage,
     formBooking,
     validationForm,

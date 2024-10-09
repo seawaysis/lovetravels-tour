@@ -28,6 +28,7 @@ function Login(props) {
                 navigate("/agent/confirm_email");
             }else{
                 notification.success({
+                    placement: 'bottomRight',
                     message: `Login successfully by ${values.user}`
                 });
                 LocalStorages.removeToken('all')
@@ -40,6 +41,7 @@ function Login(props) {
             err => {
                 console.log(err)
                 notification.error({
+                    placement: 'bottomRight',
                     message: `status : ${err.response.status} fail message : ${err.response.data.message}`
                 });
             }

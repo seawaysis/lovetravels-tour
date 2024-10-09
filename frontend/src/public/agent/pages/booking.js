@@ -26,10 +26,12 @@ const Booking = ()=>{
         axios.post('agent/change_status_booking',values).then(res => {
             dispatch(agentThunks.getAllBooking());
              notification.success({
+                    placement: 'bottomRight',
                     message: `Change status ${values.id} successfully !!`
                 });
         }).catch(err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `status : ${err.response.status} fail message : ${err.response.data.message}`
                 });
             }

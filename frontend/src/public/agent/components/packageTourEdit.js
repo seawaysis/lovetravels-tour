@@ -45,6 +45,7 @@ function EditPackageTour(props) {
             setPicPath(checkboxPic);
         } catch (err) {
             notification.error({
+                placement: 'bottomRight',
                 message: `Edit Package fail status : ${err.response?.status} Message : ${err.response?.data?.message || err.message}`,
             });
         }
@@ -74,6 +75,7 @@ function EditPackageTour(props) {
            formData.append('pic_package',fileList[i])
         }
         notification.warning({
+                    placement: 'bottomRight',
                     message: `Edit Package Progress`,
                     showProgress: true,
                 });
@@ -83,12 +85,14 @@ function EditPackageTour(props) {
                 getEditPackageTour();
                 setFileList([]);
                 notification.success({
+                    placement: 'bottomRight',
                     message: `Edit Package successfully`
                 });
             }
         ).catch(
             err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `Edit Package fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }

@@ -41,6 +41,7 @@ function AppMenu({isInline=false}){
         LocalStorages.removeToken('all');
         dispatch(updateRole('user'))
         notification.success({
+                    placement: 'bottomRight',
                     message: `Logout successfully !!`
                 });
         navigate("/user/login");

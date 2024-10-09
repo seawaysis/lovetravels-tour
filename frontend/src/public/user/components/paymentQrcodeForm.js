@@ -31,6 +31,7 @@ function PaymentQrcodeForm (props) {
         axios.post('user/create_booking',formData).then(
             res => {
                 notification.success({
+                    placement: 'bottomRight',
                     message: `Booking successfully by`
                 });
                navigate("/user/booking");
@@ -38,6 +39,7 @@ function PaymentQrcodeForm (props) {
         ).catch(
             err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `Booking fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }

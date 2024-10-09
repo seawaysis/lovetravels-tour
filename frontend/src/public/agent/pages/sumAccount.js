@@ -21,12 +21,14 @@ function SumAccount (){
                 console.log(res.data);
                 setDataSource(res.data);
                 notification.success({
+                    placement: 'bottomRight',
                     message: `Search successfully`
                 });
             }
         ).catch(
             err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `Search fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }

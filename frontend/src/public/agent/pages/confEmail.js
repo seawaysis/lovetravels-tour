@@ -22,6 +22,7 @@ function ConfEmail() {
         axios.post("agent/confirm_email",formData)
         .then(res => {
             notification.success({
+                    placement: 'bottomRight',
                     message: `confirm OTP successfully`
                 });
             LocalStorages.removeToken('all')
@@ -30,6 +31,7 @@ function ConfEmail() {
             navigate("/agent/booking");
         }).catch(err => {
               notification.error({
+                    placement: 'bottomRight',
                     message: `Register fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });  
         })
@@ -43,6 +45,7 @@ function ConfEmail() {
     };
     const resendOTP = () =>{
         notification.warning({
+                    placement: 'bottomRight',
                     message: `Resend OTP Progress`,
                     showProgress: true,
                 });
@@ -50,10 +53,12 @@ function ConfEmail() {
             LocalStorages.removeToken('all')
             LocalStorages.setToken(res.data)
             notification.success({
+                    placement: 'bottomRight',
                     message: `confirm OTP successfully`
                 });
         }).catch(err => {
             notification.error({
+                    placement: 'bottomRight',
                     message: `Resend fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });  
             if(err.response.status === 401){navigate("/agent/login");}

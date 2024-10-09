@@ -18,6 +18,8 @@ axios.interceptors.request.use(
                 {'auth_token' : {headers: {authorization : `Bearer ${token.refreshToken}`}}},
                 {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
                 {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
+                {'person_info' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
+                {'update_person_info' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
             ],
             'agent':[
                 {'login' : {headers: {'Content-Type': 'application/json'}}},
@@ -33,6 +35,7 @@ axios.interceptors.request.use(
                 {'change_status_booking' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
                 {'change_status_package' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
                 {'summary_account' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
+                {'agent_info' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
             ]
         }
             arrPath[urlSplit[0]].forEach((v) => {

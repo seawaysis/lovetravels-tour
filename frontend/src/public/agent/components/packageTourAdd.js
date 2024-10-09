@@ -41,6 +41,7 @@ function AddPackageTour(props) {
            formData.append('pic_package',fileList[i])
         }
         notification.warning({
+                    placement: 'bottomRight',
                     message: `Add Package Progress`,
                     showProgress: true,
                 });
@@ -49,6 +50,7 @@ function AddPackageTour(props) {
             res => {
                 console.log(res)
                 notification.success({
+                    placement: 'bottomRight',
                     message: `Add Package successfully`
                 });
                 props.setView(null);
@@ -57,6 +59,7 @@ function AddPackageTour(props) {
         ).catch(
             err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `Add Package fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }

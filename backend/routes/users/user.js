@@ -28,8 +28,10 @@ const uploadSlip = multer({ storage:storageSlip,fileFillter });
 
 router.post('/login',Middlewares.formLogin(),Middlewares.validationForm,userControllers.loginUser);
 router.post('/register',Middlewares.formRegis(),Middlewares.validationForm,userControllers.registerUser);
+router.get('/person_info',Middlewares.checkAccessToken,userControllers.personIfo);
 router.post('/search_package',Middlewares.formSearchPackage(),Middlewares.validationForm,packageControllers.searchPackage);
 router.post('/confirm_email',Middlewares.checkRefreshToken,Middlewares.formConfirmEmail(),Middlewares.validationForm,userControllers.confEmailUser);
+router.patch('/update_person_info',Middlewares.checkAccessToken,Middlewares.formUpdateInfo(),Middlewares.validationForm,userControllers.updatePersonInfo);
 router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTPUser);
 
 router.get('/auth_token',Middlewares.checkRefreshToken,userControllers.authToken);

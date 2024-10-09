@@ -19,11 +19,13 @@ function PackageTourShow(props) {
       res => {
         dispatch(agentThunks.getPackage());
         notification.success({
+                    placement: 'bottomRight',
                     message: `Change status ${values.id} successfully !!`
                 });
       }
     ).catch(err => {
                 notification.error({
+                    placement: 'bottomRight',
                     message: `status : ${err.response.status} fail message : ${err.response.data.message}`
                 });
             }

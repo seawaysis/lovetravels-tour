@@ -41,6 +41,7 @@ function AppMenu({isInline=false}){
         console.log('test')
         dispatch(updateRole('user'))
         notification.success({
+                    placement: 'bottomRight',
                     message: `Logout successfully !!`
                 });
         navigate("/agent/login");

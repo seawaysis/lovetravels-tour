@@ -10,6 +10,12 @@ import formatMoney from '../formatMoney';
 function PackageSearch (props){
     const dateFormat = "YYYY-MM-DD";
     const [body,setBody] = useState({});
+    const [fieldsSearch,setFieldsSearch] = useState([
+                            {name : ["search"],value : props.dataSearch.search? props.dataSearch.search : body.search},
+                            {name : ["checkIn"],value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs()},
+                            {name : ["checkOut"],value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs().add(2, 'day')},
+                            {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : body.amount}
+                        ]);
     const onFinish = values => {
         const getBody = {
             search : values.search ? values.search : null,
@@ -20,6 +26,12 @@ function PackageSearch (props){
         setBody(prevBody => ({
             ...prevBody,...getBody
         }));
+        setFieldsSearch([
+                            {name : ["search"],value : getBody.search},
+                            {name : ["checkIn"],value : dayjs(getBody.checkIn,dateFormat)},
+                            {name : ["checkOut"],value : dayjs(getBody.checkOut,dateFormat)},
+                            {name : ["amount"],value : getBody.amount}
+                        ]);
         refetch(getBody);
     }
     const refetch = async (body) => {
@@ -46,24 +58,7 @@ function PackageSearch (props){
                         span={24}
                         onFinish={onFinish}
                         style={{ width: "100%" }}
-                        fields={[
-                            {
-                                name : ["search"],
-                                value : props.dataSearch.search? props.dataSearch.search : body.search
-                            },
-                            {
-                                name : ["checkIn"],
-                                value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs()
-                            },
-                            {
-                                name : ["checkOut"],
-                                value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs().add(2, 'day')
-                            },
-                            {
-                                name : ["amount"],
-                                value : props.dataSearch.amount? props.dataSearch.amount : body.amount
-                            }
-                        ]}
+                        fields={fieldsSearch}
                     >
                         <span className="label_style">Search</span>
                         <Form.Item

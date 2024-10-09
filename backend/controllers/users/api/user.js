@@ -56,6 +56,41 @@ const registerUser = async (req,res) => {
         return status.error ? res.status(400).send({message : status.error}) : res.status(201).send({confirmToken:confEncoded,message: 'Register successfully !!'})
     }
 }
+const personIfo = async (req,res) => {
+    const reDecoded = req.decodeToken;
+    const result = await sequelize.query('SELECT email FROM member WHERE email = ?', {
+                replacements: [reDecoded.email],
+                type: QueryTypes.SELECT,
+            });
+            if (!Object.keys(result).length){
+                res.status(400).send({message :`member not found !!`});
+            }else{
+                res.status(200).send({email : result[0].email});
+            }
+}
+const updatePersonInfo = async (req,res) => {
+    const reDecoded = req.decodeToken;
+    const body = req.body;
+    const datetime = dateTime.today();
+    const result = await sequelize.query('SELECT email FROM member WHERE email = ?', {
+                replacements: [reDecoded.email],
+                type: QueryTypes.SELECT,
+            });
+            if (!Object.keys(result).length){
+                res.status(400).send({message :`member not found !!`});
+            }else{
+                const encoded = await encryptToken.encoded({email: body.email,typeRole: 'member'});
+                const reEncoded = await encryptToken.reEncoded({email: body.email,typeRole: 'member'});
+                const update = await db.Member.update({
+                        email: body.email,
+                        password : bcryptjs.hashSync(body.confirm,bcryptjs.genSaltSync(12)),
+                        update_date : datetime.normal
+                    },{
+                        where: {email:result[0].email}
+                    }).then(res => {return res}).catch(err => {return {error : err}});
+                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'member',message: 'Update person info successfully !!'});
+            }
+}
 const confEmailUser = async (req,res) => {
         const body = req.body;
         const reDecoded = req.decodeToken;
@@ -124,6 +159,8 @@ function getOTPNum(numLenght){
 module.exports = {
     loginUser,
     registerUser,
+    personIfo,
+    updatePersonInfo,
     confEmailUser,
     resendOTPUser,
     authToken

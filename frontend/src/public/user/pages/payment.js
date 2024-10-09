@@ -19,7 +19,7 @@ function Confirm_payment () {
     //     }));
 
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
-     const tabsBar = [
+    const tabsBar = [
     {
         key: '1',
         label: 'QRcode Payment',
