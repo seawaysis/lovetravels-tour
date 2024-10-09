@@ -15,7 +15,7 @@ function PackageTourShow(props) {
   },[dispatch]);
   const {agentPackage} = useSelector((state) => state.AgentPackage);
   const statusChange = (values) => {
-    axios.post('agent/change_status_package',values).then(
+    axios.patch('agent/change_status_package',values).then(
       res => {
         dispatch(agentThunks.getPackage());
         notification.success({

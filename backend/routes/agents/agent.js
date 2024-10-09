@@ -46,7 +46,7 @@ router.post('/edit_package',uploadPackage.array('pic_package',5),Middlewares.che
 router.get('/once_package/:id',Middlewares.checkAccessToken,Middlewares.paramIdPackageTour(),Middlewares.validationForm,packageControllers.oncePackageTour);
 router.get('/all_package',Middlewares.checkAccessToken,packageControllers.allPackagtTour);
 router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBooking);
-router.post('/change_status_booking',Middlewares.checkAccessToken,Middlewares.changeStatusBooking(),Middlewares.validationForm,bookingControllers.changeStatusBooking);
-router.post('/change_status_package',Middlewares.checkAccessToken,Middlewares.changeStatusPackage(),Middlewares.validationForm,packageControllers.changeStatusPackage);
+router.patch('/change_status_booking',Middlewares.checkAccessToken,Middlewares.changeStatusBooking(),Middlewares.validationForm,bookingControllers.changeStatusBooking);
+router.patch('/change_status_package',Middlewares.checkAccessToken,Middlewares.changeStatusPackage(),Middlewares.validationForm,packageControllers.changeStatusPackage);
 router.post('/summary_account',Middlewares.checkAccessToken,Middlewares.formSummaryAccount(),Middlewares.validationForm,accountControllers.summaryAccount);
 module.exports = router;

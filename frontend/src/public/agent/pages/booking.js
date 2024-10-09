@@ -14,6 +14,7 @@ const Booking = ()=>{
        dispatch(agentThunks.getAllBooking());
     }, [dispatch]);
     const { allBooking } = useSelector((state) => state.AgentBooking);
+    console.log(allBooking);
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     
     const arrStatusTag = {
@@ -23,7 +24,7 @@ const Booking = ()=>{
         refunded : {class : 'tag_refunded'}
     };
     const statusChange = (values) => {
-        axios.post('agent/change_status_booking',values).then(res => {
+        axios.patch('agent/change_status_booking',values).then(res => {
             dispatch(agentThunks.getAllBooking());
              notification.success({
                     placement: 'bottomRight',
