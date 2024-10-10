@@ -25,10 +25,17 @@ function ConfEmail() {
                     placement: 'bottomRight',
                     message: `confirm OTP successfully`
                 });
-            LocalStorages.removeToken('all')
+            LocalStorages.removeToken(['accessToken','refreshToken','confirmToken'])
             LocalStorages.setToken(res.data)
             dispatch(getRole())
-            navigate("user/search");
+            const result = LocalStorages.getToken('tempBooking');
+                setTimeout(() => {
+                    if(result.tempBooking){
+                        navigate("/user/payment");
+                    }else{
+                        navigate("/user/search");
+                    }
+                },50);
         }).catch(err => {
               notification.error({
                     placement: 'bottomRight',
@@ -50,7 +57,7 @@ function ConfEmail() {
                     showProgress: true,
                 });
         axios.get("user/resend_otp").then(res => {
-            LocalStorages.removeToken('all')
+            LocalStorages.removeToken(['confirmToken'])
             LocalStorages.setToken(res.data)
             notification.success({
                     placement: 'bottomRight',
@@ -94,10 +101,10 @@ function ConfEmail() {
                         <Input.OTP length={8} {...sharedProps} />
                         </Form.Item>
                             <Row style={{float: 'right'}}>
-                            <Button onClick={resendOTP} className="Button button_link_style" htmlType="button" size="large" type="link">  Resend OTP</Button>
-                            <Button className="Button button_style " type="primary" size="large" htmlType="submit">
+                            <Col span={12}><Button onClick={resendOTP} className="Button button_link_style" htmlType="button" size="large" type="link">  Resend OTP</Button></Col>
+                            <Col span={12}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
                                 Confirm OTP
-                            </Button>
+                            </Button></Col>
                             </Row>
                     </Form>
             </Col>

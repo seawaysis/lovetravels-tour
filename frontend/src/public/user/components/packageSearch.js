@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Row,Col,Form,Input,InputNumber,Button,DatePicker, Empty, Divider} from 'antd'
+import {Row,Col,Form,Input,InputNumber,Button,DatePicker, Empty, Divider,notification} from 'antd'
 import axios from 'axios';
 import dayjs from 'dayjs';
 
@@ -37,7 +37,13 @@ function PackageSearch (props){
     const refetch = async (body) => {
         if(body.checkIn){
         return await axios.post("user/search_package",body)
-            .then(res => {props.dispatch(updatePackageSearch(res.data))})
+            .then(res => {
+                props.dispatch(updatePackageSearch(res.data));
+                notification.success({
+                    placement: 'bottomRight',
+                    message: `Search successfully`
+                });
+            })
             .catch(err => {return []});
         }
     };

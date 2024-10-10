@@ -4,10 +4,10 @@ axios.defaults.baseURL = "http://localhost:8080/";
 
 axios.interceptors.request.use(
     config => {
-        const url = config.url.toLowerCase()
-        const urlSplit = url.split('/')
+        const url = config.url.toLowerCase();
+        const urlSplit = url.split('/');
         if(url.includes("user/search") || url.includes("user/detail")) return config
-        const token = LocalStorages.getAllToken()
+        const token = LocalStorages.getAllToken();
         const arrPath = {
             'user':[
                 {'login' : {headers: {'Content-Type': 'application/json'}}},

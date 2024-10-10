@@ -21,7 +21,7 @@ function Search(props) {
     return (
         <>
         <Header/> 
-        {!packageDetail.statusChange ? <PackageSearch {...arrProps}/> : <PackageDetail packageDetail={packageDetail} setPackageDetail={setPackageDetail} />}
+       {!packageDetail.statusChange ? <PackageSearch {...arrProps}/> : <PackageDetail packageDetail={packageDetail} setPackageDetail={setPackageDetail} />}
         </>
     )
 }

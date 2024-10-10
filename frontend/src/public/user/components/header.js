@@ -82,15 +82,15 @@ function AppMenu({isInline=false}){
     }
     let styleForMenu = {}
     if(isInline){
-        styleForMenu = {backgroundColor:"#7BBCB0",float: 'left'}
+        styleForMenu = {backgroundColor:"#7BBCB0",float: 'left',fontSize:"18px",marginTop: '10px'}
     }else if(role === 'member'){
-        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'380px'}
+        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'380px',fontSize:"18px",marginTop: '10px'}
     }else{
-        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'180px'}
+        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'180px',fontSize:"18px",marginTop: '10px'}
     }
     return (
         <div style={{backgroundColor:"#7BBCB0",overflow: 'auto'}}>
-            <div className='bg_color' style={{fontSize:'20px',padding:'8px 0 0 10px',marginBottom:"20px",float:'left'}}>LoveTravels</div>
+            <div className='bg_color' style={{fontSize:'25px',padding:'15px 0 0 10px',marginBottom:"15px",float:'left'}}>LoveTravels</div>
             <div className="iconMenu">
             <Divider
                 variant="dotted"

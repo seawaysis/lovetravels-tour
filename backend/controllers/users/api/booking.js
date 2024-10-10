@@ -2,6 +2,10 @@ const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
+const omise = require('omise')({
+    secretKey: process.env.OMISE_SECRET_KEY,
+    omiseVersion: '2019-05-29'
+});
 
 const allBooking = async (req,res) => {
     const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid INNER JOIN packageTour AS p ON r.package_id = p.package_id LEFT JOIN (SELECT package_id,pic_path FROM gallery GROUP BY package_id ORDER BY update_date DESC) AS g ON r.package_id = g.package_id WHERE m.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;

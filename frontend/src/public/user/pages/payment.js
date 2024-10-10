@@ -1,9 +1,10 @@
-import React,{ useState} from "react";
+import React,{ useEffect, useState} from "react";
 import {Row,Col,Tabs,Divider} from 'antd'
 import LocalStorages from '../../../services/localStorages';
 
 import Header from '../components/header';
 import PaymentQrcodeForm from '../components/paymentQrcodeForm';
+import PaymentCreditCard from "../components/paymentCreditCard";
 
 import formatMoney from '../formatMoney';
 import '../allStyle.css';
@@ -14,9 +15,9 @@ function Confirm_payment () {
         return result.tempBooking ? JSON.parse(result.tempBooking) : null;
     }
     const [items, setItems] = useState(setDetail());
-    //     setItems(prevItems => ({
-    //         ...prevItems,...JSON.parse(result.tempBooking)
-    //     }));
+    // useEffect(() => {
+    //     setItems();
+    // },[]);
 
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     const tabsBar = [
@@ -28,7 +29,7 @@ function Confirm_payment () {
     {
         key: '2',
         label: 'Credit Card',
-        children: 'creditcard is coming soon',
+        children: <PaymentCreditCard item={items} />,
     }
     ];
     const arrPrice = {

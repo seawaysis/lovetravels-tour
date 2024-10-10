@@ -27,7 +27,7 @@ function Register(props) {
                 });
         axios.post('user/register',body).then(
             res => {
-                LocalStorages.removeToken('all')
+                LocalStorages.removeToken(['accessToken','refreshToken'])
                 LocalStorages.setToken(res.data)
                 notification.success({
                     placement: 'bottomRight',
@@ -125,10 +125,10 @@ function Register(props) {
                             <Input.Password />
                         </Form.Item>
                         <Row style={{float: 'right'}}>
-                            <Button onClick={toLogin} className="Button button_link_style" htmlType="button" size="large" type="link">Sign in</Button>
-                            <Button className="Button button_style " type="primary" size="large" htmlType="submit">
+                            <Col span={10}><Button onClick={toLogin} className="Button button_link_style" htmlType="button" size="large" type="link">Sign in</Button></Col>
+                            <Col span={14}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
                                 Register
-                            </Button>
+                            </Button></Col>
                         </Row>
                     </Form>
                 </div>

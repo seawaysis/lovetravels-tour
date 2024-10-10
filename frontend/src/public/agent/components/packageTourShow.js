@@ -72,13 +72,13 @@ function PackageTourShow(props) {
                     <div className='header_sub'>End Date : <br /><span className='value_style'>{v.end_date}</span></div>
                   </Col>
                   <Col span={9} offset={2} >
-                    <div className='header_sub'>Price Per Person : <span className='price'>{formatMoney(v.price_person)}</span> Baht</div>
+                    <div className='header_sub'>Price Per Person : <br /><span className='price'>{formatMoney(v.price_person)}</span> Baht</div>
                   </Col>
                   <Col span={5} offset={1} >
-                    <div className='header_sub'>discount : <span className='value_style'>{v.discount}</span> %</div>
+                    <div className='header_sub'>discount : <br /><span className='value_style'>{v.discount}</span> %</div>
                   </Col>
                   <Col span={6} offset={1} >
-                    <div className='header_sub'>Net Price : <span className='price_sum'>{formatMoney(parseInt(v.price_person) - (parseFloat(v.price_person)*parseInt(v.discount)/100))}</span> Baht</div>
+                    <div className='header_sub'>Net Price : <br /><span className='price_sum'>{formatMoney(parseInt(v.price_person) - (parseFloat(v.price_person)*parseInt(v.discount)/100))}</span> Baht</div>
                   </Col>
                   <Col span={10} offset={2}>
                     <div className='header_sub'>Days Trip : <span className='value_style'>{v.days_trip}</span> Days</div>
