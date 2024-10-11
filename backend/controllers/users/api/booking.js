@@ -69,18 +69,18 @@ const PayCreditCard = async(req,res) => {
         security_code: body.cvv
         }});
 
-        const customer = await Omise.customers.create({
-            email: reDecoded.email,
-            description: body.holderName,
-            card: token.id
-        });
+        // const customer = await Omise.customers.create({
+        //     email: reDecoded.email,
+        //     description: body.holderName,
+        //     card: token.id
+        // });
         
-        const charge = await Omise.charges.create({
-            amount : body.netPrice * 100,
-            currency : 'thb',
-            customer: customer.id
-        });
-        res.status(200).send(charge);
+        // const charge = await Omise.charges.create({
+        //     amount : body.netPrice * 100,
+        //     currency : 'thb',
+        //     customer: customer.id
+        // });
+        res.status(200).send({message : 'done'});
     }catch{err => {
         res.status(400).send({message : err});
     }}
