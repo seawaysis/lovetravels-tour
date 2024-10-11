@@ -20,23 +20,23 @@ function Confirm_payment () {
     // },[]);
 
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
-    const tabsBar = [
-    {
-        key: '1',
-        label: 'QRcode Payment',
-        children: <PaymentQrcodeForm items={items}/>,
-    },
-    {
-        key: '2',
-        label: 'Credit Card',
-        children: <PaymentCreditCard item={items} />,
-    }
-    ];
     const arrPrice = {
         price : items.dataDetail.price_person*items.dataSearch.amount,
         discountPrice : (items.dataDetail.price_person*items.dataSearch.amount)*items.dataDetail.discount/100,
         netPrice : (items.dataDetail.price_person*items.dataSearch.amount)-((items.dataDetail.price_person*items.dataSearch.amount)*items.dataDetail.discount/100)
     }
+    const tabsBar = [
+    {
+        key: '1',
+        label: 'QRcode Payment',
+        children: <PaymentQrcodeForm items={items} arrPrice={arrPrice}/>,
+    },
+    {
+        key: '2',
+        label: 'Credit Card',
+        children: <PaymentCreditCard item={items} arrPrice={arrPrice}/>,
+    }
+    ];
     return (<>
     <Header />
     <Row justify="center">
