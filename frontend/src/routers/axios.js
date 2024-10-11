@@ -20,6 +20,7 @@ axios.interceptors.request.use(
                 {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
                 {'person_info' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'update_person_info' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
+                {'pay_credit_card' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
             ],
             'agent':[
                 {'login' : {headers: {'Content-Type': 'application/json'}}},

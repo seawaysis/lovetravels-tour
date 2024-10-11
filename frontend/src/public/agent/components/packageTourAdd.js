@@ -20,7 +20,6 @@ const { TextArea } = Input;
 function AddPackageTour(props) {
   const [fileList, setFileList] = useState([])
   const onFinish = values => {
-    //console.log(new Date(values.rangeDate[0]['$d']).toISOString().split('T')[0])
     const getDate = ConfigDate.adaptRangepickerDate(values.rangeDate)
     const body = {
             packageName: values.packageName,

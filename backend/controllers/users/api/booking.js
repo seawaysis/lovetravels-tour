@@ -2,7 +2,8 @@ const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
-const omise = require('omise')({
+const Omise = require('omise')({
+    publicKey: process.env.OMISE_PUBLIC_KEY,
     secretKey: process.env.OMISE_SECRET_KEY,
     omiseVersion: '2019-05-29'
 });
@@ -56,6 +57,34 @@ const createBooking = async (req,res) => {
         }
     }
 }
+const PayCreditCard = async(req,res) => {
+    const body = req.body;
+    const reDecoded = req.decodeToken;
+    try{
+        const token = await Omise.tokens.create({card : {
+        number: body.cardNumber,
+        name: body.holderName,
+        expiration_month: '09',
+        expiration_year: '2025',
+        security_code: body.cvv
+        }});
+
+        const customer = await Omise.customers.create({
+            email: reDecoded.email,
+            description: body.holderName,
+            card: token.id
+        });
+        
+        const charge = await Omise.charges.create({
+            amount : body.netPrice * 100,
+            currency : 'thb',
+            customer: customer.id
+        });
+        res.status(200).send(charge);
+    }catch{err => {
+        res.status(400).send({message : err});
+    }}
+}
 function makeid(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -69,5 +98,6 @@ function makeid(length) {
 }
 module.exports = {
     allBooking,
-    createBooking
+    createBooking,
+    PayCreditCard
 }
