@@ -7,11 +7,11 @@ module.exports = (Sequelize , DataTypes) => {
         },
         pic_path: {
             type: DataTypes.TEXT,
-            notNull: true
+            notNull: false
         },
         update_date: {
             type: DataTypes.DATE,
-            notNull: true
+            notNull: false
         },
         package_id: {
             type: DataTypes.INTEGER,

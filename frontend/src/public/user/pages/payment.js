@@ -34,7 +34,7 @@ function Confirm_payment () {
     {
         key: '2',
         label: 'Credit Card',
-        children: <PaymentCreditCard item={items} arrPrice={arrPrice}/>,
+        children: <PaymentCreditCard items={items} arrPrice={arrPrice}/>,
     }
     ];
     return (<>

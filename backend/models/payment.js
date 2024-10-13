@@ -1,38 +1,42 @@
 module.exports = (Sequelize , DataTypes) => {
     const model = Sequelize.define('Payment',{
-            id: {
+            id_paid: {
                 type: DataTypes.STRING(30),
                 primaryKey: true
             },
             amount: {
                 type: DataTypes.DECIMAL(7,2),
-                notNull: true
+                notNull: false
             },
             currency:{
                 type: DataTypes.STRING(15),
-                notNull: true
+                notNull: false
             },
             status:{
                 type: DataTypes.STRING(15),
-                notNull: true
+                notNull: false
             },
             paid_at: {
                 type: DataTypes.DATE(6),
-                notNull: true
+                notNull: false
             },
             method: {
                 type: DataTypes.STRING(20),
+                notNull: false
+            },
+            pic_receipt_path: {
+                type: DataTypes.TEXT,
                 notNull: true
             },
             booking_id: {
                 type: DataTypes.STRING(30),
                 foreignKey: true,
-                notNull: true
+                notNull: false
             },
             uid: {
                 type: DataTypes.INTEGER,
                 foreignKey: true,
-                notNull: true
+                notNull: false
             },
          },{
         tableName: 'payment',

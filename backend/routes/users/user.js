@@ -36,8 +36,8 @@ router.patch('/update_person_info',Middlewares.checkAccessToken,Middlewares.form
 router.post('/search_package',Middlewares.formSearchPackage(),Middlewares.validationForm,packageControllers.searchPackage);
 
 router.get('/auth_token',Middlewares.checkRefreshToken,userControllers.authToken);
-router.post('/create_booking',Middlewares.checkAccessToken,uploadSlip.array('slip',1),Middlewares.formBooking(),Middlewares.validationForm,bookingControllers.createBooking);
 router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBooking);
+router.post('/pay_eslip',Middlewares.checkAccessToken,uploadSlip.array('slip',1),Middlewares.formPayESlip(),Middlewares.validationForm,bookingControllers.PayESlip);
 router.post('/pay_credit_card',Middlewares.checkAccessToken,bookingControllers.PayCreditCard);
 
 module.exports = router;

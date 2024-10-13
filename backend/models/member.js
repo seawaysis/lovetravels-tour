@@ -7,20 +7,20 @@ module.exports = (Sequelize , DataTypes) => {
         },
         email: {
             type: DataTypes.STRING,
-            notNull: true,
+            notNull: false,
             unique: true
         },
         password: {
             type: DataTypes.TEXT,
-            notNull: true
+            notNull: false
         },
         conf_email: {
             type: DataTypes.TEXT,
-            notNull: true
+            notNull: false
         },
         update_date: {
             type: DataTypes.DATE,
-            notNull: true
+            notNull: false
         }
     },{
         tableName: 'member',

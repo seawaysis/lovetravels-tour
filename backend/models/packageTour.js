@@ -32,7 +32,7 @@ module.exports = (Sequelize , DataTypes) => {
         discount: {
             type: DataTypes.INTEGER(3),
             len: [0,100],
-            notNull: true
+            notNull: false
         },
         start_date: {
             type: DataTypes.DATE,

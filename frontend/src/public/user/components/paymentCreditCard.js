@@ -34,7 +34,7 @@ function PaymentCreditCard(props) {
     // }
     // const addCart = () => {
     //   OmiseCard.open({
-    //    frameDescription : props.item.dataDetail.package_name,
+    //    frameDescription : props.items.dataDetail.package_name,
     //    amount : props.arrPrice.netPrice * 100,
     //    onCreateTokenSuccess: (token) => {
     //     console.log(token)
@@ -48,8 +48,24 @@ function PaymentCreditCard(props) {
       wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
   };
 const onFinish = async(values) => {
-    values.netPrice = props.arrPrice.netPrice;
-    axios.post("user/pay_credit_card",JSON.stringify(values)).then(
+    const dataBooking = {
+        booking : {
+            netPrice : props.arrPrice.netPrice,
+            amount : props.items.dataSearch.amount,
+            pricePerson : props.items.dataDetail.price_person,
+            discount : props.items.dataDetail.discount,
+            checkIn : props.items.dataSearch.checkIn,
+            checkOut : props.items.dataSearch.checkOut,
+            packageId : props.items.dataDetail.packageId
+        },
+        payment : {
+            cardNumber : values.cardNumber,
+            holderName : values.holderName,
+            cvv : values.cvv,
+        }
+    };
+    console.log(JSON.stringify(dataBooking));
+    axios.post("user/pay_credit_card",JSON.stringify(dataBooking)).then(
             res => {
                 notification.success({
                     placement: 'bottomRight',

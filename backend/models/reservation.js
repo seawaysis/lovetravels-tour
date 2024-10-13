@@ -6,11 +6,11 @@ module.exports = (Sequelize , DataTypes) => {
         },
         amount: {
             type: DataTypes.INTEGER(3),
-            notNull: true
+            notNull: false
         },
         price_person: {
             type: DataTypes.DECIMAL(7,2),
-            notNull: true
+            notNull: false
         },
         discount: {
             type: DataTypes.INTEGER(3),
@@ -18,23 +18,19 @@ module.exports = (Sequelize , DataTypes) => {
         },
         check_in_date: {
             type: DataTypes.DATEONLY,
-            notNull: true
+            notNull: false
         },
         check_out_date: {
             type: DataTypes.DATEONLY,
-            notNull: true
+            notNull: false
         },
         status: {
             type: DataTypes.STRING(20),
-            notNull: true
-        },
-        pic_receipt_path: {
-            type: DataTypes.TEXT,
-            notNull: true
+            notNull: false
         },
         since_date: {
             type: DataTypes.DATE(6),
-            notNull: true
+            notNull: false
         },
         update_date: {
             type: DataTypes.DATE(6),
@@ -60,7 +56,7 @@ module.exports = (Sequelize , DataTypes) => {
         //model.hasOne(models.Member,{foreignKey:'uid'}) //one to one
         //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
         //model.hasMany(models.Reservation,{foreignKey:'booking_id'}) //one to many
-        model.hasMany(models.Payment,{foreignKey:'booking_id'})
+        model.hasMany(models.Payment,{foreignKey:'id'})
 
         model.belongsTo(models.Member, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
         model.belongsTo(models.PackageTour, {foreignKey: 'package_id',allowNull: false}) //one to one || one to many

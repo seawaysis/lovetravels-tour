@@ -12,31 +12,31 @@ module.exports = (Sequelize , DataTypes) => {
         },
         password: {
             type: DataTypes.TEXT,
-            notNull: true
+            notNull: false
         },
         email: {
             type: DataTypes.STRING,
-            notNull: true,
+            notNull: false,
         },
         conf_email: {
             type: DataTypes.TEXT,
-            notNull: true
+            notNull: false
         },
         company_name: {
             type: DataTypes.STRING,
-            notNull: true
+            notNull: false
         },
         tel: {
             type: DataTypes.STRING(20),
-            notNull: true
+            notNull: false
         },
         pic_payment_path: {
             type: DataTypes.TEXT,
-            notNull: true
+            notNull: false
         },
         update_date: {
             type: DataTypes.DATE,
-            notNull: true
+            notNull: false
         }
     },{
         tableName: 'agent',

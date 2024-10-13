@@ -93,7 +93,7 @@ const formSearchPackage = () => {
     body('amount').matches(/^([0-9]{1,2})*$/).withMessage('Only number'),
   ]
 }
-const formBooking = () => {
+const formPayESlip = () => {
   return [
   body('amount').matches(/^([0-9]{1,2})*$/).withMessage('Only number'),
   body('pricePerson').not().isEmpty().withMessage('Invalid price dose not empty')
@@ -114,6 +114,9 @@ const formBooking = () => {
     .exists({checkFalsy: true}).withMessage('You must type a number')
   ]
 }
+const formPayCreditCard = () => {
+  return [];
+}
 module.exports = {
     checkAccessToken,
     checkRefreshToken,
@@ -122,6 +125,7 @@ module.exports = {
     formConfirmEmail,
     formUpdateInfo,
     formSearchPackage,
-    formBooking,
+    formPayESlip,
+    formPayCreditCard,
     validationForm,
 };
