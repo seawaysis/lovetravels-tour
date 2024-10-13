@@ -28,7 +28,7 @@ function PaymentQrcodeForm (props) {
         for(let i=0;i < fileList.length;i++){
            formData.append('slip',fileList[i]);
         }
-        axios.post('user/create_booking',formData).then(
+        axios.post('user/pay_eslip',formData).then(
             res => {
                 notification.success({
                     placement: 'bottomRight',

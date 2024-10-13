@@ -30,20 +30,34 @@ const PayESlip = async (req,res) => {
     const body = req.body;
     const reDecoded = req.decodeToken;
     const datetime = dateTime.today();
-    const result = await checkPackageAndUser(res,{packageId : body.packageId,email : req.decodeToken.email});
-    if(!result[0].uid || !result[0].package_id){
-        res.status(400).send({message : 'No member or package !!'});
-    }else{
+    if(req.files[0].originalname){
+    const result = await checkPackageAndUser(res,{packageId : body.packageId,email:req.decodeToken.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
         try{
-            //req.files[0].originalname
-            body.statusBooking = 'pending';
-            const resultBooking = createBooking(body,result[0]);
-            if(!resultBooking.dataValues.booking_id){
-                res.status(400).send({message : 'Insert package fail'});
-            }else{
-                res.status(200).send({message : 'create ok !!'});
-            }
+            const dataBooking = {booking : {
+                amount: body.amount,
+                pricePerson: body.pricePerson,
+                discount : body.discount,
+                checkIn : body.checkIn,
+                checkOut : body.checkOut,
+                statusBooking : 'pending'
+            }}
+            const netPrice = ((body.pricePerson * body.amount) - (((body.pricePerson * body.amount) * body.discount)/100));
+            const resultBooking = await createBooking(res,dataBooking,result[0]).then(r => {return r;}).catch(err => {res.status(400).send({message : err});});
+            const payment = await db.Payment.create({
+                    id_paid : datetime.microtime,
+                    amount : netPrice,
+                    currency : 'thb',
+                    status : 'successful',
+                    paid_at : datetime.normal,
+                    method : 'e_slip',
+                    pic_receipt_path : req.files[0].originalname,
+                    booking_id : resultBooking.dataValues.booking_id,
+                    uid : resultBooking.dataValues.uid
+                }).then(r => {return r.id_paid ? r : res.status(400).send({message : 'Add Payment fail'});}).catch(err => {res.status(400).send({message : err})});
+                res.status(200).send({message : payment});
         }catch{err => {res.status(400).send({message : err});}}
+    }else{
+        res.status(400).send({message : 'Please upload eslip'});
     }
 }
 const PayCreditCard = async(req,res) => {
@@ -114,7 +128,7 @@ async function createBooking (res,body,dataSearch) {
     try{
     const datetime = dateTime.today();
     return await db.Reservation.create({
-                booking_id:makeid(5)+''+datetime.microtime,
+                booking_id:datetime.microtime+''+makeid(5),
                 amount:body.booking.amount,
                 price_person:body.booking.pricePerson,
                 discount:body.booking.discount,

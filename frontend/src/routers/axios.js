@@ -14,12 +14,12 @@ axios.interceptors.request.use(
                 {'register' : {headers: {'Content-Type': 'application/json'}}},
                 {'search_package' : {headers: {'Content-Type': 'application/json'}}},
                 {'all_booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
-                {'create_booking' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'multipart/form-data'}}},
                 {'auth_token' : {headers: {authorization : `Bearer ${token.refreshToken}`}}},
                 {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
                 {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
                 {'person_info' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'update_person_info' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
+                {'pay_eslip' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'multipart/form-data'}}},
                 {'pay_credit_card' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
             ],
             'agent':[
@@ -44,11 +44,6 @@ axios.interceptors.request.use(
                     Object.keys(v[urlSplit[1]]).forEach(function(k) { 
                         if(k){
                             config[k] = v[urlSplit[1]][k]
-                            // Object.keys(v[urlSplit[1]][k]).forEach(function(key) {
-                            //     if(token && key){
-                            //         config[k][key] = v[urlSplit[2]][k][key]
-                            //     }
-                            // });
                         }
                     });
                 } 
