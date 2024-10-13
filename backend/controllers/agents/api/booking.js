@@ -4,10 +4,9 @@ const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
 
 const allBooking = async (req,res) => {
-    const pathPic = `${req.protocol}://${req.get('host')}/e_slip/`;
-    const queryText = `SELECT r.*,CONCAT(?,r.pic_receipt_path) AS eSlip,p.package_name,m.email FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid INNER JOIN packageTour AS p ON r.package_id = p.package_id GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
+    const queryText = `SELECT r.*,p.package_name,m.email FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid INNER JOIN packageTour AS p ON r.package_id = p.package_id GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
     const result = await sequelize.query(queryText, {
-        replacements: [pathPic],
+        replacements: [],
         type: QueryTypes.SELECT,
     });
     if(!result){

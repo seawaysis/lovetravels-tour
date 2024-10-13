@@ -1,11 +1,13 @@
 import React,{useEffect,useState} from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import {Form,Input,Button, Row, Col,notification} from 'antd';
 
 import formatMoney from '../formatMoney';
 
 let OmiseCard
 function PaymentCreditCard(props) {
+    const navigate = useNavigate();
     useEffect(() => {
       OmiseCard = handleLoadScript();
     },[]);
@@ -64,14 +66,13 @@ const onFinish = async(values) => {
             cvv : values.cvv,
         }
     };
-    console.log(JSON.stringify(dataBooking));
     axios.post("user/pay_credit_card",JSON.stringify(dataBooking)).then(
             res => {
                 notification.success({
                     placement: 'bottomRight',
                     message: `Payment successfully`
                 });
-               //navigate("/agent/package_tour");
+               navigate("/user/booking");
             }
         ).catch(
             err => {

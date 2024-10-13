@@ -56,7 +56,7 @@ module.exports = (Sequelize , DataTypes) => {
         //model.hasOne(models.Member,{foreignKey:'uid'}) //one to one
         //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
         //model.hasMany(models.Reservation,{foreignKey:'booking_id'}) //one to many
-        model.hasMany(models.Payment,{foreignKey:'id'})
+        model.hasMany(models.Payment,{foreignKey:'booking_id'})
 
         model.belongsTo(models.Member, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
         model.belongsTo(models.PackageTour, {foreignKey: 'package_id',allowNull: false}) //one to one || one to many

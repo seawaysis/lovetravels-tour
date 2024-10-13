@@ -8,7 +8,7 @@ function PrivateRoutes(props) {
     const dispatch = useDispatch();
     //dispatch(getRole())
     useEffect(() => {dispatch(getRole())}, [dispatch]);
-    const { role } = useSelector((state) => state.Roles); 
+    const { role } = useSelector((state) => state.Roles);
     const allowedRoutes = ConfigRoutes[role].allowedRoutes;
     const redirectRoutes = ConfigRoutes[role].redirectRoutes;
   return (

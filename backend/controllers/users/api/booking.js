@@ -51,50 +51,50 @@ const PayCreditCard = async(req,res) => {
     const reDecoded = req.decodeToken;
     try{
         const result = await checkPackageAndUser(res,{packageId : body.booking.packageId,email:req.decodeToken.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
-            // const token = await Omise.tokens.create({card : {
-            //     number: body.payment.cardNumber,
-            //     name: body.payment.holderName,
-            //     expiration_month: '09',
-            //     expiration_year: '2025',
-            //     security_code: body.payment.cvv
-            // }});
+            const token = await Omise.tokens.create({card : {
+                number: body.payment.cardNumber,
+                name: body.payment.holderName,
+                expiration_month: '09',
+                expiration_year: '2025',
+                security_code: body.payment.cvv
+            }});
 
-            // const customer = await Omise.customers.create({
-            //     email: reDecoded.email,
-            //     description: body.payment.holderName,
-            //     card: token.id
-            // });
+            const customer = await Omise.customers.create({
+                email: reDecoded.email,
+                description: body.payment.holderName,
+                card: token.id
+            });
             
-            // const charge = await Omise.charges.create({
-            //     amount : body.booking.netPrice * 100,
-            //     currency : 'thb',
-            //     customer: customer.id
-            // });
-            const charge = {
-                id : 'chrg_test_61eabc3htfkxw2s8lu',
-                amount : 40000,
+            const charge = await Omise.charges.create({
+                amount : body.booking.netPrice * 100,
                 currency : 'thb',
-                status : 'successful',
-                paid : true,
-                paid_at : '2024-10-13T12:40:31Z'
-            }
+                customer: customer.id
+            });
+            // const charge = {
+            //     id : 'chrg_test_61eabc3htfkxw2s8lu',
+            //     amount : 40000,
+            //     currency : 'thb',
+            //     status : 'successful',
+            //     paid : true,
+            //     paid_at : '2024-10-13T12:40:31Z'
+            // }
             if(!charge.id){
                res.status(400).send({message : 'Payment fail Please check correct information !!'});
             }else{
                 charge.status === 'successful' ? body.booking.statusBooking = 'confirmed' : body.booking.statusBooking = 'pendding';
                 const resultBooking = await createBooking(res,body,result[0]).then(r => {return r;}).catch(err => {res.status(400).send({message : err});});
-                // const payment = await db.Payment.create({
-                //     id_paid : charge.id,
-                //     amount : charge.amount,
-                //     currency : charge.currency,
-                //     status : charge.status,
-                //     paid_at : charge.paid_at,
-                //     method : 'credit_card',
-                //     pic_receipt_path : null,
-                //     booking_id : resultBooking.booking_id,
-                //     uid : resultBooking.uid
-                // }).then(r => {return r;}).catch(err => {res.status(400).send({message : err})});
-                res.status(200).send({message : resultBooking});
+                const payment = await db.Payment.create({
+                    id_paid : charge.id,
+                    amount : charge.amount/100,
+                    currency : charge.currency,
+                    status : charge.status,
+                    paid_at : charge.paid_at,
+                    method : 'credit_card',
+                    pic_receipt_path : null,
+                    booking_id : resultBooking.dataValues.booking_id,
+                    uid : resultBooking.dataValues.uid
+                }).then(r => {return r.id_paid ? r : res.status(400).send({message : 'Add Payment fail'});}).catch(err => {res.status(400).send({message : err})});
+                res.status(200).send({message : payment});
             }
     }catch{err => {
         res.status(400).send({message : err});
@@ -125,7 +125,7 @@ async function createBooking (res,body,dataSearch) {
                 update_date:datetime.normal,
                 uid:dataSearch.uid,
                 package_id:dataSearch.package_id
-            }).then(r => {return r[0] ? r : res.status(400).send({message : r});}).catch(e => {res.status(400).send({message : e});});
+            }).then(r => {return r.booking_id ? r : res.status(400).send({message : 'Add Booking fail'});}).catch(e => {res.status(400).send({message : e});});
     }catch{
         err => {res.status(400).send({message : err})}
     }
