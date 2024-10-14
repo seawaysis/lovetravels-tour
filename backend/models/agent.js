@@ -47,9 +47,9 @@ module.exports = (Sequelize , DataTypes) => {
     model.associate = models => {
     //     //model.hasOne(models.Reservation,{foreignKey:'uid'}) //one to one
     //     //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
-        //model.hasMany(models.PackageTour,{foreignKey:{ name: 'username', field: 'username' }}) //one to many
+        //model.hasMany(models.Package_tour,{foreignKey:{ name: 'username', field: 'username' }}) //one to many
 
-    //     //model.belongsTo(models.PackageTour, {foreignKey: 'license_id',allowNull: false}) //one to one || one to many
+    //     //model.belongsTo(models.Package_tour, {foreignKey: 'license_id',allowNull: false}) //one to one || one to many
     //     //model.belongsTo(models.Reservation, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
     //     //model.belongsToMany(models.Member, {through: models.User}) //many to many
     }

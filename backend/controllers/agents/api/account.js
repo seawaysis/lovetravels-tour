@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
 
 const summaryAccount = async (req,res) => {
-    const result = await sequelize.query(`SELECT p.package_id,p.package_name,r.booking_id,r.amount,r.price_person,r.discount,((r.price_person * r.amount)) as sum_price,((r.price_person * r.amount)-((r.price_person * r.amount)*r.discount/100)) as sum_net_price FROM reservation AS r LEFT JOIN packageTour AS p ON r.package_id = p.package_id WHERE r.check_in_date >= ? AND r.check_out_date <= ? AND r.status = ? ORDER BY r.update_date DESC`, {
+    const result = await sequelize.query(`SELECT p.package_id,p.package_name,r.booking_id,r.amount,r.price_person,r.discount,((r.price_person * r.amount)) as sum_price,((r.price_person * r.amount)-((r.price_person * r.amount)*r.discount/100)) as sum_net_price FROM reservation AS r LEFT JOIN package_tour AS p ON r.package_id = p.package_id WHERE r.check_in_date >= ? AND r.check_out_date <= ? AND r.status = ? ORDER BY r.update_date DESC`, {
             replacements: [req.body.startDate,req.body.endDate,'confirmed'],
             type: QueryTypes.SELECT})
             .then(r => {return r})

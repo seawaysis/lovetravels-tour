@@ -19,7 +19,7 @@ const addPackageTour = async (req,res) => {
     if (!Object.keys(resultAgent).length){
         res.status(400).send({message : 'Agent not found '})
     }else{
-        const resultPackage = await db.PackageTour.create({
+        const resultPackage = await db.Package_tour.create({
             package_name:body.packageName,
             description:body.description,
             max_amount:body.maxPersons,
@@ -52,7 +52,7 @@ const allPackagtTour = async (req,res) => {
     const body = req.body;
     const decodeToken = req.decodeToken;
     const fullHost = `${req.protocol}://${req.get('host')}/package_tour/`;
-    const result = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,CONCAT(?,g.pic_path) AS pic_url FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? GROUP BY p.package_name ORDER BY p.package_id DESC,p.update_date DESC`, {
+    const result = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,CONCAT(?,g.pic_path) AS pic_url FROM package_tour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? GROUP BY p.package_name ORDER BY p.package_id DESC,p.update_date DESC`, {
             replacements: [fullHost,decodeToken.username],
             type: QueryTypes.SELECT})
             .then(r => {return r})
@@ -63,7 +63,7 @@ const oncePackageTour =async (req,res) => {
     const packageId = req.params.id;
     const decodeToken = req.decodeToken;
     const fullHost = `${req.protocol}://${req.get('host')}/package_tour/`;
-    const temp = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,g.pic_path,CONCAT(?,g.pic_path) AS pic_url FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?`, {
+    const temp = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,g.pic_path,CONCAT(?,g.pic_path) AS pic_url FROM package_tour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?`, {
             replacements: [fullHost,decodeToken.username,packageId],
             type: QueryTypes.SELECT})
             .then(r => {return r})
@@ -97,14 +97,14 @@ const editPackageTour = async (req,res) => {
     const pic = req.files
     const decodeToken = req.decodeToken;
     const datetime = dateTime.today();
-    const result= await sequelize.query('SELECT p.package_id,g.id,g.pic_path FROM packageTour AS p  LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?', {
+    const result= await sequelize.query('SELECT p.package_id,g.id,g.pic_path FROM package_tour AS p  LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? AND p.package_id = ?', {
         replacements: [decodeToken.username,body.packageId],
         type: QueryTypes.SELECT,
     });
     if(result.parent){
         res.status(400).json({message : temp.parent.code});
     }else{
-         const update = await db.PackageTour.update({
+         const update = await db.Package_tour.update({
                 package_name: body.packageName,
                 description : body.description,
                 days_trip : body.daysTrip,
@@ -162,14 +162,14 @@ const editPackageTour = async (req,res) => {
 const changeStatusPackage = async (req,res) => {
     const body = req.body;
     const datetime = dateTime.today();
-    const result = await sequelize.query('SELECT package_id FROM packageTour WHERE package_id = ? LIMIT ?', {
+    const result = await sequelize.query('SELECT package_id FROM package_tour WHERE package_id = ? LIMIT ?', {
                 replacements: [body.id,1],
                 type: QueryTypes.SELECT,
             });
             if (!Object.keys(result).length){
                 res.status(400).send({message :`Package tour not found !!`});
             }else{
-    const update = await db.PackageTour.update({
+    const update = await db.Package_tour.update({
                 status: body.status,
                 update_date: datetime.normal,
             },{

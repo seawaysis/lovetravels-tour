@@ -5,7 +5,7 @@ module.exports = (Sequelize , DataTypes) => {
             primaryKey: true
         },
         amount: {
-            type: DataTypes.INTEGER(3),
+            type: DataTypes.INTEGER,
             notNull: false
         },
         price_person: {
@@ -13,7 +13,7 @@ module.exports = (Sequelize , DataTypes) => {
             notNull: false
         },
         discount: {
-            type: DataTypes.INTEGER(3),
+            type: DataTypes.INTEGER,
             len: [0,100],
         },
         check_in_date: {
@@ -59,7 +59,7 @@ module.exports = (Sequelize , DataTypes) => {
         model.hasMany(models.Payment,{foreignKey:'booking_id'})
 
         model.belongsTo(models.Member, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
-        model.belongsTo(models.PackageTour, {foreignKey: 'package_id',allowNull: false}) //one to one || one to many
+        model.belongsTo(models.Package_tour, {foreignKey: 'package_id',allowNull: false}) //one to one || one to many
         //model.belongsToMany(models.Member, {through: models.User}) //many to many
     } 
     return model;

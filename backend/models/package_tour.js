@@ -1,5 +1,5 @@
 module.exports = (Sequelize , DataTypes) => {
-    const model = Sequelize.define('PackageTour',{
+    const model = Sequelize.define('Package_tour',{
         package_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -14,11 +14,11 @@ module.exports = (Sequelize , DataTypes) => {
             notNull: false
         },
         days_trip: {
-            type: DataTypes.INTEGER(2),
+            type: DataTypes.INTEGER,
             len: [1,99],
         },
         max_amount: {
-            type: DataTypes.INTEGER(4),
+            type: DataTypes.INTEGER,
             notNull: false
         },
         company_name: {
@@ -30,7 +30,7 @@ module.exports = (Sequelize , DataTypes) => {
             notNull: false
         },
         discount: {
-            type: DataTypes.INTEGER(3),
+            type: DataTypes.INTEGER,
             len: [0,100],
             notNull: false
         },
@@ -55,15 +55,15 @@ module.exports = (Sequelize , DataTypes) => {
             allowNull: false
         }
     },{
-        tableName: 'packageTour',
+        tableName: 'package_tour',
         collate: 'utf8mb4_general_ci',
         timestamps: false,
         hooks: {
             afterCreate: async (package, options) => {
-                // options.query('ALTER TABLE packageTour ADD CONSTRAINT `packageTour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE check(expression)',
+                // options.query('ALTER TABLE package_tour ADD CONSTRAINT `package_tour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE check(expression)',
                 //     {raw: false}
                 // ).then().catch()
-                console.log('packageTour check')
+                console.log('package_tour check')
             },
         },
     });

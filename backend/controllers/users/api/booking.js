@@ -10,7 +10,7 @@ const Omise = require('omise')({
 
 const allBooking = async (req,res) => {
     try{
-        const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid INNER JOIN packageTour AS p ON r.package_id = p.package_id LEFT JOIN (SELECT package_id,pic_path FROM gallery GROUP BY package_id ORDER BY update_date DESC) AS g ON r.package_id = g.package_id WHERE m.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
+        const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid INNER JOIN package_tour AS p ON r.package_id = p.package_id LEFT JOIN (SELECT package_id,pic_path FROM gallery GROUP BY package_id ORDER BY update_date DESC) AS g ON r.package_id = g.package_id WHERE m.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
         const result = await sequelize.query(queryText, {
             replacements: [req.decodeToken.email],
             type: QueryTypes.SELECT,
@@ -116,7 +116,7 @@ const PayCreditCard = async(req,res) => {
 }
 async function checkPackageAndUser (res,dataSearch) {
     try{
-        const queryText = `SELECT m.uid,p.package_id FROM member AS m ,packageTour AS p WHERE p.package_id = ? AND m.email = ? LIMIT ?`;
+        const queryText = `SELECT m.uid,p.package_id FROM member AS m ,package_tour AS p WHERE p.package_id = ? AND m.email = ? LIMIT ?`;
         return await sequelize.query(queryText, {
             replacements: [dataSearch.packageId,dataSearch.email,1],
             type: QueryTypes.SELECT,

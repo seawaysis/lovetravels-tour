@@ -3,7 +3,6 @@ services:
   db:
     container_name: db_tour
     image: mariadb:10.11.6
-    #restart: always
     environment:
       - MYSQL_ROOT_PASSWORD = ${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE = ${MYSQL_DATABASE}
@@ -25,6 +24,27 @@ services:
       PMA_HOST: db
     depends_on:
       - db
+  # db:
+  #   container_name: db_tour
+  #   image: postgres:16.2
+  #   ports:
+  #     - 5432:5432
+  #   # volumes:
+  #   #   - ~/apps/postgres:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_PASSWORD=pass_tour
+  #     - POSTGRES_USER=user_tour
+  #     - POSTGRES_DB=db_tour
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: postgres_db_tour
+  #   ports:
+  #     - "8000:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: user_tour@postgres.com
+  #     PGADMIN_DEFAULT_PASSWORD: pass_tour
+  #   depends_on:
+  #       - db
   backend:
     # image: node
     container_name: backend-nodejs-tour
@@ -55,7 +75,6 @@ services:
     depends_on:
       - db
       - backend
-
 #git command 
 #git rm [file.path] // repo and local
 #git rm --cached [file.path] // repo only

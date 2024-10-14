@@ -29,7 +29,7 @@ module.exports = (Sequelize , DataTypes) => {
         //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
         //model.hasMany(models.Reservation,{foreignKey:'booking_id'}) //one to many
 
-        model.belongsTo(models.PackageTour, {foreignKey: 'package_id',allowNull: false}) //one to one || one to many
+        model.belongsTo(models.Package_tour, {foreignKey: 'package_id',allowNull: false}) //one to one || one to many
         //model.belongsTo(models.Reservation, {foreignKey: 'uid',allowNull: false}) //one to one || one to many
         //model.belongsToMany(models.Member, {through: models.User}) //many to many
     }

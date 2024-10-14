@@ -26,7 +26,7 @@ const searchPackage = async (req,res) => {
     }
     arrSearch.push('active');
     arrSearch.push(dayTrip);
-    const queryText = `SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.price_person,p.discount,a.pic_payment_path,g.pic_path,(IFNULL(r.sum_amount,0) + ?) AS sum_amount FROM packageTour AS p INNER JOIN agent AS a ON p.company_name = a.company_name LEFT JOIN gallery AS g ON p.package_id = g.package_id LEFT JOIN (SELECT package_id,SUM(amount) AS sum_amount FROM reservation WHERE status = 'confirmed' GROUP BY package_id) AS r ON p.package_id = r.package_id WHERE ${searchSQL.searchWord} ${searchSQL.searchDate} AND p.status = ? AND p.days_trip = ? ORDER BY package_id DESC`;
+    const queryText = `SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.price_person,p.discount,a.pic_payment_path,g.pic_path,(IFNULL(r.sum_amount,0) + ?) AS sum_amount FROM package_tour AS p INNER JOIN agent AS a ON p.company_name = a.company_name LEFT JOIN gallery AS g ON p.package_id = g.package_id LEFT JOIN (SELECT package_id,SUM(amount) AS sum_amount FROM reservation WHERE status = 'confirmed' GROUP BY package_id) AS r ON p.package_id = r.package_id WHERE ${searchSQL.searchWord} ${searchSQL.searchDate} AND p.status = ? AND p.days_trip = ? ORDER BY package_id DESC`;
     const temp = await sequelize.query(queryText, {
         replacements: arrSearch,
         type: QueryTypes.SELECT,
@@ -56,7 +56,7 @@ const searchPackage = async (req,res) => {
     res.status(200).send(result);
 }
 const detailDescription = async (req,res) => {
-    const queryText = 'SELECT p.package_name,p.description,p.company_name,p.price_person,p.discount,g.pic_path,g.type FROM packageTour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.package_id = ?';
+    const queryText = 'SELECT p.package_name,p.description,p.company_name,p.price_person,p.discount,g.pic_path,g.type FROM package_tour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.package_id = ?';
     const arrSearch = [req.body.package_id];
     const result = await sequelize.query(queryText, {
         replacements: arrSearch,

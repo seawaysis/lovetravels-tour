@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/sequelize.json')[env];
+const config = require(__dirname + '/../config/mysql.json')[env];
 const db = {};
 
 let sequelize;
@@ -42,7 +42,7 @@ db.Sequelize = Sequelize;
 
 db.extradb = async (resetDB) => {
   if(resetDB.force){
-    await sequelize.query('ALTER TABLE packageTour ADD CONSTRAINT `packageTour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE',
+    await sequelize.query('ALTER TABLE package_tour ADD CONSTRAINT `package_tour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE',
       {raw: false}
     ).then().catch()
   }
