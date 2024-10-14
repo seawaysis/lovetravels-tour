@@ -1,4 +1,4 @@
-import React,{ useEffect, useState} from "react";
+import React,{ useState} from "react";
 import {Row,Col,Tabs,Divider} from 'antd'
 import LocalStorages from '../../../services/localStorages';
 
@@ -15,9 +15,6 @@ function Confirm_payment () {
         return result.tempBooking ? JSON.parse(result.tempBooking) : null;
     }
     const [items, setItems] = useState(setDetail());
-    // useEffect(() => {
-    //     setItems();
-    // },[]);
 
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     const arrPrice = {

@@ -38,6 +38,6 @@ router.post('/search_package',Middlewares.formSearchPackage(),Middlewares.valida
 router.get('/auth_token',Middlewares.checkRefreshToken,userControllers.authToken);
 router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBooking);
 router.post('/pay_eslip',Middlewares.checkAccessToken,uploadSlip.array('slip',1),Middlewares.formPayESlip(),Middlewares.validationForm,bookingControllers.PayESlip);
-router.post('/pay_credit_card',Middlewares.checkAccessToken,bookingControllers.PayCreditCard);
+router.post('/pay_credit_card',Middlewares.checkAccessToken,Middlewares.formPayCreditCard(),Middlewares.validationForm,bookingControllers.PayCreditCard);
 
 module.exports = router;

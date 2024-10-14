@@ -1,13 +1,16 @@
-import React,{useEffect} from 'react';
+import React,{ useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {Form,Input,Button, Row, Col,notification} from 'antd';
 
 import formatMoney from '../formatMoney';
+import ConfigDate from '../configDate';
 
 let OmiseCard
 function PaymentCreditCard(props) {
     const navigate = useNavigate();
+    const [countDel,setCountDel] = useState(0);
+    const [expireDate,setExpireDate] = useState([{name : ["expireCard"],value : ''}]);
     useEffect(() => {
       OmiseCard = handleLoadScript();
     },[]);
@@ -49,7 +52,24 @@ function PaymentCreditCard(props) {
       labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
       wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
   };
+const onChangeExpireDate = (_,v) => {
+    if(countDel < v.length){
+        v.length === 2 ? setExpireDate([{name : ["expireCard"],value : v+'/'}]) : setExpireDate([{name : ["expireCard"],value : v}]);
+    }else{
+        setExpireDate([{name : ["expireCard"],value : v}]);
+    }
+    setCountDel(v.length);
+
+    if(v.length === 5){
+        const arr = v.split('/');
+        const checkExpire = ConfigDate.compareExpireCard({eMonth : arr[0],eYear : arr[1]});
+        return checkExpire ? Promise.resolve() : Promise.reject(new Error('Card Expired !'));
+    }
+    //return Promise.resolve();
+    //return Promise.reject(new Error('Price must be greater than zero!'));
+}
 const onFinish = async(values) => {
+    const [eMonth, eYear] = values.expireCard.split('/');
     const dataBooking = {
         booking : {
             netPrice : props.arrPrice.netPrice,
@@ -63,6 +83,8 @@ const onFinish = async(values) => {
         payment : {
             cardNumber : values.cardNumber,
             holderName : values.holderName,
+            eMonth : eMonth,
+            eYear : '20'+eYear,
             cvv : values.cvv,
         }
     };
@@ -102,6 +124,7 @@ const onFinish = async(values) => {
                         {...layout}
                         onFinish={onFinish}
                         style={{ width: "100%" }}
+                        fields={expireDate}
                     >   
             <Form.Item
                             name="cardNumber"
@@ -134,7 +157,7 @@ const onFinish = async(values) => {
                                 }
                             ]}
                         >
-                        <Input />
+                        <Input maxLength={100} />
                         </Form.Item>
                         <Row justify="space-around">
                           <Col span={15} md={15}>
@@ -149,11 +172,12 @@ const onFinish = async(values) => {
                                     {
                                         pattern: new RegExp(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/),
                                         message: 'Not allow special characters',
-                                    }
+                                    },
+                                    { validator: onChangeExpireDate }
                                 ]}
                                 
                             >
-                            <Input maxLength={5} style={{width: '90%',float : 'right'}}/>
+                            <Input maxLength={5}  style={{width: '90%',float : 'right'}}/>
                             </Form.Item>
                           </Col>
                           <Col span={9} md={9}>
@@ -166,7 +190,7 @@ const onFinish = async(values) => {
                                         message: 'Please input your CVV',
                                     },
                                     {
-                                        pattern: new RegExp(/^[0-9]{1,3}$/),
+                                        pattern: new RegExp(/^[0-9]{3,4}$/),
                                         message: 'Not allow special characters',
                                     }
                                 ]}

@@ -19,8 +19,17 @@ const adaptRangepickerDate = (rawDate) => {
     }
     return getDate
 }
+const compareExpireCard = (arr) => {
+    const currentDate = new Date();
+    //const checkYear = currentDate.getFullYear().toString().slice(-2);
+    //console.log(currentDate.getTime()+' '+new Date(`01-${currentDate.getMonth()}-${currentDate.getFullYear()}`).getTime()+' '+new Date(`01-${arr.eMonth}-${arr.eYear}`).getTime());
+    const currentYear = new Date(`${currentDate.getFullYear()}-${parseInt(currentDate.getMonth())+1}`).getTime();
+    const expireYear = new Date(`20${arr.eYear}-${arr.eMonth}`).getTime();
+    return currentYear < expireYear ? true : false;
+}
 const configDate = {
     adaptRangepickerDate,
-    adaptpickerDate
+    adaptpickerDate,
+    compareExpireCard
 }
 export default configDate

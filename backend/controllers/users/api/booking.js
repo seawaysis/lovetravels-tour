@@ -10,20 +10,20 @@ const Omise = require('omise')({
 
 const allBooking = async (req,res) => {
     try{
-        const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid INNER JOIN package_tour AS p ON r.package_id = p.package_id LEFT JOIN (SELECT package_id,pic_path FROM gallery GROUP BY package_id ORDER BY update_date DESC) AS g ON r.package_id = g.package_id WHERE m.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
+        const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path 
+        FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid 
+        INNER JOIN package_tour AS p ON r.package_id = p.package_id 
+        LEFT JOIN (SELECT package_id,pic_path FROM gallery GROUP BY package_id ORDER BY update_date DESC) AS g ON r.package_id = g.package_id 
+        WHERE m.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
         const result = await sequelize.query(queryText, {
             replacements: [req.decodeToken.email],
             type: QueryTypes.SELECT,
-        });
-        if(!result[0].uid || !result[0].package_id){
-            res.status(200).send({message : 'No member or package !!'});
-        }else{
-            const arrPicPath = {packageTour : `${req.protocol}://${req.get('host')}/package_tour/`,e_slip : `${req.protocol}://${req.get('host')}/e_slip/`};
+        }).then(r => {return r[0] ? r : res.status(400).send({message : 'No member or package !!'});}).catch(e => {res.status(400).send({message : e});});
+        const arrPicPath = {packageTour : `${req.protocol}://${req.get('host')}/package_tour/`,e_slip : `${req.protocol}://${req.get('host')}/e_slip/`};
             for(let i =0;i < result.length;i++){
                 result[i].pic_path = arrPicPath.packageTour+''+result[i].pic_path;
             }
             res.status(200).send(result);
-        }
     }catch{err => {res.status(400).send({message : err})}}
 }
 const PayESlip = async (req,res) => {
@@ -49,6 +49,7 @@ const PayESlip = async (req,res) => {
                     currency : 'thb',
                     status : 'successful',
                     paid_at : datetime.normal,
+                    update_date : datetime.normal,
                     method : 'e_slip',
                     pic_receipt_path : req.files[0].originalname,
                     booking_id : resultBooking.dataValues.booking_id,
@@ -63,13 +64,15 @@ const PayESlip = async (req,res) => {
 const PayCreditCard = async(req,res) => {
     const body = req.body;
     const reDecoded = req.decodeToken;
+    console.log(body);
+    res.status(200).send({message : "test"});
     try{
         const result = await checkPackageAndUser(res,{packageId : body.booking.packageId,email:req.decodeToken.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
             const token = await Omise.tokens.create({card : {
                 number: body.payment.cardNumber,
                 name: body.payment.holderName,
-                expiration_month: '09',
-                expiration_year: '2025',
+                expiration_month: body.payment.eMonth,
+                expiration_year: body.payment.eYear,
                 security_code: body.payment.cvv
             }});
 
@@ -84,14 +87,6 @@ const PayCreditCard = async(req,res) => {
                 currency : 'thb',
                 customer: customer.id
             });
-            // const charge = {
-            //     id : 'chrg_test_61eabc3htfkxw2s8lu',
-            //     amount : 40000,
-            //     currency : 'thb',
-            //     status : 'successful',
-            //     paid : true,
-            //     paid_at : '2024-10-13T12:40:31Z'
-            // }
             if(!charge.id){
                res.status(400).send({message : 'Payment fail Please check correct information !!'});
             }else{
@@ -103,6 +98,7 @@ const PayCreditCard = async(req,res) => {
                     currency : charge.currency,
                     status : charge.status,
                     paid_at : charge.paid_at,
+                    update_date : charge.paid_at,
                     method : 'credit_card',
                     pic_receipt_path : null,
                     booking_id : resultBooking.dataValues.booking_id,

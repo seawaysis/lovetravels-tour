@@ -6,23 +6,27 @@ module.exports = (Sequelize , DataTypes) => {
             },
             amount: {
                 type: DataTypes.DECIMAL(7,2),
-                notNull: false
+                notNull: true
             },
             currency:{
                 type: DataTypes.STRING(15),
-                notNull: false
+                notNull: true
             },
             status:{
                 type: DataTypes.STRING(15),
-                notNull: false
+                notNull: true
             },
             paid_at: {
                 type: DataTypes.DATE(6),
-                notNull: false
+                notNull: true
+            },
+            update_date: {
+                type: DataTypes.DATE(6),
+                notNull: true
             },
             method: {
                 type: DataTypes.STRING(20),
-                notNull: false
+                notNull: true
             },
             pic_receipt_path: {
                 type: DataTypes.TEXT,
@@ -31,12 +35,12 @@ module.exports = (Sequelize , DataTypes) => {
             booking_id: {
                 type: DataTypes.STRING(30),
                 foreignKey: true,
-                notNull: false
+                notNull: true
             },
             uid: {
                 type: DataTypes.INTEGER,
                 foreignKey: true,
-                notNull: false
+                notNull: true
             },
          },{
         tableName: 'payment',
