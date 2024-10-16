@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Oct 14, 2024 at 07:13 AM
+-- Generation Time: Oct 14, 2024 at 06:05 PM
 -- Server version: 10.11.6-MariaDB-1:10.11.6+maria~ubu2204
 -- PHP Version: 8.2.8
 
@@ -103,7 +103,7 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`uid`, `email`, `password`, `conf_email`, `update_date`) VALUES
-(1, 'bank_777_777@hotmail.com', '$2a$12$8t2p32SPiADSB236MQvAXuTkGLF8GLUveyabLv3ZsH8btqx2hPFBu', '83174635', '2024-10-14 13:23:04');
+(1, 'bank_777_777@hotmail.com', '$2a$12$8t2p32SPiADSB236MQvAXuTkGLF8GLUveyabLv3ZsH8btqx2hPFBu', '83174635', '2024-10-15 00:47:28');
 
 -- --------------------------------------------------------
 
@@ -151,11 +151,20 @@ CREATE TABLE `payment` (
   `currency` varchar(15) DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL,
   `paid_at` datetime(6) DEFAULT NULL,
+  `update_date` datetime NOT NULL,
   `method` varchar(20) DEFAULT NULL,
   `pic_receipt_path` text DEFAULT NULL,
   `booking_id` varchar(30) DEFAULT NULL,
   `uid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`id_paid`, `amount`, `currency`, `status`, `paid_at`, `update_date`, `method`, `pic_receipt_path`, `booking_id`, `uid`) VALUES
+('1728893447382', 475.00, 'thb', 'successful', '2024-10-14 15:10:47.000000', '0000-00-00 00:00:00', 'e_slip', 'slip-history-05.jpg', '1728893447385xJkua', 1),
+('chrg_test_61euitgot3ur9krubdo', 475.00, 'THB', 'successful', '2024-10-15 01:02:14.000000', '2024-10-15 01:02:14', 'credit_card', NULL, '1728928931614voyJM', 1);
 
 -- --------------------------------------------------------
 
@@ -176,6 +185,14 @@ CREATE TABLE `reservation` (
   `uid` int(11) DEFAULT NULL,
   `package_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`booking_id`, `amount`, `price_person`, `discount`, `check_in_date`, `check_out_date`, `status`, `since_date`, `update_date`, `uid`, `package_id`) VALUES
+('1728893447385xJkua', 1, 500.00, 5, '2024-10-14', '2024-10-16', 'pending', '2024-10-14 15:10:47.000000', '2024-10-14 15:10:47.000000', 1, 1),
+('1728928931614voyJM', 1, 500.00, 5, '2024-10-15', '2024-10-17', 'confirmed', '2024-10-15 01:02:11.000000', '2024-10-15 01:02:11.000000', 1, 1);
 
 --
 -- Indexes for dumped tables

@@ -1,6 +1,6 @@
 
 const encryptToken = require('./encrypt');
-const {body,validationResult} = require('express-validator');
+const {body,param,validationResult} = require('express-validator');
 const checkAccessToken = async (req, res, next) => {
     if(!req.headers.authorization){
         return res.status(401).send({message : 'No authorization Token'});
@@ -44,7 +44,7 @@ const formLogin = () => {
     .isLength({min:5}).withMessage('The minimum password length is 5 characters')
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/).withMessage('The Password must have lowwerletter,upperletter,number least once')
     .exists({checkFalsy: true}).withMessage('You must type a password'),
-  ]
+  ];
 }
 const formRegis = () => {
   return [
@@ -60,14 +60,14 @@ const formRegis = () => {
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/).withMessage('The Password must have lowwerletter,upperletter,number least once')
     .exists({checkFalsy: true}).withMessage('You must type a password')
     .custom((value, {req}) => value === req.body.pass).withMessage("The passwords do not match"),
-  ]
+  ];
 }
 const formConfirmEmail = () => {
   return [
     body('otp').trim().not().isEmpty().withMessage('Invalid OTP does not Empty')
     .exists({checkFalsy: true}).withMessage('You must type a number')
     .isLength({min:8,max:8}).withMessage('The OTP length is 8 number')
-  ]
+  ];
 }
 const formUpdateInfo = () => {
   return [
@@ -83,7 +83,7 @@ const formUpdateInfo = () => {
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/).withMessage('The Password must have lowwerletter,upperletter,number least once')
     .exists({checkFalsy: true}).withMessage('You must type a password')
     .custom((value, {req}) => value === req.body.password).withMessage("The passwords do not match"),
-  ]
+  ];
 }
 const formSearchPackage = () => {
   return [
@@ -91,7 +91,15 @@ const formSearchPackage = () => {
     body('checkIn').matches(/^([0-9-]{10})*$/).withMessage('format date is invalid'),
     body('checkOut').matches(/^([0-9-]{10})*$/).withMessage('format date is invalid'),
     body('amount').matches(/^([0-9]{1,2})*$/).withMessage('Only number'),
-  ]
+  ];
+}
+const paramDetailPayment = () => {
+  return[
+    param('bookingId').not().isEmpty().withMessage('Invalid booking id dose not empty')
+    .exists({checkFalsy: true}).withMessage('type parameter Invalid')
+    .matches(/^[a-zA-Z0-9]{20}$/).withMessage('The booking id is normal character only')
+    .isLength({max:20}).withMessage('The maximum length is 20 digit')
+  ];
 }
 const formPayESlip = () => {
   return [
@@ -115,7 +123,7 @@ const formPayESlip = () => {
     body('packageId').not().isEmpty().withMessage('Invalid days_trip dose not empty')
       .matches(/^[0-9]*$/).withMessage('Only number')
       .exists({checkFalsy: true}).withMessage('You must type a number')
-  ]
+  ];
 }
 const formPayCreditCard = () => {
   return [
@@ -173,6 +181,7 @@ module.exports = {
     formConfirmEmail,
     formUpdateInfo,
     formSearchPackage,
+    paramDetailPayment,
     formPayESlip,
     formPayCreditCard,
     validationForm,

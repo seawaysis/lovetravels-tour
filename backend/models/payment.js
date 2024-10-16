@@ -32,8 +32,12 @@ module.exports = (Sequelize , DataTypes) => {
                 type: DataTypes.TEXT,
                 notNull: true
             },
+             email: {
+                type: DataTypes.STRING,
+                notNull: true
+            },
             booking_id: {
-                type: DataTypes.STRING(30),
+                type: DataTypes.STRING(20),
                 foreignKey: true,
                 notNull: true
             },

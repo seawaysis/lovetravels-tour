@@ -14,23 +14,23 @@ const loginUser = async (req,res) => {
         type: QueryTypes.SELECT,
     });
     if (!Object.keys(result).length){
-        res.status(400).json({message :`user not found !!`})
+        res.status(400).json({message :`user not found !!`});
     }else if(result[0].conf_email.length !== 8){
-            const confEncoded = await getConfirmToken(result[0].email)
-            res.status(200).send({confirmToken : confEncoded,redirect : 'confirm_email'})
+            const confEncoded = await getConfirmToken(result[0].email);
+            res.status(200).send({confirmToken : confEncoded,redirect : 'confirm_email'});
         }else{
         const dePass = bcryptjs.compareSync(body.pass,result[0].password);
         if(!dePass){
             res.status(400).send({message: "Username or Password is wrong !!"})
         }else{
-            const encoded = await encryptToken.encoded({email: result[0].email,typeRole: 'member'})
-            const reEncoded = await encryptToken.reEncoded({email: result[0].email,typeRole: 'member'})
+            const encoded = await encryptToken.encoded({email: result[0].email,typeRole: 'member'});
+            const reEncoded = await encryptToken.reEncoded({email: result[0].email,typeRole: 'member'});
             await db.Member.update({
                 update_date: datetime.normal
             },{
                 where: {uid:result[0].uid,email:result[0].email}
             })
-            res.status(200).json({accessToken: encoded,refreshToken: reEncoded,typeRole: 'member',message :`user => ${result[0].email} login OK !!`})
+            res.status(200).json({accessToken: encoded,refreshToken: reEncoded,typeRole: 'member',message :`user => ${result[0].email} login OK !!`});
         }
     }
 };
@@ -42,7 +42,7 @@ const registerUser = async (req,res) => {
         type: QueryTypes.SELECT,
     });
     if (Object.keys(result).length){
-        return res.status(400).send({message : `Have ${body.email} already !!`})
+        return res.status(400).send({message : `Have ${body.email} already !!`});
     }else{
         const numOTP = await getOTPNum(8)
         result = await db.Member.create({
@@ -51,9 +51,9 @@ const registerUser = async (req,res) => {
             conf_email: bcryptjs.hashSync(numOTP,bcryptjs.genSaltSync(12)),
             update_date: datetime.normal
         });
-        const confEncoded = await getConfirmToken(body.email)
-        const status = await email.sender({receive: body.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`})
-        return status.error ? res.status(400).send({message : status.error}) : res.status(201).send({confirmToken:confEncoded,message: 'Register successfully !!'})
+        const confEncoded = await getConfirmToken(body.email);
+        const status = await email.sender({receive: body.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`});
+        return status.error ? res.status(400).send({message : status.error}) : res.status(201).send({confirmToken:confEncoded,message: 'Register successfully !!'});
     }
 }
 const personIfo = async (req,res) => {

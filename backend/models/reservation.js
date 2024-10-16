@@ -1,7 +1,7 @@
 module.exports = (Sequelize , DataTypes) => {
     const model = Sequelize.define('Reservation',{
         booking_id: {
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING(20),
             primaryKey: true
         },
         amount: {

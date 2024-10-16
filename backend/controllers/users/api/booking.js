@@ -26,6 +26,18 @@ const allBooking = async (req,res) => {
             res.status(200).send(result);
     }catch{err => {res.status(400).send({message : err})}}
 }
+const detailPayment = async (req,res) => {
+    const bookingId = req.params.bookingId;
+    const reDecoded = req.decodeToken;
+    try{
+        const queryText = `SELECT * FROM payment WHERE email = ? AND booking_id = ?`;
+        const result = await sequelize.query(queryText, {
+            replacements: [req.decodeToken.email,bookingId],
+            type: QueryTypes.SELECT,
+        }).then(r => {return r[0] ? r : res.status(400).send({message : 'No payment transection !!'});}).catch(e => {res.status(400).send({message : e});});
+        res.status(200).send(result);
+    }catch{err => {res.status(400).send({message : err})}}
+}
 const PayESlip = async (req,res) => {
     const body = req.body;
     const reDecoded = req.decodeToken;
@@ -52,6 +64,7 @@ const PayESlip = async (req,res) => {
                     update_date : datetime.normal,
                     method : 'e_slip',
                     pic_receipt_path : req.files[0].originalname,
+                    email : result[0].email,
                     booking_id : resultBooking.dataValues.booking_id,
                     uid : resultBooking.dataValues.uid
                 }).then(r => {return r.id_paid ? r : res.status(400).send({message : 'Add Payment fail'});}).catch(err => {res.status(400).send({message : err})});
@@ -64,7 +77,6 @@ const PayESlip = async (req,res) => {
 const PayCreditCard = async(req,res) => {
     const body = req.body;
     const reDecoded = req.decodeToken;
-    console.log(body);
     res.status(200).send({message : "test"});
     try{
         const result = await checkPackageAndUser(res,{packageId : body.booking.packageId,email:req.decodeToken.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
@@ -101,6 +113,7 @@ const PayCreditCard = async(req,res) => {
                     update_date : charge.paid_at,
                     method : 'credit_card',
                     pic_receipt_path : null,
+                    email : result[0].email,
                     booking_id : resultBooking.dataValues.booking_id,
                     uid : resultBooking.dataValues.uid
                 }).then(r => {return r.id_paid ? r : res.status(400).send({message : 'Add Payment fail'});}).catch(err => {res.status(400).send({message : err})});
@@ -112,7 +125,7 @@ const PayCreditCard = async(req,res) => {
 }
 async function checkPackageAndUser (res,dataSearch) {
     try{
-        const queryText = `SELECT m.uid,p.package_id FROM member AS m ,package_tour AS p WHERE p.package_id = ? AND m.email = ? LIMIT ?`;
+        const queryText = `SELECT m.uid,m.email,,p.package_id FROM member AS m ,package_tour AS p WHERE p.package_id = ? AND m.email = ? LIMIT ?`;
         return await sequelize.query(queryText, {
             replacements: [dataSearch.packageId,dataSearch.email,1],
             type: QueryTypes.SELECT,
@@ -153,6 +166,7 @@ function makeid(length) {
 }
 module.exports = {
     allBooking,
+    detailPayment,
     PayESlip,
     PayCreditCard
 }
