@@ -11,14 +11,13 @@ const Omise = require('omise')({
 const allBooking = async (req,res) => {
     try{
         const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path 
-        FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid 
-        INNER JOIN package_tour AS p ON r.package_id = p.package_id 
+        FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id 
         LEFT JOIN (SELECT package_id,pic_path FROM gallery GROUP BY package_id ORDER BY update_date DESC) AS g ON r.package_id = g.package_id 
-        WHERE m.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
+        WHERE r.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
         const result = await sequelize.query(queryText, {
             replacements: [req.decodeToken.email],
             type: QueryTypes.SELECT,
-        }).then(r => {return r[0] ? r : res.status(400).send({message : 'No member or package !!'});}).catch(e => {res.status(400).send({message : e});});
+        }).then(r => {console.log(r);return r[0] ? r : res.status(400).send({message : 'No member or package !!'});}).catch(e => {res.status(400).send({message : e});});
         const arrPicPath = {packageTour : `${req.protocol}://${req.get('host')}/package_tour/`,e_slip : `${req.protocol}://${req.get('host')}/e_slip/`};
             for(let i =0;i < result.length;i++){
                 result[i].pic_path = arrPicPath.packageTour+''+result[i].pic_path;
@@ -146,6 +145,7 @@ async function createBooking (res,body,dataSearch) {
                 status:body.booking.statusBooking,
                 since_date:datetime.normal,
                 update_date:datetime.normal,
+                email:dataSearch.email,
                 uid:dataSearch.uid,
                 package_id:dataSearch.package_id
             }).then(r => {return r.booking_id ? r : res.status(400).send({message : 'Add Booking fail'});}).catch(e => {res.status(400).send({message : e});});

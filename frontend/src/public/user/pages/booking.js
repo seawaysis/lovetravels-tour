@@ -11,6 +11,7 @@ const Booking = (props)=>{
     const dispatch = useDispatch();
     useEffect(() => {dispatch(getAllBooking())}, [dispatch]);
     const { allBooking } = useSelector((state) => state.AgentBooking);
+    console.log(allBooking);
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     
     const arrStatusTag = {

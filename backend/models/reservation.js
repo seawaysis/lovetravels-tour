@@ -36,6 +36,10 @@ module.exports = (Sequelize , DataTypes) => {
             type: DataTypes.DATE(6),
             notNull: true
         },
+        email: {
+            type: DataTypes.STRING,
+            notNull: true
+        },
         uid: {
             type: DataTypes.INTEGER,
             foreignKey: true,
