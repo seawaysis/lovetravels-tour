@@ -1,17 +1,17 @@
 import React,{useEffect} from 'react';
-import {Row,Col,Image,Divider,Empty} from 'antd';
+import {Row,Col,Button,Divider,Empty,Switch} from 'antd';
 import { useSelector,useDispatch } from 'react-redux';
 import Title from 'antd/lib/typography/Title';
 
 import getAllBooking from '../../../services/store/userThunks';
 import Header from '../components/header';
+import BookingPaymentDetail from '../components/bookingPaymentDetail';
 import formatMoney from '../formatMoney';
 import '../allStyle.css';
 const Booking = (props)=>{
     const dispatch = useDispatch();
     useEffect(() => {dispatch(getAllBooking())}, [dispatch]);
     const { allBooking } = useSelector((state) => state.AgentBooking);
-    console.log(allBooking);
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     
     const arrStatusTag = {
@@ -20,7 +20,10 @@ const Booking = (props)=>{
         confirmed : {class : 'tag_confirmed'},
         refunded : {class : 'tag_refunded'}
     };
-    
+    const showPaymentDetail= (v) => {
+        const card = document.getElementById(`PaymentDetail_`+v.bookingId);
+        card.append(<BookingPaymentDetail arrDetail={v}/>);
+    }
     return (
     <div><Header />
     
@@ -54,8 +57,14 @@ const Booking = (props)=>{
                     </Col>
             </Row>
             <Row justify="space-around" style={{marginTop : '20px'}}>
-                <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(v.price_person)}</span><Image style={{marginTop : '20px',height: '200px'}} width={200} src={v.pic_receipt_path}/></Col>
+                <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(v.price_person)}</span></Col>
                 <Col span={8} style={{textAlign: 'right'}}><span className="text_main">Sum Price</span><br /><span className="price_discount">{formatMoney(v.price_person*v.amount)}</span><br /><span className="price" style={{fontSize : '18px'}}>{formatMoney((v.price_person*v.amount)*v.discount/100)}</span><br /><span className="price_sum">{formatMoney((v.price_person*v.amount)-((v.price_person*v.amount)*v.discount/100))}</span><br /><span className="sub_description"> * text includes</span></Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                    <Switch onChange={(value)=>showPaymentDetail({check : value,bookingId : v.booking_id})} checkedChildren="Show Payment Detail" unCheckedChildren="Hide" />
+                </Col>
+                <Row id={`PaymentDetail_`+v.booking_id} span={24}></Row>
             </Row>
         </Col>
     </Row>

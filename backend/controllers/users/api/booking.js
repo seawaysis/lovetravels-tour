@@ -25,7 +25,7 @@ const allBooking = async (req,res) => {
             res.status(200).send(result);
     }catch{err => {res.status(400).send({message : err})}}
 }
-const detailPayment = async (req,res) => {
+const paymentDetail = async (req,res) => {
     const bookingId = req.params.bookingId;
     const reDecoded = req.decodeToken;
     try{
@@ -166,7 +166,7 @@ function makeid(length) {
 }
 module.exports = {
     allBooking,
-    detailPayment,
+    paymentDetail,
     PayESlip,
     PayCreditCard
 }

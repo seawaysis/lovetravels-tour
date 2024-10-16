@@ -14,6 +14,7 @@ axios.interceptors.request.use(
                 {'register' : {headers: {'Content-Type': 'application/json'}}},
                 {'search_package' : {headers: {'Content-Type': 'application/json'}}},
                 {'all_booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
+                {'payment_detail' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'auth_token' : {headers: {authorization : `Bearer ${token.refreshToken}`}}},
                 {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
                 {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
