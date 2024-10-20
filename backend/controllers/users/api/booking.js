@@ -17,7 +17,7 @@ const allBooking = async (req,res) => {
         const result = await sequelize.query(queryText, {
             replacements: [req.decodeToken.email],
             type: QueryTypes.SELECT,
-        }).then(r => {console.log(r);return r[0] ? r : res.status(400).send({message : 'No member or package !!'});}).catch(e => {res.status(400).send({message : e});});
+        }).then(r => {return r[0] ? r : res.status(400).send({message : 'No member or package !!'});}).catch(e => {res.status(400).send({message : e});});
         const arrPicPath = {packageTour : `${req.protocol}://${req.get('host')}/package_tour/`,e_slip : `${req.protocol}://${req.get('host')}/e_slip/`};
             for(let i =0;i < result.length;i++){
                 result[i].pic_path = arrPicPath.packageTour+''+result[i].pic_path;

@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
 
 const allBooking = async (req,res) => {
-    const queryText = `SELECT r.*,p.package_name,m.email FROM reservation AS r INNER JOIN member AS m ON r.uid = m.uid INNER JOIN package_tour AS p ON r.package_id = p.package_id GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
+    const queryText = `SELECT r.*,p.package_name FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id GROUP BY r.booking_id ORDER BY r.update_date DESC`;
     const result = await sequelize.query(queryText, {
         replacements: [],
         type: QueryTypes.SELECT,

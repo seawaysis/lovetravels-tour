@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import {Row,Col,Button,Divider,Empty,Switch} from 'antd';
 import { useSelector,useDispatch } from 'react-redux';
 import Title from 'antd/lib/typography/Title';
@@ -9,20 +9,35 @@ import BookingPaymentDetail from '../components/bookingPaymentDetail';
 import formatMoney from '../formatMoney';
 import '../allStyle.css';
 const Booking = (props)=>{
-    const dispatch = useDispatch();
-    useEffect(() => {dispatch(getAllBooking())}, [dispatch]);
-    const { allBooking } = useSelector((state) => state.AgentBooking);
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
-    
     const arrStatusTag = {
         pending : {class : 'tag_pending'},
         cancelled : {class : 'tag_cancelled'},
         confirmed : {class : 'tag_confirmed'},
         refunded : {class : 'tag_refunded'}
     };
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getAllBooking());
+    }, [dispatch]);
+    const { allBooking } = useSelector((state) => state.AgentBooking);
+    const [paymentDetail,setPaymentDetail] = useState({});
+    const getInitPayment = () => {
+            const arrPaymentDetail = allBooking.map(v => {return v.booking_id}).reduce((a, v) => ({ ...a, [v]: null}), {});
+            setPaymentDetail(arrPaymentDetail);
+        }
+    
+    
     const showPaymentDetail= (v) => {
-        const card = document.getElementById(`PaymentDetail_`+v.bookingId);
-        card.append(<BookingPaymentDetail arrDetail={v}/>);
+        if(v.check === true){
+            getInitPayment()
+            const card = document.getElementById(`PaymentDetail_`+v.bookingId);
+            console.log(paymentDetail);
+            //setPaymentDetail(getInitPayment());
+            //console.log(paymentDetail)
+            //card.append(<BookingPaymentDetail arrDetail={v}/>);
+        }
     }
     return (
     <div><Header />
@@ -64,7 +79,7 @@ const Booking = (props)=>{
                 <Col span={24}>
                     <Switch onChange={(value)=>showPaymentDetail({check : value,bookingId : v.booking_id})} checkedChildren="Show Payment Detail" unCheckedChildren="Hide" />
                 </Col>
-                <Row id={`PaymentDetail_`+v.booking_id} span={24}></Row>
+                <Row id={`PaymentDetail_`+v.booking_id} span={24}><BookingPaymentDetail arrDetail={{check : true,bookingId : v.booking_id}}/></Row>
             </Row>
         </Col>
     </Row>
