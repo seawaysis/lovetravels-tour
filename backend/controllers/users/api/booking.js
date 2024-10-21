@@ -7,7 +7,6 @@ const Omise = require('omise')({
     secretKey: process.env.OMISE_SECRET_KEY,
     omiseVersion: '2019-05-29'
 });
-
 const allBooking = async (req,res) => {
     try{
         const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path 
@@ -45,7 +44,7 @@ const PayESlip = async (req,res) => {
     const reDecoded = req.decodeToken;
     const datetime = dateTime.today();
     if(req.files[0].originalname){
-    const result = await checkPackageAndUser(res,{packageId : body.packageId,email:req.decodeToken.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
+    const result = await checkPackageAndUser(res,{packageId : body.packageId,email:reDecoded.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
         try{
             const dataBooking = {booking : {
                 amount: body.amount,
@@ -79,14 +78,13 @@ const PayESlip = async (req,res) => {
 const PayCreditCard = async(req,res) => {
     const body = req.body;
     const reDecoded = req.decodeToken;
-    res.status(200).send({message : "test"});
     try{
-        const result = await checkPackageAndUser(res,{packageId : body.booking.packageId,email:req.decodeToken.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
-            const token = await Omise.tokens.create({card : {
+        const result = await checkPackageAndUser(res,{packageId : body.booking.packageId,email:reDecoded.email}).then(r => {return r}).catch(err => {res.status(400).send({message : err});});
+        const token = await Omise.tokens.create({card : {
                 number: body.payment.cardNumber,
                 name: body.payment.holderName,
                 expiration_month: body.payment.eMonth,
-                expiration_year: body.paymlent.eYear,
+                expiration_year: body.payment.eYear,
                 security_code: body.payment.cvv
             }});
 
@@ -95,7 +93,6 @@ const PayCreditCard = async(req,res) => {
                 description: body.payment.holderName,
                 card: token.id
             });
-            
             const charge = await Omise.charges.create({
                 amount : body.booking.netPrice * 100,
                 currency : 'thb',

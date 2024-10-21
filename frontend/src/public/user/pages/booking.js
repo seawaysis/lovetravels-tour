@@ -28,19 +28,18 @@ const Booking = (props)=>{
     },[allBooking]);
     const [paymentDetail,setPaymentDetail] = useState([]);
     const getInitPayment = () => {
-        const paymentList = allBooking.map(v => {return {bookingId : v.booking_id,showDetail : false}});
+        //const paymentList = allBooking.map(v => {return {bookingId : v.booking_id,showDetail : false}});
+        const paymentList = allBooking.map(v => ({bookingId : v.booking_id,showDetail : false}));
         setPaymentDetail(paymentList);
     }
     
     const showPaymentDetail= async (e) => {
-        //e.check e.bookingId
             setPaymentDetail(perv => {
                 return perv.map((v) => {
                     return {...v,showDetail:e.bookingId === v.bookingId ? e.check : v.showDetail}
                 })
             });
     }
-    console.log(paymentDetail);
     return (
     <div><Header />
     
@@ -81,7 +80,7 @@ const Booking = (props)=>{
                 <Col span={24}>
                     <Switch onChange={(value)=>showPaymentDetail({check : value,bookingId : v.booking_id})} checkedChildren="Show Payment Detail" unCheckedChildren="Hide" />
                 </Col>
-                <Row id={`PaymentDetail_`+v.booking_id} justify="center"><BookingPaymentDetail paymentDetail={paymentDetail} arrDetail={{check : true,bookingId : v.booking_id}}/></Row>
+                {paymentDetail.find((e) => e.bookingId === v.booking_id)?.showDetail ? <Row justify="center"><BookingPaymentDetail arrDetail={{bookingId : v.booking_id}}/></Row> : null}
             </Row>
         </Col>
     </Row>

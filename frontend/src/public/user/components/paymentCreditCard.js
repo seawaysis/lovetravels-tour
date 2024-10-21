@@ -88,6 +88,11 @@ const onFinish = async(values) => {
             cvv : values.cvv,
         }
     };
+    notification.warning({
+                    placement: 'bottomRight',
+                    message: `Payment Progress`,
+                    showProgress: true,
+                });
     axios.post("user/pay_credit_card",JSON.stringify(dataBooking)).then(
             res => {
                 notification.success({
