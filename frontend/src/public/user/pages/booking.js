@@ -22,21 +22,19 @@ const Booking = (props)=>{
         dispatch(getAllBooking());
     }, [dispatch]);
     const { allBooking } = useSelector((state) => state.AgentBooking);
-    const [paymentDetail,setPaymentDetail] = useState({});
+    const [paymentDetail,setPaymentDetail] = useState([]);
     const getInitPayment = () => {
-            const arrPaymentDetail = allBooking.map(v => {return v.booking_id}).reduce((a, v) => ({ ...a, [v]: null}), {});
-            setPaymentDetail(arrPaymentDetail);
+            const paymentList = allBooking.map(v => {return {bookingId : v.booking_id,showDetail : false}});
+            setPaymentDetail([...paymentDetail,paymentList]);
         }
     
     
-    const showPaymentDetail= (v) => {
+    const showPaymentDetail= async (v) => {
         if(v.check === true){
-            getInitPayment()
-            const card = document.getElementById(`PaymentDetail_`+v.bookingId);
+            if(paymentDetail.length === 0){await getInitPayment();}
             console.log(paymentDetail);
             //setPaymentDetail(getInitPayment());
             //console.log(paymentDetail)
-            //card.append(<BookingPaymentDetail arrDetail={v}/>);
         }
     }
     return (
@@ -79,7 +77,7 @@ const Booking = (props)=>{
                 <Col span={24}>
                     <Switch onChange={(value)=>showPaymentDetail({check : value,bookingId : v.booking_id})} checkedChildren="Show Payment Detail" unCheckedChildren="Hide" />
                 </Col>
-                <Row id={`PaymentDetail_`+v.booking_id} span={24}><BookingPaymentDetail arrDetail={{check : true,bookingId : v.booking_id}}/></Row>
+                <Row id={`PaymentDetail_`+v.booking_id} justify="center"><BookingPaymentDetail key={v.booking_id} paymentDetail={paymentDetail} arrDetail={{check : true,bookingId : v.booking_id}}/></Row>
             </Row>
         </Col>
     </Row>

@@ -34,6 +34,9 @@ const paymentDetail = async (req,res) => {
             replacements: [req.decodeToken.email,bookingId],
             type: QueryTypes.SELECT,
         }).then(r => {return r[0] ? r : res.status(400).send({message : 'No payment transection !!'});}).catch(e => {res.status(400).send({message : e});});
+        for(let i=0;i < result.length;i++){
+            result[i].pic_receipt_path = result[i].pic_receipt_path ? `${req.protocol}://${req.get('host')}/e_slip/`+result[i].pic_receipt_path : null;
+            }
         res.status(200).send(result);
     }catch{err => {res.status(400).send({message : err})}}
 }
@@ -57,7 +60,7 @@ const PayESlip = async (req,res) => {
             const payment = await db.Payment.create({
                     id_paid : datetime.microtime,
                     amount : netPrice,
-                    currency : 'thb',
+                    currency : 'THB',
                     status : 'successful',
                     paid_at : datetime.normal,
                     update_date : datetime.normal,

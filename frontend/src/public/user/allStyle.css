@@ -209,7 +209,14 @@ input[type]:after {
     padding : 5px 0;
     margin-bottom: 15px;
 }
-
+.card_bg .tag_payment_success{
+    color : green;
+    font-weight: bold;
+}
+.card_bg .tag_payment_fail {
+    color : red;
+    font-weight: bold;
+}
 .card_bg .package_list:hover{
     background-color: #828282 !important;
 }
