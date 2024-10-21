@@ -86,7 +86,7 @@ const PayCreditCard = async(req,res) => {
                 number: body.payment.cardNumber,
                 name: body.payment.holderName,
                 expiration_month: body.payment.eMonth,
-                expiration_year: body.payment.eYear,
+                expiration_year: body.paymlent.eYear,
                 security_code: body.payment.cvv
             }});
 
@@ -127,7 +127,7 @@ const PayCreditCard = async(req,res) => {
 }
 async function checkPackageAndUser (res,dataSearch) {
     try{
-        const queryText = `SELECT m.uid,m.email,,p.package_id FROM member AS m ,package_tour AS p WHERE p.package_id = ? AND m.email = ? LIMIT ?`;
+        const queryText = `SELECT m.uid,m.email,p.package_id FROM member AS m ,package_tour AS p WHERE p.package_id = ? AND m.email = ? LIMIT ?`;
         return await sequelize.query(queryText, {
             replacements: [dataSearch.packageId,dataSearch.email,1],
             type: QueryTypes.SELECT,

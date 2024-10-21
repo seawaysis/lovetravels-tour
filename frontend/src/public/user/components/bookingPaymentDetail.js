@@ -21,7 +21,7 @@ function BookingPaymentDetail(props) {
     dataIndex: 'status',
     key: 'status',
     align : 'center',
-    render : (text) => text === 'successful' ? <p class="tag_payment_success">{text}</p> : <p class="tag_payment_fail">{text}</p>
+    render : (text) => text === 'successful' ? <p className="tag_payment_success">{text}</p> : <p className="tag_payment_fail">{text}</p>
   },
   {
     title: 'Paid at',

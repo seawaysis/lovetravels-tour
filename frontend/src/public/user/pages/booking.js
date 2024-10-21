@@ -21,22 +21,26 @@ const Booking = (props)=>{
     useEffect(() => {
         dispatch(getAllBooking());
     }, [dispatch]);
+
     const { allBooking } = useSelector((state) => state.AgentBooking);
+    useEffect(() => {
+        getInitPayment();
+    },[allBooking]);
     const [paymentDetail,setPaymentDetail] = useState([]);
     const getInitPayment = () => {
-            const paymentList = allBooking.map(v => {return {bookingId : v.booking_id,showDetail : false}});
-            setPaymentDetail([...paymentDetail,paymentList]);
-        }
-    
-    
-    const showPaymentDetail= async (v) => {
-        if(v.check === true){
-            if(paymentDetail.length === 0){await getInitPayment();}
-            console.log(paymentDetail);
-            //setPaymentDetail(getInitPayment());
-            //console.log(paymentDetail)
-        }
+        const paymentList = allBooking.map(v => {return {bookingId : v.booking_id,showDetail : false}});
+        setPaymentDetail(paymentList);
     }
+    
+    const showPaymentDetail= async (e) => {
+        //e.check e.bookingId
+            setPaymentDetail(perv => {
+                return perv.map((v) => {
+                    return {...v,showDetail:e.bookingId === v.bookingId ? e.check : v.showDetail}
+                })
+            });
+    }
+    console.log(paymentDetail);
     return (
     <div><Header />
     
@@ -48,7 +52,7 @@ const Booking = (props)=>{
     {!allBooking[0] ? (
         <Col className="card_bg" {...wrapSpan}><Empty /></Col>
     ) : ( allBooking.map((v) => ( 
-    <Row justify="center">
+    <Row justify="center" key={v.booking_id}>
         <Col className="card_bg" {...wrapSpan}>
             <Row>
                 <Col span={11}><img src={v.pic_path} alt={v.package_name} style={{width : '100%',height:'150px'}}/></Col>
@@ -77,7 +81,7 @@ const Booking = (props)=>{
                 <Col span={24}>
                     <Switch onChange={(value)=>showPaymentDetail({check : value,bookingId : v.booking_id})} checkedChildren="Show Payment Detail" unCheckedChildren="Hide" />
                 </Col>
-                <Row id={`PaymentDetail_`+v.booking_id} justify="center"><BookingPaymentDetail key={v.booking_id} paymentDetail={paymentDetail} arrDetail={{check : true,bookingId : v.booking_id}}/></Row>
+                <Row id={`PaymentDetail_`+v.booking_id} justify="center"><BookingPaymentDetail paymentDetail={paymentDetail} arrDetail={{check : true,bookingId : v.booking_id}}/></Row>
             </Row>
         </Col>
     </Row>
