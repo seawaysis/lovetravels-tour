@@ -80,7 +80,7 @@ const Booking = (props)=>{
                 <Col span={24}>
                     <Switch onChange={(value)=>showPaymentDetail({check : value,bookingId : v.booking_id})} checkedChildren="Show Payment Detail" unCheckedChildren="Hide" />
                 </Col>
-                {paymentDetail.find((e) => e.bookingId === v.booking_id)?.showDetail ? <Row justify="center"><BookingPaymentDetail arrDetail={{bookingId : v.booking_id}}/></Row> : null}
+                <Col span={24} style={{overflowX: 'auto'}}>{paymentDetail.find((e) => e.bookingId === v.booking_id)?.showDetail ? <Row justify="center"><BookingPaymentDetail arrDetail={{bookingId : v.booking_id}}/></Row> : null}</Col>
             </Row>
         </Col>
     </Row>
