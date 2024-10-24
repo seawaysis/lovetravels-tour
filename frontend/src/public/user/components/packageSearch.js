@@ -61,6 +61,9 @@ function PackageSearch (props){
                                 {name : ["checkOut"],value : dayjs(result.dataSearch.checkOut,dateFormat)},
                                 {name : ["amount"],value : result.dataSearch.amount}
                             ]);
+            setBody(prevBody => ({
+            ...prevBody,...result.dataSearch
+        }));
             refetch(result.dataSearch);
         }
     }
