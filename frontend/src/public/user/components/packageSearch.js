@@ -18,7 +18,11 @@ function PackageSearch (props){
                             {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : body.amount}
                         ]);
     useEffect(() => {
-        checkTempPackage();
+        const tempBooking = localStorage.getToken('tempBooking');
+        if(tempBooking.tempBooking){
+            const result = JSON.parse(tempBooking.tempBooking);
+            setDataSearch(result.dataSearch);
+        }
     },[]);
     const onFinish = values => {
         const getBody = {
@@ -27,17 +31,21 @@ function PackageSearch (props){
             checkOut : configDate.adaptpickerDate(values.checkOut),
             amount : values.amount
         }
-        setBody(prevBody => ({
-            ...prevBody,...getBody
-        }));
-        setFieldsSearch([
-                            {name : ["search"],value : getBody.search},
-                            {name : ["checkIn"],value : dayjs(getBody.checkIn,dateFormat)},
-                            {name : ["checkOut"],value : dayjs(getBody.checkOut,dateFormat)},
-                            {name : ["amount"],value : getBody.amount}
-                        ]);
-        refetch(getBody);
+        setDataSearch(getBody);
     }
+    const setDataSearch = (dataSearch) => {
+            setFieldsSearch([
+                                {name : ["search"],value : dataSearch.search},
+                                {name : ["checkIn"],value : dayjs(dataSearch.checkIn,dateFormat)},
+                                {name : ["checkOut"],value : dayjs(dataSearch.checkOut,dateFormat)},
+                                {name : ["amount"],value : dataSearch.amount}
+                            ]);
+            setBody(prevBody => ({
+                ...prevBody,...dataSearch
+            }));
+            refetch(dataSearch);
+    }
+
     const refetch = async (body) => {
         if(body.checkIn){
         return await axios.post("user/search_package",body)
@@ -51,22 +59,6 @@ function PackageSearch (props){
             .catch(err => {return []});
         }
     };
-    const checkTempPackage = () => {
-        const tempBooking = localStorage.getToken('tempBooking');
-        if(tempBooking.tempBooking){
-            const result = JSON.parse(tempBooking.tempBooking);
-            setFieldsSearch([
-                                {name : ["search"],value : result.dataSearch.search},
-                                {name : ["checkIn"],value : dayjs(result.dataSearch.checkIn,dateFormat)},
-                                {name : ["checkOut"],value : dayjs(result.dataSearch.checkOut,dateFormat)},
-                                {name : ["amount"],value : result.dataSearch.amount}
-                            ]);
-            setBody(prevBody => ({
-            ...prevBody,...result.dataSearch
-        }));
-            refetch(result.dataSearch);
-        }
-    }
     const toPackageDetail = values => {
        props.setPackageDetail(prevDetail => ({
             ...prevDetail,
