@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
 
 const allBooking = async (req,res) => {
-    const queryText = `SELECT r.*,p.package_name,pay.id_paid,pay.amount AS amount_paid,pay.status AS status_paid,pay.paid_at,pay.method,IFNULL(pay.pic_receipt_path, '-') AS pic_receipt_path FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id LEFT JOIN payment AS pay ON r.booking_id = pay.booking_id ORDER BY r.update_date DESC`;
+    const queryText = `SELECT r.*,p.package_name,pay.id_paid,pay.amount AS amount_paid,pay.status AS status_paid,pay.paid_at,pay.method,IFNULL(pay.pic_receipt_path, '-') AS pic_receipt_path FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id LEFT JOIN payment AS pay ON r.booking_id = pay.booking_id ORDER BY CASE WHEN r.status = 'pending' THEN 0 ELSE 1 END,r.status ASC,r.update_date DESC`;
     const temp = await sequelize.query(queryText, {
         replacements: [],
         type: QueryTypes.SELECT,
@@ -27,21 +27,12 @@ const allBooking = async (req,res) => {
                     status : v.status,
                     since_date : v.since_date,
                     email : v.email,
-                    paymentDetail : [
-                        {
-                            id_paid : v.id_paid,
-                            amount_paid : v.amount_paid,
-                            status_paid : v.status_paid,
-                            paid_at : v.paid_at,
-                            method : v.method,
-                            pic_receipt_path : v.pic_receipt_path
-                        }
-                    ]
+                    paymentDetail : []
                 }
                 );
                 arr.pervId = v.booking_id;
-            }else{
-                arr.tempIndex = result.length -1;
+            }
+            arr.tempIndex = result.length -1;
                 result[arr.tempIndex].paymentDetail.push(
                     {
                             id_paid : v.id_paid,
@@ -52,7 +43,6 @@ const allBooking = async (req,res) => {
                             pic_receipt_path : v.pic_receipt_path
                         }
                 );
-            }
         });
         res.status(200).send(result);
     }

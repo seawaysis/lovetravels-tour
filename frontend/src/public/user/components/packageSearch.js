@@ -1,8 +1,9 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import {Row,Col,Form,Input,InputNumber,Button,DatePicker, Empty, Divider,notification} from 'antd'
 import axios from 'axios';
 import dayjs from 'dayjs';
 
+import localStorage from '../../../services/localStorages';
 import {updatePackageSearch} from '../../../services/store/userPackageTourReducer';
 import configDate from '../configDate';
 import formatMoney from '../formatMoney';
@@ -16,6 +17,9 @@ function PackageSearch (props){
                             {name : ["checkOut"],value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs().add(2, 'day')},
                             {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : body.amount}
                         ]);
+    useEffect(() => {
+        checkTempPackage();
+    },[]);
     const onFinish = values => {
         const getBody = {
             search : values.search ? values.search : null,
@@ -47,6 +51,19 @@ function PackageSearch (props){
             .catch(err => {return []});
         }
     };
+    const checkTempPackage = () => {
+        const tempBooking = localStorage.getToken('tempBooking');
+        if(tempBooking.tempBooking){
+            const result = JSON.parse(tempBooking.tempBooking);
+            setFieldsSearch([
+                                {name : ["search"],value : result.dataSearch.search},
+                                {name : ["checkIn"],value : dayjs(result.dataSearch.checkIn,dateFormat)},
+                                {name : ["checkOut"],value : dayjs(result.dataSearch.checkOut,dateFormat)},
+                                {name : ["amount"],value : result.dataSearch.amount}
+                            ]);
+            refetch(result.dataSearch);
+        }
+    }
     const toPackageDetail = values => {
        props.setPackageDetail(prevDetail => ({
             ...prevDetail,

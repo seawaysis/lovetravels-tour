@@ -87,37 +87,37 @@ const PayCreditCard = async(req,res) => {
                 expiration_year: body.payment.eYear,
                 security_code: body.payment.cvv
             }});
-
-            const customer = await Omise.customers.create({
-                email: reDecoded.email,
-                description: body.payment.holderName,
-                card: token.id
-            });
-            const charge = await Omise.charges.create({
-                amount : body.booking.netPrice * 100,
-                currency : 'thb',
-                customer: customer.id
-            });
-            if(!charge.id){
-               res.status(400).send({message : 'Payment fail Please check correct information !!'});
-            }else{
-                charge.status === 'successful' ? body.booking.statusBooking = 'confirmed' : body.booking.statusBooking = 'pendding';
-                const resultBooking = await createBooking(res,body,result[0]).then(r => {return r;}).catch(err => {res.status(400).send({message : err});});
-                const payment = await db.Payment.create({
-                    id_paid : charge.id,
-                    amount : charge.amount/100,
-                    currency : charge.currency,
-                    status : charge.status,
-                    paid_at : charge.paid_at,
-                    update_date : charge.paid_at,
-                    method : 'credit_card',
-                    pic_receipt_path : null,
-                    email : result[0].email,
-                    booking_id : resultBooking.dataValues.booking_id,
-                    uid : resultBooking.dataValues.uid
-                }).then(r => {return r.id_paid ? r : res.status(400).send({message : 'Add Payment fail'});}).catch(err => {res.status(400).send({message : err})});
-                res.status(200).send({message : payment});
-            }
+            res.status(200).send(body);
+            // const customer = await Omise.customers.create({
+            //     email: reDecoded.email,
+            //     description: body.payment.holderName,
+            //     card: token.id
+            // });
+            // const charge = await Omise.charges.create({
+            //     amount : body.booking.netPrice * 100,
+            //     currency : 'thb',
+            //     customer: customer.id
+            // });
+            // if(!charge.id){
+            //    res.status(400).send({message : 'Payment fail Please check correct information !!'});
+            // }else{
+            //     charge.status === 'successful' ? body.booking.statusBooking = 'confirmed' : body.booking.statusBooking = 'pendding';
+            //     const resultBooking = await createBooking(res,body,result[0]).then(r => {return r;}).catch(err => {res.status(400).send({message : err});});
+            //     const payment = await db.Payment.create({
+            //         id_paid : charge.id,
+            //         amount : charge.amount/100,
+            //         currency : charge.currency,
+            //         status : charge.status,
+            //         paid_at : charge.paid_at,
+            //         update_date : charge.paid_at,
+            //         method : 'credit_card',
+            //         pic_receipt_path : null,
+            //         email : result[0].email,
+            //         booking_id : resultBooking.dataValues.booking_id,
+            //         uid : resultBooking.dataValues.uid
+            //     }).then(r => {return r.id_paid ? r : res.status(400).send({message : 'Add Payment fail'});}).catch(err => {res.status(400).send({message : err})});
+            //     res.status(200).send({message : payment});
+            //}
     }catch{err => {
         res.status(400).send({message : err});
     }}
