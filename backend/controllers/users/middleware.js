@@ -141,7 +141,7 @@ const formPayCreditCard = () => {
       .isLength({min:1}).withMessage('The minimum price length is 1 digit')
       .isLength({max:6}).withMessage('The maximum price length is 6 digit'),
     body('booking.discount').not().isEmpty().withMessage('Invalid discount dose not empty')
-      .exists({checkFalsy: true}).withMessage('You must type a number')
+      .matches(/^[0-9]*$/).withMessage('Only number')  
       .isLength({min:1}).withMessage('The minimum discount length is 1 digit')
       .isLength({max:2}).withMessage('The maximum discount length is 2 digit'),
     body('booking.checkIn').not().isEmpty().withMessage('Invalid startDate dose not empty')
