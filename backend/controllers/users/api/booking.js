@@ -87,7 +87,6 @@ const PayCreditCard = async(req,res) => {
                 expiration_year: body.payment.eYear,
                 security_code: body.payment.cvv
             }});
-            res.status(200).send(body);
             const customer = await Omise.customers.create({
                 email: reDecoded.email,
                 description: body.payment.holderName,

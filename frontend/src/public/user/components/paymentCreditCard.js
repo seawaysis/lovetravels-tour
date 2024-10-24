@@ -93,6 +93,7 @@ const onFinish = async(values) => {
                     message: `Payment Progress`,
                     showProgress: true,
                 });
+                console.log(dataBooking);
     axios.post("user/pay_credit_card",JSON.stringify(dataBooking)).then(
             res => {
                 notification.success({
