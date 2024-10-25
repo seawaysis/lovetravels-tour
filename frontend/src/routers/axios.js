@@ -1,5 +1,7 @@
 import axios from 'axios';
-import LocalStorages from '../services/localStorages'
+import LocalStorages from '../services/localStorages';
+import { useNavigate } from 'react-router-dom';
+
 axios.defaults.baseURL = "http://localhost:8080/";
 
 axios.interceptors.request.use(
@@ -26,6 +28,7 @@ axios.interceptors.request.use(
             'agent':[
                 {'login' : {headers: {'Content-Type': 'application/json'}}},
                 {'register' : {headers: {'Content-Type': 'multipart/form-data'}}},
+                {'profile' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'auth_token' : {headers: {authorization : `Bearer ${token.refreshToken}`}}},
                 {'resend_otp' : {headers: {authorization : `Bearer ${token.confirmToken}`}}},
                 {'confirm_email' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
@@ -55,5 +58,9 @@ axios.interceptors.request.use(
         Promise.reject(err)
     }
 )
-
+// axios.interceptors.response.use(
+//     response => {
+//         return response;
+//     }
+// )
 export default axios;

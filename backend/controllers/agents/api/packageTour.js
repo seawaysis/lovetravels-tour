@@ -10,8 +10,8 @@ const path = require('path');
 const addPackageTour = async (req,res) => {
     const datetime = dateTime.today();
     const body = req.body;
-    const pic = req.files
-    const decodeToken = req.decodeToken
+    const pic = req.files;
+    const decodeToken = req.decodeToken;
     const resultAgent = await sequelize.query('SELECT * FROM agent WHERE username = ? LIMIT 1', {
         replacements: [decodeToken.username],
         type: QueryTypes.SELECT,

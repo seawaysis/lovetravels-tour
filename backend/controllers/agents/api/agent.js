@@ -69,6 +69,14 @@ const registerAgent = async (req,res) => {
         
     }
 }
+const profileAgent = async (req,res) => {
+    const decodeToken = req.decodeToken;
+    let result = await sequelize.query('SELECT license_id,username,email,company_name,tel,pic_payment_path FROM agent WHERE username = ? LIMIT ?', {
+        replacements: [decodeToken.username,1],
+        type: QueryTypes.SELECT,
+    });
+    res.status(200).send(result);
+}
 const confEmailAgent = async (req,res) => {
     const body = req.body
     const reDecoded = req.decodeToken
@@ -126,6 +134,7 @@ function getOTPNum(numLenght){
 module.exports = {
     loginAgent,
     registerAgent,
+    profileAgent,
     confEmailAgent,
     resendOTPAgent
 }

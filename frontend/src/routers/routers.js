@@ -10,6 +10,7 @@ import UserProfilePage from '../public/user/pages/profile';
 import AgentRegisterPage from '../public/agent/pages/register';
 import AgentConfEmail from '../public/agent/pages/confEmail';
 import AgentLoginPage from '../public/agent/pages/login';
+import AgentProfile from '../public/agent/pages/profile';
 import AgentBookingPage from '../public/agent/pages/booking';
 import AgentPackageTourPage from '../public/agent/pages/packageTour';
 import AgentSumAccountPage from '../public/agent/pages/sumAccount';
@@ -59,6 +60,10 @@ const components = {
         url: "agent/confirm_email",
         component: AgentConfEmail
     },
+    agentProfile: {
+        url: "agent/profile",
+        component: AgentProfile
+    },
     agentBooking: {
         url: "agent/booking",
         component: AgentBookingPage
@@ -99,6 +104,7 @@ const permissions = {
     },
     agent : {
         allowedRoutes: [
+            components.agentProfile,
             components.agentBooking,
             components.agentPackageTour,
             components.agentSumAccount

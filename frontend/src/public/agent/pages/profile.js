@@ -1,20 +1,40 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Flex, Row, Col, Divider, notification } from 'antd';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Form, Input, Button, Flex, Row, Col, Divider,Upload, notification } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import axios from '../../../routers/axios';
 import { useNavigate } from 'react-router-dom';
-import LocalStorages from '../../../services/localStorages'
-
-import Upload from '../components/upload'
-import '../allStyle.css';
-
-const layout = {
-    labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
-    wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
-};
-function Register(props) {
+import LocalStorages from '../../../services/localStorages';
+import Header from '../pages/header';
+function Profile() {
+    const layout = {
+        labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
+        wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
+    };
     const navigate = useNavigate();
+    const [profile,setProfile] = useState([]);
     const [fileList, setFileList] = useState([]);
+    useEffect(() => {
+        getProfile();
+    },[]);
+    const getProfile = async () => {
+        axios.get('agent/profile').then(res => {
+            const result = res.data[0];
+            if(result){
+                setProfile([
+                    {name : ["license"],value : result.license_id? result.license_id : ""},
+                    {name : ["company"],value : result.company_name? result.company_name : ""},
+                    {name : ["username"],value : result.username? result.username : ""},
+                    {name : ["email"],value : result.email? result.email : ""},
+                    {name : ["phone"],value : result.tel? result.tel : ""},
+                ]);
+            }
+        }).catch(err => {
+            notification.error({
+                        placement: 'bottomRight',
+                        message: `status : ${err.response.status} fail message : ${err.response.data.message}`
+                    });
+        });
+    }
     const onFinish = values => {
         const body = {
             license: values.license,
@@ -39,11 +59,10 @@ function Register(props) {
                 });
         axios.post('agent/register',formData,{ headers: { "Content-Type": "multipart/form-data" } }).then(
             res => {
-                LocalStorages.removeToken('all')
                 LocalStorages.setToken(res.data)
                 notification.success({
                     placement: 'bottomRight',
-                    message: `Register successfully by ${values.email}`
+                    message: `Change profile successful`
                 });
                navigate("/agent/confirm_email");
             }
@@ -51,27 +70,26 @@ function Register(props) {
             err => {
                 notification.error({
                     placement: 'bottomRight',
-                    message: `Register fail status : ${err.response.status} Message : ${err.response.data.message}`
+                    message: `Change fail status : ${err.response.status} Message : ${err.response.data.message}`
                 });
             }
         );
     };
-    const toLogin = () => {
-        navigate("/agent/login");
-    }
-
-    return (
+  return (
+    <>
+    <Header />
         <Row justify="center" >
             <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                 <div className="Form">
                     <Flex justify="left">
-                        <Title level={4} className="Title">Register</Title>
+                        <Title level={4} className="Title">Change Profile</Title>
                     </Flex>
                     <Divider className="Divider" />
                     <Form
                         {...layout}
                         onFinish={onFinish}
                         style={{ width: "100%" }}
+                        fields={profile}
                     >   
                         <Form.Item
                             name="license"
@@ -214,7 +232,7 @@ function Register(props) {
                         
                         <Upload fileList={fileList} setFileList={setFileList} inputUpload={{formItem : {name:'payment',label:'QRcode Payment'},upload: {maxCount: 1}}}/>
                         <Row justify="end">
-                            <Col span={5}><Button onClick={toLogin} className="Button button_link_style" htmlType="button" size="large" type="link">Sign in</Button></Col>
+                            <Col span={5}><Button onClick={() => navigate(-1)} className="Button button_link_style" htmlType="button" size="large" type="link">Back</Button></Col>
                             <Col span={5}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
                                 Register
                             </Button></Col>
@@ -223,7 +241,8 @@ function Register(props) {
                 </div>
             </Col>
         </Row>
+        </>
     );
 }
 
-export default Register;
+export default Profile
