@@ -81,6 +81,12 @@ const profileAgent = async (req,res) => {
     console.log(result);
     res.status(200).send(result);
 }
+const changePasswordAgent = async (req,res) => {
+    res.status(200).send('changePasswordAgent');
+} 
+const editProfileAgent = async (req,res) => {
+    res.status(200).send('change profile');
+}
 const confEmailAgent = async (req,res) => {
     const body = req.body
     const reDecoded = req.decodeToken
@@ -139,6 +145,8 @@ module.exports = {
     loginAgent,
     registerAgent,
     profileAgent,
+    changePasswordAgent,
+    editProfileAgent,
     confEmailAgent,
     resendOTPAgent
 }

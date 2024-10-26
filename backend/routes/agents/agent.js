@@ -38,7 +38,9 @@ const uploadPackage = multer({ storage:storagePackage,fileFillter });
 
 router.post('/login',Middlewares.formLogin(),Middlewares.validationForm,userControllers.loginAgent);
 router.post('/register',uploadRegister.array('payment',1),Middlewares.formRegis(),Middlewares.validationForm,userControllers.registerAgent);
-router.get('/profile',Middlewares.checkAccessToken,userControllers.profileAgent)
+router.get('/profile',Middlewares.checkAccessToken,userControllers.profileAgent);
+router.post('/change_password',Middlewares.checkAccessToken,Middlewares.formChangePassword(),Middlewares.validationForm,userControllers.changePasswordAgent);
+router.post('/edit_profile',uploadRegister.array('payment',1),Middlewares.checkAccessToken,Middlewares.formEditRegis(),Middlewares.validationForm,userControllers.editProfileAgent);
 router.post('/confirm_email',Middlewares.checkRefreshToken,Middlewares.formConfirmEmail(),Middlewares.validationForm,userControllers.confEmailAgent);
 router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTPAgent);
 
