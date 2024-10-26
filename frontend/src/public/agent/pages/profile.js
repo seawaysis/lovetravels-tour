@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Form, Input, Button, Flex, Row, Col, Divider,Upload, notification } from 'antd';
+import { Form, Input, Button, Flex, Row, Col, Divider,Checkbox, notification } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useNavigate } from 'react-router-dom';
 import LocalStorages from '../../../services/localStorages';
+
 import Header from '../pages/header';
+import Upload from '../components/upload';
 function Profile() {
     const layout = {
         labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
@@ -13,12 +15,14 @@ function Profile() {
     const navigate = useNavigate();
     const [profile,setProfile] = useState([]);
     const [fileList, setFileList] = useState([]);
+    const [picPath,setPicPath] = useState([]);
     useEffect(() => {
         getProfile();
     },[]);
     const getProfile = async () => {
         axios.get('agent/profile').then(res => {
             const result = res.data[0];
+            let checkboxPic = [];
             if(result){
                 setProfile([
                     {name : ["license"],value : result.license_id? result.license_id : ""},
@@ -27,6 +31,11 @@ function Profile() {
                     {name : ["email"],value : result.email? result.email : ""},
                     {name : ["phone"],value : result.tel? result.tel : ""},
                 ]);
+                checkboxPic.push({
+                    label: <img src={result.picPath} alt={result.company_name} style={{height:'100px',width:'100px'}} />,
+                    value: result.pic_payment_path
+                });
+                setPicPath(checkboxPic);
             }
         }).catch(err => {
             notification.error({
@@ -229,12 +238,17 @@ function Profile() {
                                 max: 10,
                             }}/>
                         </Form.Item>
-                        
+                         <Form.Item 
+                            name="deletePic"
+                            label="Current Pictures"
+                            >
+                        <Checkbox.Group options={picPath}/>
+                        </Form.Item>
                         <Upload fileList={fileList} setFileList={setFileList} inputUpload={{formItem : {name:'payment',label:'QRcode Payment'},upload: {maxCount: 1}}}/>
                         <Row justify="end">
                             <Col span={5}><Button onClick={() => navigate(-1)} className="Button button_link_style" htmlType="button" size="large" type="link">Back</Button></Col>
                             <Col span={5}><Button className="Button button_style " type="primary" size="large" htmlType="submit">
-                                Register
+                                Change
                             </Button></Col>
                         </Row>
                     </Form>

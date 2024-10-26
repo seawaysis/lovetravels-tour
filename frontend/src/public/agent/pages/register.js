@@ -37,24 +37,24 @@ function Register(props) {
                     message: `Register Progress`,
                     showProgress: true,
                 });
-        axios.post('agent/register',formData,{ headers: { "Content-Type": "multipart/form-data" } }).then(
-            res => {
-                LocalStorages.removeToken('all')
-                LocalStorages.setToken(res.data)
-                notification.success({
-                    placement: 'bottomRight',
-                    message: `Register successfully by ${values.email}`
-                });
-               navigate("/agent/confirm_email");
-            }
-        ).catch(
-            err => {
-                notification.error({
-                    placement: 'bottomRight',
-                    message: `Register fail status : ${err.response.status} Message : ${err.response.data.message}`
-                });
-            }
-        );
+        // axios.post('agent/register',formData,{ headers: { "Content-Type": "multipart/form-data" } }).then(
+        //     res => {
+        //         LocalStorages.removeToken('all')
+        //         LocalStorages.setToken(res.data)
+        //         notification.success({
+        //             placement: 'bottomRight',
+        //             message: `Register successfully by ${values.email}`
+        //         });
+        //        navigate("/agent/confirm_email");
+        //     }
+        // ).catch(
+        //     err => {
+        //         notification.error({
+        //             placement: 'bottomRight',
+        //             message: `Register fail status : ${err.response.status} Message : ${err.response.data.message}`
+        //         });
+        //     }
+        // );
     };
     const toLogin = () => {
         navigate("/agent/login");

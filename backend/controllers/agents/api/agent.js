@@ -75,6 +75,10 @@ const profileAgent = async (req,res) => {
         replacements: [decodeToken.username,1],
         type: QueryTypes.SELECT,
     });
+    result.forEach((v,i) => {
+        result[i].picPath = `${req.protocol}://${req.get('host')}/qr_code/`+v.pic_payment_path;
+    });
+    console.log(result);
     res.status(200).send(result);
 }
 const confEmailAgent = async (req,res) => {
