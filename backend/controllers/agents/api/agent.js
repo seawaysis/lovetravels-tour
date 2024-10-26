@@ -109,7 +109,7 @@ const editProfileAgent = async (req,res) => {
     const body = req.body;
     const decodeToken = req.decodeToken;
     const datetime = dateTime.today();
-    const result= await sequelize.query('SELECT username FROM agent WHERE username = ? LIMIT ?', {
+    const result= await sequelize.query('SELECT username,pic_payment_path FROM agent WHERE username = ? LIMIT ?', {
         replacements: [decodeToken.username,1],
         type: QueryTypes.SELECT,
     });
@@ -130,9 +130,9 @@ const editProfileAgent = async (req,res) => {
             res.status(400).send({message : update.error});
         }else{
             if(req.files[0]){
-                fs.unlink(path.join(__dirname, "../../../src/images/qrcode/"+body.deletePic), (err) => {
+                fs.unlink(path.join(__dirname, "../../../src/images/qrcode/"+result[0].pic_payment_path), (err) => {
                     if (err) {
-                        console.error(`Error deleting the file ${body.deletePic}:`, err);
+                        console.error(`Error deleting the file ${result[0].pic_payment_path}:`, err);
                     }
                 });
             }
