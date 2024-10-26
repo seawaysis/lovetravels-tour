@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import {Form, Input, Button, Row, Col,notification} from 'antd';
-
 import { useNavigate } from 'react-router-dom';
-function AgentChangePassword() {
+
+import LocalStorages from '../../../services/localStorages';
+function AgentChangePassword(props) {
     const layout = {
         labelCol: { xs: 24, sm: 7, md: 6, lg: 6, xl: 5, xxl: 4 },
         wrapperCol: { xs: 24, sm: 17, md: 18, lg: 18, xl: 19, xxl: 20 },
@@ -11,11 +12,14 @@ function AgentChangePassword() {
     const navigate = useNavigate();
     const onFinish = values => {
         const body = {
+            username : values.username,
             pass : values.password,
             conf_pass : values.conf_pass
         }
         axios.post('agent/change_password',body).then(
             res => {
+                LocalStorages.setToken(res.data);
+                props.getProfile();
                 notification.success({
                     placement: 'bottomRight',
                     message: `Change password successful`
@@ -36,7 +40,29 @@ function AgentChangePassword() {
                         {...layout}
                         onFinish={onFinish}
                         style={{ width: "100%" }}
+                        fields={[
+                            {name : ["username"],value : props.dataProfile.username? props.dataProfile.username : ""},
+                        ]}
                     >   
+                    <Form.Item
+                            name="username"
+                            label="Username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your Username!',
+                                },
+                                { min: 5, message: 'Username must be minimum 5 characters.' },
+                                { max: 15, message: 'Username must be maximum 15 characters.' },
+                                {
+                                    pattern: new RegExp(/^[a-zA-Z0-9_.-]*$/),
+                                    message: 'The Usrename allow just characters and number only.',
+                                }
+                            ]}
+                        >
+                        <Input />
+                        </Form.Item>
+
                         <Form.Item
                             name="password"
                             label="Password"

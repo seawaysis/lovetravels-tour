@@ -4,7 +4,9 @@ const { QueryTypes } = require('sequelize');
 const bcryptjs = require('bcryptjs');
 const dateTime = require('../datetime');
 const encryptToken = require('../encrypt');
-const email = require('../email')
+const email = require('../email');
+const fs = require('fs');
+const path = require('path');
 
 const loginAgent = async (req,res) => {
     const datetime = dateTime.today();
@@ -78,14 +80,65 @@ const profileAgent = async (req,res) => {
     result.forEach((v,i) => {
         result[i].picPath = `${req.protocol}://${req.get('host')}/qr_code/`+v.pic_payment_path;
     });
-    console.log(result);
     res.status(200).send(result);
 }
 const changePasswordAgent = async (req,res) => {
-    res.status(200).send('changePasswordAgent');
+    const reDecoded = req.decodeToken;
+    const body = req.body;
+    const datetime = dateTime.today();
+    const result = await sequelize.query('SELECT username FROM agent WHERE username = ?', {
+                replacements: [reDecoded.username],
+                type: QueryTypes.SELECT,
+            });
+            if (!Object.keys(result).length){
+                res.status(400).send({message :`agent not found !!`});
+            }else{
+                const encoded = await encryptToken.encoded({username: body.username,typeRole: 'agent'});
+                const reEncoded = await encryptToken.reEncoded({username: body.username,typeRole: 'agent'});
+                const update = await db.Agent.update({
+                        username : body.username,
+                        password : bcryptjs.hashSync(body.conf_pass,bcryptjs.genSaltSync(12)),
+                        update_date : datetime.normal
+                    },{
+                        where: {username:result[0].username}
+                    }).then(res => {return res}).catch(err => {return {error : err}});
+                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message: 'Change password successfully !!'});
+            }
 } 
 const editProfileAgent = async (req,res) => {
-    res.status(200).send('change profile');
+    const body = req.body;
+    const decodeToken = req.decodeToken;
+    const datetime = dateTime.today();
+    const result= await sequelize.query('SELECT username FROM agent WHERE username = ? LIMIT ?', {
+        replacements: [decodeToken.username,1],
+        type: QueryTypes.SELECT,
+    });
+    if(result.parent){
+        res.status(400).json({message : temp.parent.code});
+    }else{
+        const dataUpdate = {
+                license_id : body.licenseId,
+                company_name : body.company,
+                email : body.email,
+                tel : body.phone
+            };
+        req.files[0].originalname ? dataUpdate.pic_payment_path = req.files[0].originalname : null; 
+        const update = await db.Agent.update(dataUpdate,{
+                where: {username:result[0].username}
+            }).then(res => {return res}).catch(err => {return {error : err}});
+        if(update.error){
+            res.status(400).send({message : update.error});
+        }else{
+            if(req.files[0]){
+                fs.unlink(path.join(__dirname, "../../../src/images/qrcode/"+body.deletePic), (err) => {
+                    if (err) {
+                        console.error(`Error deleting the file ${body.deletePic}:`, err);
+                    }
+                });
+            }
+            res.status(200).send({message : 'Edit package tour successfully'});
+        }
+    }
 }
 const confEmailAgent = async (req,res) => {
     const body = req.body

@@ -73,7 +73,7 @@ function AppMenu({isInline=false}){
     if(isInline){
         styleForMenu = {backgroundColor:"#7BBCB0",float: 'left'}
     }else{
-        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'380px'}
+        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'450px'}
     }
     return (
         <div style={{backgroundColor:"#7BBCB0",overflow: 'auto'}}>

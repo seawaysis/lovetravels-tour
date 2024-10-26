@@ -82,6 +82,11 @@ const formRegis = () => {
 }
 const formChangePassword = () => {
   return [
+    body('username').trim().not().isEmpty().withMessage('Invalid username does not empty')
+    .isLength({min:5}).withMessage('The minimum username length is 5 characters')
+    .isLength({max:15}).withMessage('The maximum username length is 15 characters')
+    .matches(/^[a-zA-Z0-9_.-]*$/).withMessage('The Usrename allow just characters and number only.')
+    .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('pass').trim().not().isEmpty().withMessage('Invalid Password does not empty')
     .isLength({min:5}).withMessage('The minimum password length is 5 characters')
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/).withMessage('The Password must have lowwerletter,upperletter,number least once')
@@ -97,11 +102,6 @@ const formEditRegis = () => {
   return [
     body('license').trim().not().isEmpty().withMessage('Invalid license does not empty')
     .exists({checkFalsy: true}).withMessage('You must type a text'),
-    body('username').trim().not().isEmpty().withMessage('Invalid username does not empty')
-    .isLength({min:5}).withMessage('The minimum username length is 5 characters')
-    .isLength({max:15}).withMessage('The maximum username length is 15 characters')
-    .matches(/^[a-zA-Z0-9_.-]*$/).withMessage('The Usrename allow just characters and number only.')
-    .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('email').trim().not().isEmpty().withMessage('Invalid Email does not empty')
     .isEmail().withMessage('Invalid Email Address')
     .exists({checkFalsy: true}).withMessage('You must type a email'),
@@ -111,9 +111,7 @@ const formEditRegis = () => {
     .exists({checkFalsy: true}).withMessage('You must type a text'),
     body('phone').trim().not().isEmpty().withMessage('Invalid phone does not empty')
     .matches(/^[0-9]{9,10}$/).withMessage('The phone is number and lenght number is between 9 - 10')
-    .exists({checkFalsy: true}).withMessage('You must type a number'),
-    body('deletePic').matches(/^[a-zA-Z0-9ก-๛_,\-.]*$/).withMessage('Not allow special characters')
-    .exists({checkFalsy: true}).withMessage('You must type a text')
+    .exists({checkFalsy: true}).withMessage('You must type a number')
   ]
 }
 const formConfirmEmail = () => {

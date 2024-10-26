@@ -56,7 +56,7 @@ const registerUser = async (req,res) => {
         return status.error ? res.status(400).send({message : status.error}) : res.status(201).send({confirmToken:confEncoded,message: 'Register successfully !!'});
     }
 }
-const personIfo = async (req,res) => {
+const personInfo = async (req,res) => {
     const reDecoded = req.decodeToken;
     const result = await sequelize.query('SELECT email FROM member WHERE email = ?', {
                 replacements: [reDecoded.email],
@@ -159,7 +159,7 @@ function getOTPNum(numLenght){
 module.exports = {
     loginUser,
     registerUser,
-    personIfo,
+    personInfo,
     updatePersonInfo,
     confEmailUser,
     resendOTPUser,
