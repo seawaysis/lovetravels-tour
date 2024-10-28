@@ -10,18 +10,29 @@ import formatMoney from '../formatMoney';
 
 function PackageSearch (props){
     const dateFormat = "YYYY-MM-DD";
+    const tempBooking = localStorage.getToken('tempBooking');
     const [body,setBody] = useState({});
     const [fieldsSearch,setFieldsSearch] = useState([
                             {name : ["search"],value : props.dataSearch.search? props.dataSearch.search : body.search},
                             {name : ["checkIn"],value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs()},
                             {name : ["checkOut"],value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs().add(2, 'day')},
-                            {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : body.amount}
+                            {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : 1}
                         ]);
     useEffect(() => {
-        const tempBooking = localStorage.getToken('tempBooking');
         if(tempBooking.tempBooking){
             const result = JSON.parse(tempBooking.tempBooking);
             setDataSearch(result.dataSearch);
+        }else if(!body){
+            const firstSearch = {
+                search : fieldsSearch[0].value,
+                checkIn : fieldsSearch[1].value.format(dateFormat),
+                checkOut : fieldsSearch[2].value.format(dateFormat),
+                amount : fieldsSearch[3].value
+            };
+            setBody(prevBody => ({
+                ...prevBody,...firstSearch
+            }));
+            refetch(firstSearch);
         }
     },[]);
     const onFinish = values => {
