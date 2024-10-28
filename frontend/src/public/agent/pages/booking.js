@@ -7,6 +7,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import agentThunks from '../../../services/store/agentThunks';
 import formatMoney from '../formatMoney';
 import Header from './header';
+import BookingPaymentDetail from '../components/bookingPaymentDetail';
 import '../allStyle.css';
 const Booking = ()=>{
     const dispatch = useDispatch();
@@ -71,8 +72,11 @@ const Booking = ()=>{
                     </Col>
             </Row>
             <Row justify="space-around" style={{marginTop : '20px'}}>
-                <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(v.price_person)}</span><span><Image style={{marginTop : '20px',height: '200px'}} width={200} src={v.eSlip}/></span></Col>
+                <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(v.price_person)}</span></Col>
                 <Col span={8} style={{textAlign: 'right'}}><span className="text_main">Sum Price</span><br /><span className="price_discount">{formatMoney(v.price_person*v.amount)}</span><br /><span className="price" style={{fontSize : '18px'}}>{formatMoney((v.price_person*v.amount)*v.discount/100)}</span><br /><span className="price_sum">{formatMoney((v.price_person*v.amount)-((v.price_person*v.amount)*v.discount/100))}</span><br /><span className="sub_description"> * text includes</span></Col>
+            </Row>
+            <Row>
+                <BookingPaymentDetail arrDetail={v.paymentDetail}/>
             </Row>
             <Divider />
             {v.status === 'pending' ? <Row justify="space-around"><Col span={10}><Button onClick={() => statusChange({ status : "cancelled",id : v.booking_id})} className="Button button_delete" htmlType="button" size="large">Cancel</Button></Col><Col span={10}><Button onClick={() => statusChange({ status : "confirmed",id : v.booking_id})} className="Button button_success" htmlType="button" size="large">Confirm</Button></Col></Row> : null}

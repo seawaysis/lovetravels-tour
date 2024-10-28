@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
 
 const allBooking = async (req,res) => {
-    const queryText = `SELECT r.*,p.package_name,pay.id_paid,pay.amount AS amount_paid,pay.status AS status_paid,pay.paid_at,pay.method,IFNULL(pay.pic_receipt_path, '-') AS pic_receipt_path FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id LEFT JOIN payment AS pay ON r.booking_id = pay.booking_id ORDER BY CASE WHEN r.status = 'pending' THEN 0 ELSE 1 END,r.status ASC,r.update_date DESC`;
+    const queryText = `SELECT r.*,p.package_name,pay.id_paid,pay.amount AS amount_paid,pay.status AS status_paid,pay.paid_at,pay.method,pic_receipt_path FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id LEFT JOIN payment AS pay ON r.booking_id = pay.booking_id ORDER BY CASE WHEN r.status = 'pending' THEN 0 ELSE 1 END,r.status ASC,r.update_date DESC`;
     const temp = await sequelize.query(queryText, {
         replacements: [],
         type: QueryTypes.SELECT,
@@ -13,7 +13,8 @@ const allBooking = async (req,res) => {
         res.status(200).send([]);
     }else{
         let result = [];
-        let arr = {pervId : '',tempIndex : 0}
+        let arr = {pervId : '',tempIndex : 0};
+        const fullHost = `${req.protocol}://${req.get('host')}/e_slip/`;
         temp.forEach((v,i) => {
             if(arr.pervId === '' || arr.pervId !== v.booking_id){
                 result.push(
@@ -36,13 +37,14 @@ const allBooking = async (req,res) => {
                 result[arr.tempIndex].paymentDetail.push(
                     {
                             id_paid : v.id_paid,
-                            amount_paid : v.amount_paid,
-                            status_paid : v.status_paid,
+                            amount : v.amount_paid,
+                            status : v.status_paid,
                             paid_at : v.paid_at,
                             method : v.method,
-                            pic_receipt_path : v.pic_receipt_path
+                            pic_receipt_path : v.pic_receipt_path ? fullHost+v.pic_receipt_path : v.pic_receipt_path
                         }
                 );
+                console.log(result[arr.tempIndex].paymentDetail);
         });
         res.status(200).send(result);
     }
