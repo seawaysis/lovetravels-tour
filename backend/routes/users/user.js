@@ -33,6 +33,7 @@ router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTP
 router.get('/person_info',Middlewares.checkAccessToken,userControllers.personInfo);
 router.patch('/update_person_info',Middlewares.checkAccessToken,Middlewares.formUpdateInfo(),Middlewares.validationForm,userControllers.updatePersonInfo);
 
+router.get('/default_search',packageControllers.defaultSearch);
 router.post('/search_package',Middlewares.formSearchPackage(),Middlewares.validationForm,packageControllers.searchPackage);
 
 router.get('/auth_token',Middlewares.checkRefreshToken,userControllers.authToken);

@@ -14,6 +14,7 @@ axios.interceptors.request.use(
             'user':[
                 {'login' : {headers: {'Content-Type': 'application/json'}}},
                 {'register' : {headers: {'Content-Type': 'application/json'}}},
+                {'default_search' : {headers: {'Content-Type': 'application/json'}}},
                 {'search_package' : {headers: {'Content-Type': 'application/json'}}},
                 {'all_booking' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
                 {'payment_detail' : {headers: {authorization : `Bearer ${token.accessToken}`}}},

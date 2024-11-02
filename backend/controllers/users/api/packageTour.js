@@ -3,6 +3,13 @@ const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
 
+const defaultSearch = async (req,res) => {
+    const checkIn = dateTime.today().rawDate;
+    let checkOut = dateTime.today().rawDate;
+    checkOut.setDate(checkOut.getDate() + 2);
+    console.log(checkIn);
+    res.status(200).json({ search: '',checkIn : checkIn.toISOString().split('T')[0],checkOut : checkOut.toISOString().split('T')[0],amount :1});
+}
 const searchPackage = async (req,res) => {
     const body = req.body
     const dayTrip = dateTime.countDay({startDate : body.checkIn,endDate : body.checkOut});
@@ -65,5 +72,6 @@ const detailDescription = async (req,res) => {
     res.status(200).send(result);
 }
 module.exports={
+    defaultSearch,
     searchPackage
 }

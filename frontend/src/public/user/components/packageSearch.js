@@ -12,29 +12,37 @@ function PackageSearch (props){
     const dateFormat = "YYYY-MM-DD";
     const tempBooking = localStorage.getToken('tempBooking');
     const [body,setBody] = useState({});
-    const [fieldsSearch,setFieldsSearch] = useState([
-                            {name : ["search"],value : props.dataSearch.search? props.dataSearch.search : body.search},
-                            {name : ["checkIn"],value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs()},
-                            {name : ["checkOut"],value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs().add(2, 'day')},
-                            {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : 1}
-                        ]);
+    const [fieldsSearch,setFieldsSearch] = useState([]);
     useEffect(() => {
         if(tempBooking.tempBooking){
             const result = JSON.parse(tempBooking.tempBooking);
             setDataSearch(result.dataSearch);
-        }else if(!body){
-            const firstSearch = {
-                search : fieldsSearch[0].value,
-                checkIn : fieldsSearch[1].value.format(dateFormat),
-                checkOut : fieldsSearch[2].value.format(dateFormat),
-                amount : fieldsSearch[3].value
-            };
-            setBody(prevBody => ({
-                ...prevBody,...firstSearch
-            }));
-            refetch(firstSearch);
+        }else{ 
+            defaultSearch();
         }
     },[]);
+    const defaultSearch = async () => {
+        await axios.get("user/default_search")
+            .then(res => {
+                const firstSearch = {
+                    search : res.data.search,
+                    checkIn : res.data.checkIn,
+                    checkOut : res.data.checkOut,
+                    amount : res.data.amount
+                };
+                setFieldsSearch([
+                            {name : ["search"],value : props.dataSearch.search? props.dataSearch.search : firstSearch.search},
+                            {name : ["checkIn"],value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs(firstSearch.checkIn,dateFormat)},
+                            {name : ["checkOut"],value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs(firstSearch.checkOut,dateFormat)},
+                            {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : firstSearch.amount}
+                        ]);
+                setBody(prevBody => ({
+                    ...prevBody,...firstSearch
+                }));
+                refetch(firstSearch);
+            })
+            .catch(err => {});
+    }
     const onFinish = values => {
         const getBody = {
             search : values.search ? values.search : null,
@@ -58,6 +66,7 @@ function PackageSearch (props){
     }
 
     const refetch = async (body) => {
+        console.log(body.checkIn)
         if(body.checkIn){
         return await axios.post("user/search_package",body)
             .then(res => {
@@ -79,7 +88,7 @@ function PackageSearch (props){
         }));
     }
     return(
-        <>
+        <div style={{backgroundImage: 'url()'}}>
         <Row justify="center">
             <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                 <Form
@@ -185,7 +194,7 @@ function PackageSearch (props){
                 
             )))}
         </Row>
-        </>
+        </div>
     );
 }
 export default PackageSearch;

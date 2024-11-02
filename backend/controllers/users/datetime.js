@@ -7,9 +7,10 @@ const today = () => {
         } else return `0${input}`;
     };
     
-    const arr = today.split(' ') // dd/mm/yyyy hh:ii:ss
-    const getDate = arr[0].split('/') 
+    const arr = today.split(' '); // dd/mm/yyyy hh:ii:ss
+    const getDate = arr[0].split('/'); 
     const format = {
+        rawDate : new Date(),
         microtime: new Date().getTime(),
         normal: `${parseInt(getDate[2]) - 543}-${formatData(getDate[1])}-${formatData(getDate[0])} ${arr[1]}`,
         thai: `${getDate[2]}-${formatData(getDate[1])}-${formatData(getDate[0])} ${arr[1]}`

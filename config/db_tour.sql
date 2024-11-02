@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Oct 16, 2024 at 10:10 AM
+-- Generation Time: Nov 02, 2024 at 07:42 AM
 -- Server version: 10.11.6-MariaDB-1:10.11.6+maria~ubu2204
 -- PHP Version: 8.2.8
 
@@ -44,7 +44,7 @@ CREATE TABLE `agent` (
 --
 
 INSERT INTO `agent` (`license_id`, `username`, `password`, `email`, `conf_email`, `company_name`, `tel`, `pic_payment_path`, `update_date`) VALUES
-('123/23', 'qwert', '$2a$12$.elfC5igUbV7yJUXSRefhuHI1Z84EiQRHY9nKYUjfPKFk3pHrSCru', 'seawaysia@gmail.com', '78174548', 'Qwert Limited', '0912345678', 'qr-code-payment.jpg', '2024-10-14 12:59:56');
+('123/23', 'qwert', '$2a$12$KxON.fnRuGKSIOtqo6vMC.huFPzjKYy4bwQYDALE/BYQUH8tPh34u', 'seawaysia@gmail.com', '78174548', 'Qwert Limited', '0912345678', 'qr-code-payment.jpg', '2024-10-28 17:48:12');
 
 -- --------------------------------------------------------
 
@@ -103,7 +103,7 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`uid`, `email`, `password`, `conf_email`, `update_date`) VALUES
-(1, 'bank_777_777@hotmail.com', '$2a$12$8t2p32SPiADSB236MQvAXuTkGLF8GLUveyabLv3ZsH8btqx2hPFBu', '83174635', '2024-10-16 16:58:40');
+(1, 'bank_777_777@hotmail.com', '$2a$12$8t2p32SPiADSB236MQvAXuTkGLF8GLUveyabLv3ZsH8btqx2hPFBu', '83174635', '2024-11-02 14:40:41');
 
 -- --------------------------------------------------------
 
@@ -137,7 +137,7 @@ INSERT INTO `package_tour` (`package_id`, `package_name`, `description`, `days_t
 (3, 'เกาะหลีเป๊ะ (koh lipe)', 'เกาะหลีเป๊ะ หรือ เกาะลีเป๊ะ เป็นเกาะกลางทะเลอยู่ในเขตตำบลเกาะสาหร่าย อำเภอเมืองสตูล จังหวัดสตูล อยู่ทางตอนใต้ของเกาะอาดัง ห่างจากแผ่นดินของจังหวัดสตูล 85 กิโลเมตร เขตอำนาจการควบคุมของอุทยานแห่งชาติ', 3, 40, 'Qwert Limited', 1500.00, 20, '2024-10-14 06:08:00', '2024-11-20 22:59:00', 'active', '2024-10-14 13:07:22', 'qwert'),
 (4, 'หมู่เกาะพี พี (koh phi phi)', 'หมู่เกาะพี พี อยู่ห่างจากจังหวัดกระบี่ราว 40 กิโลเมตร หมู่เกาะพีพี เป็นส่วนหนึ่งของอุทยานแห่งชาติ หาดนพรัตน์ธารา-หมู่เกาะพีพี เดิมชาวทะเลเรียก หมู่เกาะนี้ว่า ปูเลาปิอาปิ คำว่า ปูเลา แปลว่าเกาะ', 2, 20, 'Qwert Limited', 2000.00, 0, '2024-10-14 07:15:00', '2024-11-30 08:08:00', 'active', '2024-10-14 13:08:48', 'qwert'),
 (5, 'เกาะกูด (koh kood)', 'ที่นี่คือเกาะสุดท้ายทางทิศตะวันออกของประเทศไทยในน่านน้ำทะเลตราด และยังมีขนาดใหญ่เป็นอันดับสองรองจากเกาะช้าง และเป็นเกาะที่มีขนาดใหญ่เป็นอันดับ 4 ของประเทศเลยทีเดียว ', 3, 20, 'Qwert Limited', 1000.00, 0, '2024-10-14 00:00:00', '2024-11-30 00:00:00', 'active', '2024-10-14 13:17:57', 'qwert'),
-(6, 'เกาะเต่า (koh Tao)', 'เกาะเต่า เป็นเกาะในอ่าวไทย อยู่ในตำบลเกาะเต่า อำเภอเกาะพะงัน จังหวัดสุราษฎร์ธานี เกาะมีรูปร่างโค้งเว้าเหมือนกับเมล็ดถั่ว เกาะตั้งอยู่ทางทิศตะวันตกเฉียงเหนือของเกาะพะงัน ห่างประมาณ 45 กิโลเมตร', 2, 50, 'Qwert Limited', 1500.00, 5, '2024-10-14 15:16:00', '2024-11-30 04:04:00', 'active', '2024-10-14 13:20:03', 'qwert');
+(6, 'เกาะเต่า (koh Tao)', 'เกาะเต่า เป็นเกาะในอ่าวไทย อยู่ในตำบลเกาะเต่า อำเภอเกาะพะงัน จังหวัดสุราษฎร์ธานี เกาะมีรูปร่างโค้งเว้าเหมือนกับเมล็ดถั่ว เกาะตั้งอยู่ทางทิศตะวันตกเฉียงเหนือของเกาะพะงัน ห่างประมาณ 45 กิโลเมตร', 2, 50, 'Qwert Limited', 1500.00, 5, '2024-10-14 15:16:00', '2024-11-30 04:04:00', 'active', '2024-10-28 16:49:32', 'qwert');
 
 -- --------------------------------------------------------
 
@@ -165,7 +165,10 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`id_paid`, `amount`, `currency`, `status`, `paid_at`, `update_date`, `method`, `pic_receipt_path`, `email`, `booking_id`, `uid`) VALUES
 ('1728893447382', 475.00, 'thb', 'successful', '2024-10-14 15:10:47.000000', '0000-00-00 00:00:00', 'e_slip', 'slip-history-05.jpg', 'bank_777_777@hotmail.com', '1728893447385xJkua', 1),
-('chrg_test_61euitgot3ur9krubdo', 475.00, 'THB', 'successful', '2024-10-15 01:02:14.000000', '2024-10-15 01:02:14', 'credit_card', NULL, 'bank_777_777@hotmail.com', '1728928931614voyJM', 1);
+('chrg_test_61euitgot3ur9krubdo', 475.00, 'THB', 'successful', '2024-10-15 01:02:14.000000', '2024-10-15 01:02:14', 'credit_card', NULL, 'bank_777_777@hotmail.com', '1728928931614voyJM', 1),
+('chrg_test_61in1j4558aovpcdsvhk', 475.00, 'THB', 'successful', '2024-10-28 16:43:25.000000', '2024-10-28 09:43:25', 'credit_card', NULL, 'bank_777_777@hotmail.com', '1728893447385xJkua', 1),
+('chrg_test_61in1j4558aovpcplqt', 400.00, 'THB', 'successful', '2024-10-24 17:43:44.000000', '2024-10-24 17:43:44', 'credit_card', NULL, 'bank_777_777@hotmail.com', '1729766622581HPYVz', 1),
+('chrg_test_61in4an7fn476sw2pbw', 2000.00, 'THB', 'successful', '2024-10-24 17:51:35.000000', '2024-10-24 17:51:35', 'credit_card', NULL, 'bank_777_777@hotmail.com', '1729767093693ZetJv', 1);
 
 -- --------------------------------------------------------
 
@@ -193,8 +196,10 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`booking_id`, `amount`, `price_person`, `discount`, `check_in_date`, `check_out_date`, `status`, `since_date`, `update_date`, `email`, `uid`, `package_id`) VALUES
-('1728893447385xJkua', 1, 500.00, 5, '2024-10-14', '2024-10-16', 'pending', '2024-10-14 15:10:47.000000', '2024-10-14 15:10:47.000000', 'bank_777_777@hotmail.com', 1, 1),
-('1728928931614voyJM', 1, 500.00, 5, '2024-10-15', '2024-10-17', 'confirmed', '2024-10-15 01:02:11.000000', '2024-10-15 01:02:11.000000', 'bank_777_777@hotmail.com', 1, 1);
+('1728893447385xJkua', 1, 500.00, 5, '2024-10-14', '2024-10-16', 'confirmed', '2024-10-14 15:10:47.000000', '2024-10-24 17:54:22.000000', 'bank_777_777@hotmail.com', 1, 1),
+('1728928931614voyJM', 1, 500.00, 5, '2024-10-15', '2024-10-17', 'confirmed', '2024-10-15 01:02:11.000000', '2024-10-15 01:02:11.000000', 'bank_777_777@hotmail.com', 1, 1),
+('1729766622581HPYVz', 1, 500.00, 0, '2024-10-13', '2024-10-15', 'confirmed', '2024-10-24 17:43:42.000000', '2024-10-24 17:43:42.000000', 'bank_777_777@hotmail.com', 1, 1),
+('1729767093693ZetJv', 2, 1000.00, 0, '2024-10-29', '2024-10-31', 'confirmed', '2024-10-24 17:51:33.000000', '2024-10-28 16:43:04.000000', 'bank_777_777@hotmail.com', 1, 5);
 
 --
 -- Indexes for dumped tables

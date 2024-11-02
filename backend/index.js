@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path')
 const app = express();
 const cors = require('cors');
+
+const adminRoutes = require('./routes/admins/admin');
 const userRoutes = require('./routes/users/user');
 const agentRoutes = require('./routes/agents/agent');
 const db = require('./models');
@@ -15,20 +17,26 @@ const resetDB = {force:false};
 db.sequelize.sync(resetDB).then(() => {
     db.extradb(resetDB)
     
+    app.use('/admin',adminRoutes);
     app.use('/user',userRoutes);
     app.use('/agent',agentRoutes);
 
-    app.use('/package_tour',express.static(path.join(__dirname,'/src/images/package_tour')));
+    app.use('/bg_search',express.static(path.join(__dirname,'/src/images/bgSearch')));
+    app.use('/package_tour',express.static(path.join(__dirname,'/src/images/packageTour')));
     app.use('/qr_code',express.static(path.join(__dirname,'/src/images/qrcode')));
+    app.use('/e_slip',express.static(path.join(__dirname,'/src/images/eSlip')));
 
+    app.get('/bg_search/:filename', (req, res) => {
+        res.sendFile(path.join(__dirname, "/src/images/bgSearch/"+req.params.filename));
+    });
     app.get('/package_tour/:filename', (req, res) => {
-        res.sendFile(path.join(__dirname, "/src/images/package_tour/"+req.params.filename));
+        res.sendFile(path.join(__dirname, "/src/images/packageTour/"+req.params.filename));
     });
     app.get('/qr_code/:filename', (req, res) => {
-        res.sendFile(path.join(__dirname, "/src/images/qr_code/"+req.params.filename));
+        res.sendFile(path.join(__dirname, "/src/images/qrcode/"+req.params.filename));
     });
     app.get('/e_slip/:filename', (req, res) => {
-        res.sendFile(path.join(__dirname, "/src/images/e_slip/"+req.params.filename));
+        res.sendFile(path.join(__dirname, "/src/images/eSlip/"+req.params.filename));
     });
 
     app.listen(process.env.PORT_BE,() =>{
