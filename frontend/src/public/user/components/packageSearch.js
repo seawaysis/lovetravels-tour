@@ -66,7 +66,6 @@ function PackageSearch (props){
     }
 
     const refetch = async (body) => {
-        console.log(body.checkIn)
         if(body.checkIn){
         return await axios.post("user/search_package",body)
             .then(res => {

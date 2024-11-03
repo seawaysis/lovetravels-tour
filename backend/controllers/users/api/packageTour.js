@@ -7,7 +7,6 @@ const defaultSearch = async (req,res) => {
     const checkIn = dateTime.today().rawDate;
     let checkOut = dateTime.today().rawDate;
     checkOut.setDate(checkOut.getDate() + 2);
-    console.log(checkIn);
     res.status(200).json({ search: '',checkIn : checkIn.toISOString().split('T')[0],checkOut : checkOut.toISOString().split('T')[0],amount :1});
 }
 const searchPackage = async (req,res) => {

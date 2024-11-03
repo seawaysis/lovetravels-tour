@@ -5,7 +5,7 @@ const packageTourSearch = createSlice({
   initialState : {packageSearch : []},
   reducers: {
     updatePackageSearch: (state, action) => {
-        console.log(current(state))
+      //console.log(current(state))
       state.packageSearch = action.payload;
     }
   }

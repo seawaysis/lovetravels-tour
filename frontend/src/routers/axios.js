@@ -1,7 +1,6 @@
 import axios from 'axios';
 import LocalStorages from '../services/localStorages';
 import { useNavigate } from 'react-router-dom';
-
 axios.defaults.baseURL = "http://localhost:8080/";
 
 axios.interceptors.request.use(
@@ -61,9 +60,16 @@ axios.interceptors.request.use(
         Promise.reject(err)
     }
 )
-// axios.interceptors.response.use(
-//     response => {
-//         return response;
-//     }
-// )
+axios.interceptors.response.use(
+    response => {
+        return response ;
+    },err => {
+        if(err.status === 401){
+            LocalStorages.removeToken('all');
+            window.location = '/user/login';
+        }else{
+            return err;
+        }
+    }
+)
 export default axios;

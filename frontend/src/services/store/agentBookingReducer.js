@@ -6,7 +6,7 @@ const allBooking = createSlice({
   initialState : {allBooking : []},
   reducers: {
     updateAllBooking: (state, action) => {
-      console.log(current(state));
+      //console.log(current(state));
       state.allBooking = action.payload;
     }
   },

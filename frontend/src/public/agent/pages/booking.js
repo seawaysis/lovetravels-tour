@@ -15,7 +15,6 @@ const Booking = ()=>{
        dispatch(agentThunks.getAllBooking());
     }, [dispatch]);
     const { allBooking } = useSelector((state) => state.AgentBooking);
-    console.log(allBooking);
     const wrapSpan = {xs : 23, sm : 23, md : 23, lg : 14, xl : 14, xxl : 12};
     
     const arrStatusTag = {
@@ -75,7 +74,7 @@ const Booking = ()=>{
                 <Col span={8} style={{textAlign: 'left'}}><span className="text_main">Price Per Person</span><br /><span className="price">{formatMoney(v.price_person)}</span></Col>
                 <Col span={8} style={{textAlign: 'right'}}><span className="text_main">Sum Price</span><br /><span className="price_discount">{formatMoney(v.price_person*v.amount)}</span><br /><span className="price" style={{fontSize : '18px'}}>{formatMoney((v.price_person*v.amount)*v.discount/100)}</span><br /><span className="price_sum">{formatMoney((v.price_person*v.amount)-((v.price_person*v.amount)*v.discount/100))}</span><br /><span className="sub_description"> * text includes</span></Col>
             </Row>
-            <Row>
+            <Row style={{overflowX: 'auto'}}>
                 <BookingPaymentDetail arrDetail={v.paymentDetail}/>
             </Row>
             <Divider />

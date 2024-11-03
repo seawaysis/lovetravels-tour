@@ -44,7 +44,6 @@ const allBooking = async (req,res) => {
                             pic_receipt_path : v.pic_receipt_path ? fullHost+v.pic_receipt_path : v.pic_receipt_path
                         }
                 );
-                console.log(result[arr.tempIndex].paymentDetail);
         });
         res.status(200).send(result);
     }
