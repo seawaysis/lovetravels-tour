@@ -17,7 +17,7 @@ const storageRegister = multer.diskStorage({
 });
 const storagePackage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, 'src/images/package_tour/');
+    callback(null, 'src/images/packageTour/');
   },
   filename: function (req, file, callback) {
     callback(null, file.originalname.replace(/[&\/\\#,+()$~%^'":*?<>{} ]/g,''));

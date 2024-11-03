@@ -52,7 +52,8 @@ const allPackagtTour = async (req,res) => {
     const body = req.body;
     const decodeToken = req.decodeToken;
     const fullHost = `${req.protocol}://${req.get('host')}/package_tour/`;
-    const result = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,CONCAT(?,g.pic_path) AS pic_url FROM package_tour AS p LEFT JOIN gallery AS g ON p.package_id = g.package_id WHERE p.username = ? GROUP BY p.package_name ORDER BY p.package_id DESC,p.update_date DESC`, {
+    const result = await sequelize.query(`SELECT p.package_id,p.package_name,p.description,p.company_name,p.max_amount,p.days_trip,p.price_person,p.discount,p.start_date,p.end_date,p.status,CONCAT(?, (SELECT g.pic_path FROM gallery g WHERE g.package_id = p.package_id LIMIT 1)) AS pic_url FROM package_tour AS p WHERE p.username = ? ORDER BY p.package_id DESC, p.update_date DESC;
+`, {
             replacements: [fullHost,decodeToken.username],
             type: QueryTypes.SELECT})
             .then(r => {return r})

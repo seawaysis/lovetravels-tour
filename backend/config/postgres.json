@@ -3,7 +3,7 @@
     "username": "user_tour",
     "password": "pass_tour",
     "database": "db_tour",
-    "host": "172.19.0.1",
+    "host": "172.24.0.1",
     "port": "5432",
     "dialect": "postgres",
     "dialectOptions": {

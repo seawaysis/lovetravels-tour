@@ -63,13 +63,13 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         return response ;
-    },err => {
-        if(err.status === 401){
-            LocalStorages.removeToken('all');
-            window.location = '/user/login';
-        }else{
-            return err;
-        }
-    }
+    }// },err => {
+    //     if(err.status === 401){
+    //         LocalStorages.removeToken('all');
+    //         window.location = '/user/login';
+    //     }else{
+    //         return err;
+    //     }
+    // }
 )
 export default axios;

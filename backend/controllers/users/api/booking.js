@@ -9,10 +9,15 @@ const Omise = require('omise')({
 });
 const allBooking = async (req,res) => {
     try{
-        const queryText = `SELECT r.*,p.package_name,p.company_name,g.pic_path 
-        FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id 
-        LEFT JOIN (SELECT package_id,pic_path FROM gallery GROUP BY package_id ORDER BY update_date DESC) AS g ON r.package_id = g.package_id 
-        WHERE r.email = ? GROUP BY r.booking_id ORDER BY r.update_date DESC;`;
+        const queryText = `SELECT r.*, p.package_name, p.company_name, g.pic_path
+            FROM reservation AS r 
+            INNER JOIN package_tour AS p ON r.package_id = p.package_id 
+            LEFT JOIN (
+                SELECT package_id, MIN(pic_path) AS pic_path
+                FROM gallery GROUP BY package_id
+            ) AS g ON r.package_id = g.package_id 
+            WHERE r.email = ? 
+            ORDER BY r.update_date DESC`;
         const result = await sequelize.query(queryText, {
             replacements: [req.decodeToken.email],
             type: QueryTypes.SELECT,
