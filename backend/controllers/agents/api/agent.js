@@ -122,7 +122,7 @@ const editProfileAgent = async (req,res) => {
                 email : body.email,
                 tel : body.phone
             };
-        req.files[0].originalname ? dataUpdate.pic_payment_path = req.files[0].originalname : null; 
+        req.files[0] ? dataUpdate.pic_payment_path = req.files[0].originalname : null; 
         const update = await db.Agent.update(dataUpdate,{
                 where: {username:result[0].username}
             }).then(res => {return res}).catch(err => {return {error : err}});

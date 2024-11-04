@@ -175,7 +175,7 @@ const formEditPackage = () => {
     body('price').not().isEmpty().withMessage('Invalid price dose not empty')
     .exists({checkFalsy: true}).withMessage('You must type a number')
     .isLength({min:1}).withMessage('The minimum price length is 1 number')
-    .isLength({max:6}).withMessage('The maximum price length is 6 number'),
+    .isLength({max:10}).withMessage('The maximum price length is 10 number'),
     body('priceDiscount').not().isEmpty().withMessage('Invalid discount dose not empty')
     .exists({checkFalsy: true}).withMessage('You must type a number')
     .isLength({min:1}).withMessage('The minimum discount length is 1 number')
