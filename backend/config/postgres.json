@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "db_tour_owner",
-    "password": "WLMEgIxpP5u3",
+    "username": "user_tour",
+    "password": "pass_tour",
     "database": "db_tour",
-    "host": "ep-muddy-heart-a1mmx4vu.ap-southeast-1.aws.neon.tech/db_tour?sslmode=require",
+    "host": "172.24.0.1",
     "port": "5432",
     "dialect": "postgres",
     "dialectOptions": {
