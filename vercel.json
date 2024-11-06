@@ -4,6 +4,7 @@
     {
       "name": "frontend",
       "src": "frontend",
+      "builds": [{ "src": "./frontend/src/index.js", "use": "@vercel/node" }],
       "routes": [
         {
           "src": "/(.*)",
@@ -14,6 +15,7 @@
     {
       "name": "backend",
       "src": "backend",
+      "builds": [{ "src": "./backend/index.js", "use": "@vercel/node" }],
       "routes": [
         {
           "src": "/(.*)",
