@@ -1,8 +1,9 @@
 import axios from 'axios';
 import LocalStorages from '../services/localStorages';
-import { useNavigate } from 'react-router-dom';
-axios.defaults.baseURL = "http://localhost:8080/";
+//import { useNavigate } from 'react-router-dom';
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API ? process.env.REACT_APP_BACKEND_API : "http://localhost:8080/";
 
+console.log(axios.defaults.baseURL);
 axios.interceptors.request.use(
     config => {
         const url = config.url.toLowerCase();
