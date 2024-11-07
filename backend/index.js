@@ -6,7 +6,6 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
     app.listen(3000,() =>{
         console.log('Server on port ',3000)
     });
-module.exports = app ;
 // const cors = require('cors');
 
 // const adminRoutes = require('./routes/admins/admin');
@@ -49,4 +48,4 @@ module.exports = app ;
 //     });
 // });
 
-// module.exports = app;
+module.exports = app ;
