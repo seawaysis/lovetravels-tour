@@ -1,7 +1,12 @@
-require('dotenv').config();
+//require('dotenv').config();
 const express = require('express');
 // const path = require('path')
 const app = express();
+app.get("/", (req, res) => res.send("Express on Vercel"));
+    app.listen(8080,() =>{
+        console.log('Server on port ',8080)
+    });
+module.exports = app ;
 // const cors = require('cors');
 
 // const adminRoutes = require('./routes/admins/admin');
@@ -43,10 +48,5 @@ const app = express();
 //         console.log('Server on port ',process.env.PORT_BE)
 //     });
 // });
-
-    app.get("/", (req, res) => res.send("Express on Vercel"));
-    app.listen(process.env.PORT_BE,() =>{
-        console.log('Server on port ',process.env.PORT_BE)
-    });
 
 // module.exports = app;
