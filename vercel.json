@@ -6,5 +6,5 @@
   "routes": [
     { "src": "/(.*)", "dest": "./frontend/src/index.js" }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "./backend/index.js" }] 
+  "rewrites": [{ "source": "/(.*)", "destination": "./backend/index.js" }]    
 }
