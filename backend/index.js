@@ -15,9 +15,9 @@ app.use(express.urlencoded({extended: false}));
 
 const resetDB = {force:false};
 db.sequelize.sync(resetDB).then(() => {
-    db.extradb(resetDB)
-    
-    app.use('/admin',adminRoutes);
+    db.extradb(resetDB);
+});
+app.use('/admin',adminRoutes);
     app.use('/user',userRoutes);
     app.use('/agent',agentRoutes);
 
@@ -42,6 +42,5 @@ db.sequelize.sync(resetDB).then(() => {
     app.listen(process.env.PORT_BE,() =>{
         console.log('Server on port ',process.env.PORT_BE)
     });
-});
-
+    
 module.exports = app;
