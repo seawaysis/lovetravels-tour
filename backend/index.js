@@ -3,8 +3,8 @@ const express = require('express');
 // const path = require('path')
 const app = express();
 app.get("/", (req, res) => res.send("Express on Vercel"));
-    app.listen(8080,() =>{
-        console.log('Server on port ',8080)
+    app.listen(3000,() =>{
+        console.log('Server on port ',3000)
     });
 module.exports = app ;
 // const cors = require('cors');
