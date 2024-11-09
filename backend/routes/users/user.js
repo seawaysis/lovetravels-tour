@@ -8,7 +8,7 @@ const multer = require('multer');
 
 const storageSlip = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, 'src/images/e_slip/');
+    callback(null, 'src/images/eSlip/');
   },
   filename: function (req, file, callback) {
     callback(null, file.originalname.replace(/[&\/\\#,+()$~%^'":*?<>{} ]/g,''));
