@@ -21,10 +21,10 @@ app.use('/admin',adminRoutes);
     app.use('/user',userRoutes);
     app.use('/agent',agentRoutes);
 
-    app.use('/bg_search',express.static(path.join(__dirname,'/src/images/bgSearch')));
-    app.use('/package_tour',express.static(path.join(__dirname,'/src/images/packageTour')));
-    app.use('/qr_code',express.static(path.join(__dirname,'/src/images/qrcode')));
-    app.use('/e_slip',express.static(path.join(__dirname,'/src/images/eSlip')));
+    // app.use('/bg_search',express.static(path.join(__dirname,'/src/images/bgSearch')));
+    // app.use('/package_tour',express.static(path.join(__dirname,'/src/images/packageTour')));
+    // app.use('/qr_code',express.static(path.join(__dirname,'/src/images/qrcode')));
+    // app.use('/e_slip',express.static(path.join(__dirname,'/src/images/eSlip')));
 
     app.get('/bg_search/:filename', (req, res) => {
         res.sendFile(path.join(__dirname, "/src/images/bgSearch/"+req.params.filename));

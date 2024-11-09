@@ -87,6 +87,7 @@ services:
 #git reset --hard [commit_id]
 #git log --graph --oneline --decorate
 
+#create network => docker network create nginx-proxy-example
 #frontend
 #npm init
 #npx create-react-app [projectname] || npm install -g create-react-app
