@@ -140,6 +140,26 @@ const editProfileAgent = async (req,res) => {
         }
     }
 }
+const allTaskLog = async (req,res) => {
+    const reDecoded = req.decodeToken;
+    console.log(reDecoded);
+    const result = await sequelize.query('SELECT * FROM agent_log WHERE username = ?', {
+        replacements: [reDecoded.username],
+        type: QueryTypes.SELECT,
+    });
+    if (!Object.keys(result).length){
+        res.status(400).send({message :`agent log not found !!`});
+    }else{
+        res.status(200).send(result);
+    }
+
+        // result = await db.Agent_log.create({
+        //     license_id: body.license,
+        //     task:'',
+        //     ip_address : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+        //     username : reDecoded.username
+        // });
+} 
 const confEmailAgent = async (req,res) => {
     const body = req.body
     const reDecoded = req.decodeToken
@@ -200,6 +220,7 @@ module.exports = {
     profileAgent,
     changePasswordAgent,
     editProfileAgent,
+    allTaskLog,
     confEmailAgent,
     resendOTPAgent
 }

@@ -46,6 +46,7 @@ router.get('/resend_otp',Middlewares.checkRefreshToken,userControllers.resendOTP
 
 router.post('/add_package',uploadPackage.array('pic_package',5),Middlewares.checkAccessToken,Middlewares.formAddPackage(),Middlewares.validationForm,packageControllers.addPackageTour);
 router.post('/edit_package',uploadPackage.array('pic_package',5),Middlewares.checkAccessToken,Middlewares.formEditPackage(),Middlewares.validationForm,packageControllers.editPackageTour);
+router.get('/allTaskLog',Middlewares.checkAccessToken,userControllers.allTaskLog);
 router.get('/once_package/:id',Middlewares.checkAccessToken,Middlewares.paramIdPackageTour(),Middlewares.validationForm,packageControllers.oncePackageTour);
 router.get('/all_package',Middlewares.checkAccessToken,packageControllers.allPackagtTour);
 router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBooking);
