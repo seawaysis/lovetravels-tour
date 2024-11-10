@@ -52,7 +52,7 @@ const Booking = (props)=>{
         <Col className="card_bg" {...wrapSpan}><Empty /></Col>
     ) : ( allBooking.map((v) => ( 
     <Row justify="center" key={v.booking_id}>
-        <Col className="card_bg" {...wrapSpan}>
+        <Col className="card_bg fadeIn" {...wrapSpan}>
             <Row>
                 <Col span={11}><img src={v.pic_path} alt={v.package_name} style={{width : '100%',height:'150px'}}/></Col>
                 <Col span={12} offset={1}><span className="text_main">{v.package_name}</span><br /><span className="text_sub">{v.company_name}</span><br /><div className={arrStatusTag[v.status].class} style={{margin:'10px 0'}}>{v.status}</div></Col>

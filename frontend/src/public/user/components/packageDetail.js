@@ -31,7 +31,7 @@ function PackageDetail(props) {
         }
     });
     return (
-        <>
+        <div class="fadeIn">
         <Row justify="center">
             <Col className="card_bg" xs={23} sm={23} md={20} lg={16} xl={16} xxl={12}>
                 <Row style={{textAlign: 'center'}}>
@@ -74,7 +74,7 @@ function PackageDetail(props) {
                 <Button className="Button button_style" size="large" onClick={toPackageSearch} style={{marginTop : '20px'}}>Back to search</Button>
             </Col>
         </Row>
-        </>
+        </div>
     );
 }
 export default PackageDetail;

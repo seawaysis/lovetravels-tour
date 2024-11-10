@@ -221,7 +221,7 @@ input[type]:after {
     background-color: #828282 !important;
 }
 .multiline-truncate {
-display: -webkit-box;
+    display: -webkit-box;
     /* Use flexbox */
     -webkit-box-orient: vertical;
     /* Set box orientation */
@@ -229,4 +229,17 @@ display: -webkit-box;
     /* Number of lines to display */
     overflow: hidden;
     /* Hides overflow text */
+}
+
+.fadeIn{
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }

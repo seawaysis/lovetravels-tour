@@ -2,12 +2,16 @@ const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
+const path = require("path");
+const fs = require('fs');
 
 const defaultSearch = async (req,res) => {
+    let files = fs.readdirSync(path.join(__dirname, "../../../src/images/bgSearch/"));
+    const pathBg = files.map(v => {return `${req.protocol}://${req.get('host')}/bg_search/`+v});
     const checkIn = dateTime.today().rawDate;
     let checkOut = dateTime.today().rawDate;
     checkOut.setDate(checkOut.getDate() + 2);
-    res.status(200).json({ search: '',checkIn : checkIn.toISOString().split('T')[0],checkOut : checkOut.toISOString().split('T')[0],amount :1});
+    res.status(200).json({ search: '',checkIn : checkIn.toISOString().split('T')[0],checkOut : checkOut.toISOString().split('T')[0],amount :1,bgSearch : pathBg});
 }
 const searchPackage = async (req,res) => {
     const body = req.body

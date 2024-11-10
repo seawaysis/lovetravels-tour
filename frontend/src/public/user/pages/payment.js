@@ -37,7 +37,7 @@ function Confirm_payment () {
     return (<>
     <Header />
     <Row justify="center">
-        <Col className="card_bg" {...wrapSpan}>
+        <Col className="card_bg fadeIn" {...wrapSpan}>
             <Row>
                 <Col span={10}><img src={items.dataDetail.pic_path[0]} alt={items.dataDetail.package_name} style={{width : '100%',height:'150px'}}/></Col>
                 <Col span={12} offset={2}><span className="text_main">{items.dataDetail.package_name}</span><br /><span className="text_sub">{items.dataDetail.company_name}</span></Col>
@@ -64,7 +64,7 @@ function Confirm_payment () {
         </Col>
     </Row>
     <Row justify="center">
-        <Col className="card_bg"  {...wrapSpan}>
+        <Col className="card_bg fadeIn"  {...wrapSpan}>
             <span className="header_main">Payment method</span>
             <Tabs defaultActiveKey="1" items={tabsBar} /*onChange={onChangeTabs}*/ />
         </Col>

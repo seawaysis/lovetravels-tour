@@ -13,33 +13,38 @@ function PackageSearch (props){
     const tempBooking = localStorage.getToken('tempBooking');
     const [body,setBody] = useState({});
     const [fieldsSearch,setFieldsSearch] = useState([]);
+    const [bgSearch,setBgSearch] = useState([]);
     useEffect(() => {
         if(tempBooking.tempBooking){
             const result = JSON.parse(tempBooking.tempBooking);
             setDataSearch(result.dataSearch);
+            defaultSearch('bg');
         }else{ 
-            defaultSearch();
+            defaultSearch('full');
         }
     },[]);
-    const defaultSearch = async () => {
+    const defaultSearch = async (status) => {
         await axios.get("user/default_search")
             .then(res => {
-                const firstSearch = {
-                    search : res.data.search,
-                    checkIn : res.data.checkIn,
-                    checkOut : res.data.checkOut,
-                    amount : res.data.amount
-                };
-                setFieldsSearch([
-                            {name : ["search"],value : props.dataSearch.search? props.dataSearch.search : firstSearch.search},
-                            {name : ["checkIn"],value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs(firstSearch.checkIn,dateFormat)},
-                            {name : ["checkOut"],value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs(firstSearch.checkOut,dateFormat)},
-                            {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : firstSearch.amount}
-                        ]);
-                setBody(prevBody => ({
-                    ...prevBody,...firstSearch
-                }));
-                refetch(firstSearch);
+                if(status === 'full'){
+                    const firstSearch = {
+                        search : res.data.search,
+                        checkIn : res.data.checkIn,
+                        checkOut : res.data.checkOut,
+                        amount : res.data.amount
+                    };
+                    setFieldsSearch([
+                                {name : ["search"],value : props.dataSearch.search? props.dataSearch.search : firstSearch.search},
+                                {name : ["checkIn"],value : props.dataSearch.checkIn ? dayjs(props.dataSearch.checkIn,dateFormat) : dayjs(firstSearch.checkIn,dateFormat)},
+                                {name : ["checkOut"],value : props.dataSearch.checkOut ? dayjs(props.dataSearch.checkOut,dateFormat) : dayjs(firstSearch.checkOut,dateFormat)},
+                                {name : ["amount"],value : props.dataSearch.amount? props.dataSearch.amount : firstSearch.amount}
+                            ]);
+                    setBody(prevBody => ({
+                        ...prevBody,...firstSearch
+                    }));
+                    refetch(firstSearch);
+                }
+                changeBg(res.data.bgSearch);
             })
             .catch(err => {});
     }
@@ -86,8 +91,22 @@ function PackageSearch (props){
             statusChange: !prevDetail.statusChange
         }));
     }
+    const changeBg = (arrBg) => {
+        setBgSearch({
+            position: 'absolute',
+            zIndex: '-1',
+            background: `linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url(${arrBg[Math.round(Math.random() * ((arrBg.length -1) - 0) + 0)]}) center center`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            width: '100%',
+            height: '40%',
+            animation: 'fadeIn 2s'
+           });
+    }
     return(
-        <div style={{backgroundImage: 'url()'}}>
+        <div class="fadeIn">
+        <div style={bgSearch}>
+        </div>
         <Row justify="center">
             <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                 <Form
@@ -170,12 +189,12 @@ function PackageSearch (props){
         </Row>
         <Row justify="space-around">
             {!props.packageSearch[0] ? (
-                <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
+                <Col className="card_bg fadeIn" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                     <Empty />
                 </Col>
             ) : (
                 props.packageSearch.map((v,k) => (
-                <Col onClick={() => toPackageDetail(props.packageSearch[k])} className="card_bg package_list" xs={23} sm={23} md={12} lg={8} xl={8} xxl={8}>
+                <Col onClick={() => toPackageDetail(props.packageSearch[k])} className="card_bg package_list fadeIn" xs={23} sm={23} md={12} lg={8} xl={8} xxl={8}>
                     <Row>
                         <Col span={24}><img src={v.pic_path[0]} alt={v.package_name} style={{height: '250px',width: '100%'}}/></Col>
                     </Row>
@@ -193,7 +212,7 @@ function PackageSearch (props){
                 
             )))}
         </Row>
-        </div>
+    </div>
     );
 }
 export default PackageSearch;
