@@ -4,6 +4,7 @@ const { QueryTypes } = require('sequelize');
 const bcryptjs = require('bcryptjs');
 const dateTime = require('../datetime');
 const encryptToken = require('../encrypt');
+const log = require('../log');
 const email = require('../email');
 const fs = require('fs');
 const path = require('path');
@@ -31,7 +32,12 @@ const loginAgent = async (req,res) => {
                 update_date: datetime.normal
             },{
                 where: {username:result[0].username}
-            })
+            });
+            await log.taskLog({
+                task : 'Login',
+                ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                username : result[0].username
+            });
             res.status(200).json({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message :`agent => ${result[0].username} login OK !!`});
         }
     }
@@ -102,7 +108,11 @@ const changePasswordAgent = async (req,res) => {
                     },{
                         where: {username:result[0].username}
                     }).then(res => {return res}).catch(err => {return {error : err}});
-                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message: 'Change password successfully !!'});
+                update.error ? res.status(400).send({message : update.error}) : await log.taskLog({
+                            task : 'Changed password',
+                            ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                            username : result[0].username
+                        }); res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message: 'Change password successfully !!'});
             }
 } 
 const editProfileAgent = async (req,res) => {
@@ -136,33 +146,30 @@ const editProfileAgent = async (req,res) => {
                     }
                 });
             }
+            await log.taskLog({
+                            task : 'Edit profile',
+                            ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                            username : result[0].username
+                        });
             res.status(200).send({message : 'Edit package tour successfully'});
         }
     }
 }
 const allTaskLog = async (req,res) => {
     const reDecoded = req.decodeToken;
-    console.log(reDecoded);
-    const result = await sequelize.query('SELECT * FROM agent_log WHERE username = ?', {
-        replacements: [reDecoded.username],
-        type: QueryTypes.SELECT,
-    });
-    if (!Object.keys(result).length){
-        res.status(400).send({message :`agent log not found !!`});
-    }else{
-        res.status(200).send(result);
-    }
-
-        // result = await db.Agent_log.create({
-        //     license_id: body.license,
-        //     task:'',
-        //     ip_address : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-        //     username : reDecoded.username
-        // });
+            let result = await sequelize.query('SELECT * FROM agent_log WHERE username = ?', {
+                replacements: [reDecoded.username],
+                type: QueryTypes.SELECT,
+            });
+            if (!Object.keys(result).length){
+                res.status(400).send({message :`agent log not found !!`});
+            }else{
+                res.status(200).send(result);
+            }
 } 
 const confEmailAgent = async (req,res) => {
-    const body = req.body
-    const reDecoded = req.decodeToken
+    const body = req.body;
+    const reDecoded = req.decodeToken;
     const datetime = dateTime.today();
             const result = await sequelize.query('SELECT username,email,conf_email FROM agent WHERE email = ?', {
                 replacements: [reDecoded.email],
@@ -183,13 +190,17 @@ const confEmailAgent = async (req,res) => {
                     },{
                         where: {email:result[0].email}
                     }).then(res => {return res}).catch(err => {return {error : err}});
-                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message: 'Verify Email successfully !!'});
+                update.error ? res.status(400).send({message : update.error}) : await log.taskLog({
+                            task : 'Login',
+                            ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                            username : result[0].username
+                        }); res.status(200).send({accessToken: encoded,refreshToken: reEncoded,typeRole: 'agent',message: 'Verify Email successfully !!'});
                 }
             }
         }
 const resendOTPAgent = async (req,res) => {
     const datetime = dateTime.today();
-    const reDecoded = req.decodeToken
+    const reDecoded = req.decodeToken;
             const numOTP = await getOTPNum(8);
             const confEncoded = await getConfirmToken(reDecoded.email);
             const status = await email.sender({receive: reDecoded.email,subject:'Lovetravels Verify OTP',message:`OTP : <b>${numOTP}</b>`});

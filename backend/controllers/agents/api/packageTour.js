@@ -4,6 +4,7 @@ const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const encryptToken = require('../encrypt');
 const dateTime = require('../datetime');
+const log = require('../log');
 const fs = require('fs');
 const path = require('path');
 
@@ -44,6 +45,11 @@ const addPackageTour = async (req,res) => {
                 });
                 //result.dataValues.id
             }));
+            await log.taskLog({
+                task : 'add Package '+body.packageName,
+                ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                username : resultAgent[0].username
+            });
             res.status(200).send("add package ok !!")
         }
     }
@@ -156,6 +162,11 @@ const editPackageTour = async (req,res) => {
                 }
             }
             }
+            await log.taskLog({
+                task : 'edit Package '+body.packageName,
+                ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                username : decodeToken.username
+            });
             res.status(200).send({message : 'Edit package tour successfully'});
         }
     }
@@ -163,6 +174,7 @@ const editPackageTour = async (req,res) => {
 const changeStatusPackage = async (req,res) => {
     const body = req.body;
     const datetime = dateTime.today();
+    const decodeToken = req.decodeToken;
     const result = await sequelize.query('SELECT package_id FROM package_tour WHERE package_id = ? LIMIT ?', {
                 replacements: [body.id,1],
                 type: QueryTypes.SELECT,
@@ -176,7 +188,11 @@ const changeStatusPackage = async (req,res) => {
             },{
                 where: {package_id:result[0].package_id}
             }).then(res => {return res}).catch(err => {return {error : err}});
-        update.error ? res.status(400).send({message : update.error}) : res.status(200).send({message: 'Change status booking successfully !!'});
+        update.error ? res.status(400).send({message : update.error}) :await log.taskLog({
+                task : 'Changed status package '+result[0].package_id,
+                ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                username : decodeToken.username
+            }); res.status(200).send({message: 'Change status booking successfully !!'});
     }
 }
 module.exports = {

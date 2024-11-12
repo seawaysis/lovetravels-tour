@@ -7,36 +7,36 @@ module.exports = (Sequelize , DataTypes) => {
         },
         username: {
             type: DataTypes.STRING(30),
+            allowNull: false,
             unique: true,
-            allowNull: false
         },
         password: {
             type: DataTypes.TEXT,
-            notNull: true
+            allowNull: false,
         },
         email: {
             type: DataTypes.STRING,
-            notNull: true,
+            allowNull: false,
         },
         conf_email: {
             type: DataTypes.TEXT,
-            notNull: true
+            allowNull: false,
         },
         company_name: {
             type: DataTypes.STRING,
-            notNull: true
+            allowNull: false,
         },
         tel: {
             type: DataTypes.STRING(20),
-            notNull: true
+            allowNull: false,
         },
         pic_payment_path: {
             type: DataTypes.TEXT,
-            notNull: true
+            allowNull: false,
         },
         update_date: {
             type: DataTypes.DATE,
-            notNull: true
+            allowNull: false,
         }
     },{
         tableName: 'agent',
@@ -45,7 +45,7 @@ module.exports = (Sequelize , DataTypes) => {
     });
     
     model.associate = models => {
-        model.hasMany(models.Agent_log,{foreignKey:'username'})
+        //model.hasOne(models.Agent_log,{foreignKey:'username', targetKey: 'username', foreignKeyConstraint: true})
     //     //model.hasOne(models.Reservation,{foreignKey:'uid'}) //one to one
     //     //model.belongsToMany(models.Reservation, {through: models.Reservation}) //many to many
         //model.hasMany(models.Package_tour,{foreignKey:{ name: 'username', field: 'username' }}) //one to many

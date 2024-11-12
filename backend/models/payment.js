@@ -6,45 +6,45 @@ module.exports = (Sequelize , DataTypes) => {
             },
             amount: {
                 type: DataTypes.DECIMAL(7,2),
-                notNull: true
+                allowNull: false,
             },
             currency:{
                 type: DataTypes.STRING(15),
-                notNull: true
+                allowNull: false,
             },
             status:{
                 type: DataTypes.STRING(15),
-                notNull: true
+                allowNull: false,
             },
             paid_at: {
                 type: DataTypes.DATE(6),
-                notNull: true
+                allowNull: false,
             },
             update_date: {
                 type: DataTypes.DATE(6),
-                notNull: true
+                allowNull: false,
             },
             method: {
                 type: DataTypes.STRING(20),
-                notNull: true
+                allowNull: false,
             },
             pic_receipt_path: {
                 type: DataTypes.TEXT,
-                notNull: true
+                allowNull: true,
             },
             email: {
                 type: DataTypes.STRING,
-                notNull: true
+                allowNull: false,
             },
             booking_id: {
                 type: DataTypes.STRING(20),
                 foreignKey: true,
-                notNull: true
+                allowNull: false,
             },
             uid: {
                 type: DataTypes.INTEGER,
                 foreignKey: true,
-                notNull: true
+                allowNull: false,
             },
          },{
         tableName: 'payment',

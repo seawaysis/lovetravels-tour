@@ -241,5 +241,5 @@ module.exports = {
     changeStatusBooking,
     changeStatusPackage,
     formSummaryAccount,
-    validationForm,
+    validationForm
 };

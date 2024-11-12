@@ -50,9 +50,9 @@ db.Sequelize = Sequelize;
 
 db.extradb = async (resetDB) => {
   if(resetDB.force){
-    await sequelize.query('ALTER TABLE package_tour ADD CONSTRAINT `package_tour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE',
-      {raw: false}
-    ).then().catch()
+    // await sequelize.query('ALTER TABLE package_tour ADD CONSTRAINT `package_tour_ibfk_1` FOREIGN KEY(username) REFERENCES agent(username) ON DELETE NO ACTION ON UPDATE CASCADE',
+    //   {raw: false}
+    // ).then().catch()
   }
 }
 module.exports = db;

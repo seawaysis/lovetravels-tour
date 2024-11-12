@@ -7,12 +7,12 @@ module.exports = (Sequelize , DataTypes) => {
         },
         email: {
             type: DataTypes.STRING,
-            notNull: true,
+            allowNull: false,
             unique: true
         },
         password: {
             type: DataTypes.TEXT,
-            notNull: true
+            allowNull: false,allowNull: false,
         },
         conf_email: {
             type: DataTypes.TEXT,
@@ -20,7 +20,7 @@ module.exports = (Sequelize , DataTypes) => {
         },
         update_date: {
             type: DataTypes.DATE,
-            notNull: true
+            allowNull: false,
         }
     },{
         tableName: 'member',

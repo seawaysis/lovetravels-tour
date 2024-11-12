@@ -42,5 +42,8 @@ app.use('/admin',adminRoutes);
     app.listen(process.env.PORT_BE,() =>{
         console.log('Server on port ',process.env.PORT_BE)
     });
+    app.listen(process.env.PORT_BE_HTTPS,() =>{
+        console.log('Server on port ',process.env.PORT_BE_HTTPS)
+    });
     
 module.exports = app;

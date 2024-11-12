@@ -2,6 +2,7 @@ const db = require('../../../models');
 const {sequelize,Sequelize} = require('../../../models');
 const { QueryTypes } = require('sequelize');
 const dateTime = require('../datetime');
+const log = require('../log');
 
 const allBooking = async (req,res) => {
     const queryText = `SELECT r.*,p.package_name,pay.id_paid,pay.amount AS amount_paid,pay.status AS status_paid,pay.paid_at,pay.method,pic_receipt_path FROM reservation AS r INNER JOIN package_tour AS p ON r.package_id = p.package_id LEFT JOIN payment AS pay ON r.booking_id = pay.booking_id ORDER BY CASE WHEN r.status = 'pending' THEN 0 ELSE 1 END,r.status ASC,r.update_date DESC`;
@@ -51,6 +52,7 @@ const allBooking = async (req,res) => {
 const changeStatusBooking = async (req,res) => {
     const body = req.body;
     const datetime = dateTime.today();
+    const reDecoded = req.decodeToken;
     const result = await sequelize.query('SELECT booking_id FROM reservation WHERE booking_id = ? LIMIT ?', {
                 replacements: [body.id,1],
                 type: QueryTypes.SELECT,
@@ -64,7 +66,11 @@ const changeStatusBooking = async (req,res) => {
                     },{
                         where: {booking_id:result[0].booking_id}
                     }).then(res => {return res}).catch(err => {return {error : err}});
-                update.error ? res.status(400).send({message : update.error}) : res.status(200).send({message: 'Change status booking successfully !!'});
+                update.error ? res.status(400).send({message : update.error}) :await log.taskLog({
+                            task : 'Changed status booking '+result[0].booking_id,
+                            ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                            username : reDecoded.username
+                        }); res.status(200).send({message: 'Change status booking successfully !!'});
                 }
             };
 module.exports = {

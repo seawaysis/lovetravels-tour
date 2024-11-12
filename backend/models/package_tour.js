@@ -7,11 +7,11 @@ module.exports = (Sequelize , DataTypes) => {
         },
         package_name: {
             type: DataTypes.STRING,
-            notNull: true
+            allowNull: false,
         },
         description: {
             type: DataTypes.TEXT,
-            notNull: true
+            allowNull: false,
         },
         days_trip: {
             type: DataTypes.INTEGER,
@@ -19,36 +19,36 @@ module.exports = (Sequelize , DataTypes) => {
         },
         max_amount: {
             type: DataTypes.INTEGER,
-            notNull: true
+            allowNull: false,
         },
         company_name: {
             type: DataTypes.STRING,
-            notNull: true
+            allowNull: false,
         },
         price_person: {
             type: DataTypes.DECIMAL(7,2),
-            notNull: true
+            allowNull: false,
         },
         discount: {
             type: DataTypes.INTEGER,
             len: [0,100],
-            notNull: true
+            allowNull: false,
         },
         start_date: {
             type: DataTypes.DATE,
-            notNull: true
+            allowNull: false,
         },
         end_date: {
             type: DataTypes.DATE,
-            notNull: true
+            allowNull: false,
         },
         status: {
             type: DataTypes.STRING(10),
-            notNull: true
+            allowNull: false,
         },
         update_date: {
             type: DataTypes.DATE,
-            notNull: true
+            allowNull: false,
         },
         username: {
             type: DataTypes.STRING(30),

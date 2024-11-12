@@ -6,11 +6,11 @@ module.exports = (Sequelize , DataTypes) => {
         },
         amount: {
             type: DataTypes.INTEGER,
-            notNull: true
+            allowNull: false,
         },
         price_person: {
             type: DataTypes.DECIMAL(7,2),
-            notNull: true
+            allowNull: false,
         },
         discount: {
             type: DataTypes.INTEGER,
@@ -18,37 +18,37 @@ module.exports = (Sequelize , DataTypes) => {
         },
         check_in_date: {
             type: DataTypes.DATEONLY,
-            notNull: true
+            allowNull: false,
         },
         check_out_date: {
             type: DataTypes.DATEONLY,
-            notNull: true
+            allowNull: false,
         },
         status: {
             type: DataTypes.STRING(20),
-            notNull: true
+            allowNull: false,
         },
         since_date: {
             type: DataTypes.DATE(6),
-            notNull: true
+            allowNull: false,
         },
         update_date: {
             type: DataTypes.DATE(6),
-            notNull: true
+            allowNull: false,
         },
         email: {
             type: DataTypes.STRING,
-            notNull: true
+            allowNull: false,
         },
         uid: {
             type: DataTypes.INTEGER,
             foreignKey: true,
-            notNull: true
+            allowNull: false,
         },
         package_id: {
             type: DataTypes.INTEGER,
             foreignKey: true,
-            notNull: true
+            allowNull: false,
         },
     },{
         tableName: 'reservation',
