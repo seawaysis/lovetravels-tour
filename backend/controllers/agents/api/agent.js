@@ -157,15 +157,15 @@ const editProfileAgent = async (req,res) => {
 }
 const allTaskLog = async (req,res) => {
     const reDecoded = req.decodeToken;
-            let result = await sequelize.query('SELECT * FROM agent_log WHERE username = ?', {
-                replacements: [reDecoded.username],
-                type: QueryTypes.SELECT,
-            });
-            if (!Object.keys(result).length){
-                res.status(400).send({message :`agent log not found !!`});
-            }else{
-                res.status(200).send(result);
-            }
+    let result = await sequelize.query('SELECT * FROM agent_log WHERE username = ?', {
+        replacements: [reDecoded.username],
+        type: QueryTypes.SELECT,
+    });
+    if (!Object.keys(result).length){
+        res.status(400).send({message :`agent log not found !!`});
+    }else{
+        res.status(200).send(result);
+    }
 } 
 const confEmailAgent = async (req,res) => {
     const body = req.body;

@@ -53,4 +53,5 @@ router.get('/all_booking',Middlewares.checkAccessToken,bookingControllers.allBoo
 router.patch('/change_status_booking',Middlewares.checkAccessToken,Middlewares.changeStatusBooking(),Middlewares.validationForm,bookingControllers.changeStatusBooking);
 router.patch('/change_status_package',Middlewares.checkAccessToken,Middlewares.changeStatusPackage(),Middlewares.validationForm,packageControllers.changeStatusPackage);
 router.post('/summary_account',Middlewares.checkAccessToken,Middlewares.formSummaryAccount(),Middlewares.validationForm,accountControllers.summaryAccount);
+router.get('/all_task_log',Middlewares.checkAccessToken,userControllers.allTaskLog);
 module.exports = router;

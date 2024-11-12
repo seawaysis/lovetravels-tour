@@ -14,6 +14,7 @@ import AgentProfile from '../public/agent/pages/profile';
 import AgentBookingPage from '../public/agent/pages/booking';
 import AgentPackageTourPage from '../public/agent/pages/packageTour';
 import AgentSumAccountPage from '../public/agent/pages/sumAccount';
+import AgentLogPage from '../public/agent/pages/log';
 
 const components = {
     userLogin: {
@@ -76,6 +77,10 @@ const components = {
         url: "agent/account",
         component: AgentSumAccountPage
     },
+    agentLog: {
+        url: "agent/log",
+        component: AgentLogPage
+    },
 
 }
 const permissions = {
@@ -107,7 +112,8 @@ const permissions = {
             components.agentProfile,
             components.agentBooking,
             components.agentPackageTour,
-            components.agentSumAccount
+            components.agentSumAccount,
+            components.agentLog
         ],
         redirectRoutes: "agent/booking"
     }

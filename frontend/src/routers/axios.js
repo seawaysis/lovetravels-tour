@@ -44,6 +44,7 @@ axios.interceptors.request.use(
                 {'change_status_package' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
                 {'summary_account' : {headers: {authorization : `Bearer ${token.accessToken}`,'Content-Type': 'application/json'}}},
                 {'agent_info' : {headers: {authorization : `Bearer ${token.confirmToken}`,'Content-Type': 'application/json'}}},
+                {'all_task_log' : {headers: {authorization : `Bearer ${token.accessToken}`}}},
             ]
         }
             arrPath[urlSplit[0]].forEach((v) => {
