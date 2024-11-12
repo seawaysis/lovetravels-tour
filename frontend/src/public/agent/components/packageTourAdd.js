@@ -75,7 +75,7 @@ function AddPackageTour(props) {
         <Col span={22} offset={2} align='left'>
                         <Title level={2} className="Title">Add Package Tour</Title>
                     </Col>
-            <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
+            <Col className="card_bg fadeIn" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                 <div className="Form">
                     <Form
                         {...layout}

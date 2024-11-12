@@ -8,6 +8,7 @@ import ConfigDate from '../configDate';
 import Header from '../pages/header';
 
 import formatMoney from '../formatMoney';
+import '../allStyle.css';
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 function SumAccount (){
@@ -98,7 +99,7 @@ const onRow = (record, rowIndex) => {
             </Col>
         </Row>
         <Row justify="center">
-            <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
+            <Col className="card_bg fadeIn" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
                 <Form
                         className="App"
                         span={24}
@@ -139,7 +140,7 @@ const onRow = (record, rowIndex) => {
                         </Form>
             </Col>            
         </Row>
-        <Flex gap="middle" vertical>
+        <Flex className="fadeIn" gap="middle" vertical>
             <Flex align="center" gap="middle">
 
             </Flex>

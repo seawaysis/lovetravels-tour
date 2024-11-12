@@ -228,3 +228,17 @@ input[type]:after {
     overflow: hidden;
     /* Hides overflow text */
 }
+
+.fadeIn {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

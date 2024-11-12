@@ -59,9 +59,13 @@ function AppMenu({isInline=false}){
                         label:"Package Tour",
                         key: "package_tour",
                         style: {color:"white"}
-                     },{
+                    },{
                         label:"Profile",
                         key: "profile",
+                        style: {color:"white"}
+                    },{
+                        label:"Log",
+                        key: "log",
                         style: {color:"white"}
                     },{
                         label:"logout",
@@ -73,7 +77,7 @@ function AppMenu({isInline=false}){
     if(isInline){
         styleForMenu = {backgroundColor:"#7BBCB0",float: 'left'}
     }else{
-        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'450px'}
+        styleForMenu = {backgroundColor:"#7BBCB0",float: 'right',width:'480px'}
     }
     return (
         <div style={{backgroundColor:"#7BBCB0",overflow: 'auto'}}>

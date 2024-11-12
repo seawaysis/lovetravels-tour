@@ -3,6 +3,7 @@ import { Row,Col,Table,notification } from 'antd';
 import axios from 'axios';
 
 import Header from '../pages/header';
+import '../allStyle.css';
 function Log() {
   const columns = [
   {
@@ -39,8 +40,8 @@ function Log() {
     <div>
       <Header />
       <Row justify="center">
-        <Col className="card_bg" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
-          <Table dataSource={dataLog} columns={columns} />;
+        <Col className="card_bg fadeIn" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
+          <Table dataSource={dataLog} columns={columns} />
         </Col>
       </Row>
     </div>

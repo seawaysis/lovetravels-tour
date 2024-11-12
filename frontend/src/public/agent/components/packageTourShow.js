@@ -51,10 +51,10 @@ function PackageTourShow(props) {
       </Row>
       <Row justify="center">
         {!agentPackage[0] ?  (
-            <Col className="card_bg" {...cardCol}><Empty /></Col>
+            <Col className="card_bg fadeIn" {...cardCol}><Empty /></Col>
         ) : ( 
             agentPackage.map((v,k) => (
-              <Col className="card_bg" {...cardCol}>
+              <Col className="card_bg fadeIn" {...cardCol}>
                 <Row>
                   <Col span={11} offset={1}>
                     <img src={v.pic_url} style={{height: '250px',width: '100%'}} alt=''/>
