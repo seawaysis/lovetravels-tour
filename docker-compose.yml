@@ -60,6 +60,8 @@ services:
       - TZ=Asia/Bangkok
     depends_on:
       - db
+    networks:
+      - reverse
   frontend:
     container_name: frontend-reactjs-tour
     build: ./frontend
@@ -77,6 +79,22 @@ services:
     depends_on:
       - db
       - backend
+    networks:
+      - reverse
+  nginx:
+    container_name: revproxy
+    build: ./nginx_revproxy
+    image: nginx:latest
+    ports:
+      - 80:80
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - reverse
+networks:
+  reverse:
+    driver: bridge
 #git command 
 #git rm [file.path] // repo and local
 #git rm --cached [file.path] // repo only
@@ -87,7 +105,7 @@ services:
 #git reset --hard [commit_id]
 #git log --graph --oneline --decorate
 
-#create network => docker network create nginx-proxy-example
+#create network => docker network create reverse
 #frontend
 #npm init
 #npx create-react-app [projectname] || npm install -g create-react-app
