@@ -39,11 +39,9 @@ app.use('/admin',adminRoutes);
         res.sendFile(path.join(__dirname, "/src/images/eSlip/"+req.params.filename));
     });
 
+    // app.listen(process.env.PORT_BE_HTTPS,() =>{
+    //     console.log('Server on port ',process.env.PORT_BE_HTTPS)
+    // });
     app.listen(process.env.PORT_BE,() =>{
         console.log('Server on port ',process.env.PORT_BE)
     });
-    app.listen(process.env.PORT_BE_HTTPS,() =>{
-        console.log('Server on port ',process.env.PORT_BE_HTTPS)
-    });
-    
-module.exports = app;
