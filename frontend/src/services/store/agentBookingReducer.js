@@ -1,4 +1,4 @@
-import { createSlice ,current} from '@reduxjs/toolkit'
+import { createSlice /*,current*/} from '@reduxjs/toolkit'
 import agentThunks from './agentThunks';
 
 const allBooking = createSlice({

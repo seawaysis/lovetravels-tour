@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Form, Input, Button, Row, Col,Checkbox, notification } from 'antd';
+import { Form, Input, Button, Row, Col, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import LocalStorages from '../../../services/localStorages';
 

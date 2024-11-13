@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Col,Image,Empty,Table  } from 'antd';
+import React from 'react';
+import { Image,Empty,Table  } from 'antd';
 import '../allStyle.css';
 function BookingPaymentDetail(props) {
   const columns = [

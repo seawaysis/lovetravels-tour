@@ -84,13 +84,13 @@ function SumAccount (){
 const expandedRow = row => {
 return <Table columns={subColumns} dataSource={row.detail} pagination={false} />;
 };
-const onRow = (record, rowIndex) => {
-                return {
-                onClick: event => {
-                    console.log(record);
-                    }, // click row
-                };
-            }
+// const onRow = (record, rowIndex) => {
+//                 return {
+//                 onClick: event => {
+//                     console.log(record);
+//                     }, // click row
+//                 };
+//             }
     return (
         <><Header />
         <Row justify="center">
