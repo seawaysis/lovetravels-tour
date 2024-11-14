@@ -109,7 +109,7 @@ const formPayESlip = () => {
     body('pricePerson').not().isEmpty().withMessage('Invalid price dose not empty')
       .exists({checkFalsy: true}).withMessage('You must type a number')
       .isLength({min:1}).withMessage('The minimum price length is 1 digit')
-      .isLength({max:6}).withMessage('The maximum price length is 6 digit'),
+      .isLength({max:10}).withMessage('The maximum price length is 10 digit'),
     body('discount').not().isEmpty().withMessage('Invalid discount dose not empty')
       .exists({checkFalsy: true}).withMessage('You must type a number')
       .isLength({min:1}).withMessage('The minimum discount length is 1 digit')
@@ -135,11 +135,11 @@ const formPayCreditCard = () => {
     body('booking.netPrice').not().isEmpty().withMessage('Invalid price dose not empty')
       .exists({checkFalsy: true}).withMessage('You must type a number')
       .isLength({min:1}).withMessage('The minimum price length is 1 digit')
-      .isLength({max:6}).withMessage('The maximum price length is 6 digit'),
+      .isLength({max:10}).withMessage('The maximum price length is 10 digit'),
     body('booking.pricePerson').not().isEmpty().withMessage('Invalid price dose not empty')
       .exists({checkFalsy: true}).withMessage('You must type a number')
       .isLength({min:1}).withMessage('The minimum price length is 1 digit')
-      .isLength({max:6}).withMessage('The maximum price length is 6 digit'),
+      .isLength({max:10}).withMessage('The maximum price length is 10 digit'),
     body('booking.discount').not().isEmpty().withMessage('Invalid discount dose not empty')
       .matches(/^[0-9]*$/).withMessage('Only number')  
       .isLength({min:1}).withMessage('The minimum discount length is 1 digit')
