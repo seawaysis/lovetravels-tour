@@ -189,7 +189,7 @@ const changeStatusPackage = async (req,res) => {
                 where: {package_id:result[0].package_id}
             }).then(res => {return res}).catch(err => {return {error : err}});
         update.error ? res.status(400).send({message : update.error}) :await log.taskLog({
-                task : 'Changed status package '+result[0].package_id,
+                task : 'Changed status package '+result[0].package_id+' is '+body.status,
                 ip : req.headers['x-forwarded-for'] || req.connection.remoteAddress,
                 username : decodeToken.username
             }); res.status(200).send({message: 'Change status booking successfully !!'});
