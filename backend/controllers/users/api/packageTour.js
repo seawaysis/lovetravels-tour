@@ -12,6 +12,7 @@ const defaultSearch = async (req,res) => {
     let checkOut = dateTime.today().rawDate;
     checkOut.setDate(checkOut.getDate() + 2);
     res.status(200).json({ search: '',checkIn : checkIn.toISOString().split('T')[0],checkOut : checkOut.toISOString().split('T')[0],amount :1,bgSearch : pathBg});
+    //res.status(200).json({ search: '',checkIn : '2024-11-15',checkOut : '2024-11-17',amount :1,bgSearch : pathBg});
 }
 const searchPackage = async (req,res) => {
     const body = req.body

@@ -31,7 +31,7 @@ function Register(props) {
                 LocalStorages.setToken(res.data)
                 notification.success({
                     placement: 'bottomRight',
-                    message: `Register successfully by ${values.email}`
+                    message: `send OTP to ${values.email}`
                 });
                navigate("/user/confirm_email");
             }

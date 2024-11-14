@@ -35,7 +35,7 @@ function ConfEmail() {
                     }else{
                         navigate("/user/search");
                     }
-                },50);
+                },1000);
         }).catch(err => {
               notification.error({
                     placement: 'bottomRight',
