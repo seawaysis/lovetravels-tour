@@ -24,6 +24,7 @@ if (config.use_env_variable) {
       require: true,
     },
   },
+  timezone: "Asia/Bangkok"
 });
 }
 
