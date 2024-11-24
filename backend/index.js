@@ -1,15 +1,27 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('path')
-const app = express();
 const cors = require('cors');
+
+const http = require('http');
+const socketIo = require('socket.io');
+
+const path = require('path');
+const app = express();
+const apiServer = http.createServer(app); // Express API server
+const io = socketIo(process.env.PORT_SOCKET_BE, {
+  cors: {
+    origin: "*",  // Allow frontend local domain
+    methods: ["GET", "POST"],
+  },});
 
 const adminRoutes = require('./routes/admins/admin');
 const userRoutes = require('./routes/users/user');
 const agentRoutes = require('./routes/agents/agent');
 const db = require('./models');
 
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:3000','http://frontend.localhost']
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
@@ -17,7 +29,7 @@ const resetDB = {force:false};
 db.sequelize.sync(resetDB).then(() => {
     db.extradb(resetDB);
 });
-app.use('/admin',adminRoutes);
+    app.use('/admin',adminRoutes);
     app.use('/user',userRoutes);
     app.use('/agent',agentRoutes);
 
@@ -39,9 +51,20 @@ app.use('/admin',adminRoutes);
         res.sendFile(path.join(__dirname, "/src/images/eSlip/"+req.params.filename));
     });
 
-    // app.listen(process.env.PORT_BE_HTTPS,() =>{
-    //     console.log('Server on port ',process.env.PORT_BE_HTTPS)
-    // });
-    app.listen(process.env.PORT_BE,() =>{
-        console.log('Server on port ',process.env.PORT_BE)
+    io.on('connection', (socket) => {
+        console.log('A user connected via WebSocket');
+
+        // Handle receiving and sending messages
+        socket.on('sendMessage', (message) => {
+            console.log('Message received:', message);
+            io.emit('newMessage', message); // Broadcast message to all connected clients
+        });
+
+        socket.on('disconnect', () => {
+            console.log('User disconnected');
+        });
+    });
+
+    apiServer.listen(process.env.PORT_BE,() =>{
+        console.log('Server on port ',process.env.PORT_BE);
     });

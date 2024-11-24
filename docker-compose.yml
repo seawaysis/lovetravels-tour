@@ -37,6 +37,8 @@ services:
       - POSTGRES_PASSWORD=pass_tour
       - POSTGRES_USER=user_tour
       - POSTGRES_DB=db_tour
+    networks:
+      - reverse
   pgadmin:
     image: dpage/pgadmin4
     container_name: postgres_db_tour
@@ -47,6 +49,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: pass_tour
     depends_on:
         - db
+    networks:
+      - reverse
   backend:
     # image: node
     container_name: backend-nodejs-tour

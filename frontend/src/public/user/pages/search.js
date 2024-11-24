@@ -4,6 +4,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import Header from '../components/header';
 import PackageDetail from '../components/packageDetail';
 import PackageSearch from '../components/packageSearch';
+import Chat from '../components/chat';
 
 import '../allStyle.css';
 
@@ -22,6 +23,7 @@ function Search(props) {
         <>
         <Header/> 
        {!packageDetail.statusChange ? <PackageSearch {...arrProps}/> : <PackageDetail packageDetail={packageDetail} setPackageDetail={setPackageDetail} />}
+        {/* <Chat /> */}
         </>
     )
 }
