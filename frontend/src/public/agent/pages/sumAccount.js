@@ -19,7 +19,6 @@ function SumAccount (){
         setRangeDate({startDate : dayjs(getDate.date.startDate,dateFormat),endDate : dayjs(getDate.date.endDate,dateFormat)});
         axios.post('agent/summary_account',getDate.date).then(
             res => {
-                console.log(res.data);
                 setDataSource(res.data);
                 notification.success({
                     placement: 'bottomRight',
