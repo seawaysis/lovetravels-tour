@@ -9,7 +9,10 @@
         display: none;
     }
 }
-
+@font-face {
+    font-family: NotoSans;
+    src: url(../assets/Noto_Sans_Thai/static/NotoSansThai-Regular.ttf);
+}
 body {
     background-color: #fafafa;
 }
