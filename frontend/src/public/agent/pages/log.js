@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row,Col,Table,notification } from 'antd';
+import Title from 'antd/lib/typography/Title';
 import axios from 'axios';
 
 import Header from '../pages/header';
@@ -39,6 +40,11 @@ function Log() {
   return (
     <div>
       <Header />
+      <Row justify="center">
+            <Col span={20} offset={2} >
+                <Title level={2} className="Title">Log</Title>
+            </Col>
+      </Row>
       <Row justify="center">
         <Col className="card_bg fadeIn" xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}>
           <Table dataSource={dataLog} columns={columns} />

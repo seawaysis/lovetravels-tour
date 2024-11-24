@@ -42,14 +42,14 @@ const Booking = ()=>{
     <div>
     <Header />
     <Row justify="center">
-        <Col span={22}>
-            <Title level={4} className="Title">All Booking</Title>
+        <Col span={20} offset={2} >
+            <Title level={2} className="Title">All Booking</Title>
         </Col>
     </Row>
+    <Row justify="center">
     {!allBooking[0] ? (
         <Col className="card_bg fadeIn" {...wrapSpan}><Empty /></Col>
     ) : ( allBooking.map((v) => ( 
-    <Row justify="center">
         <Col className="card_bg fadeIn" {...wrapSpan}>
             <Row justify="space-around">
                 <Col span={12}><span className="text_main">{v.booking_id}</span><br /><span className="text_main">{v.email}</span><br /><span className="text_sub">{v.package_name}</span></Col>
@@ -83,8 +83,8 @@ const Booking = ()=>{
             {v.status === 'refunded' ? <Row justify="space-around"><Col span={10}><Button onClick={() => statusChange({ status : "cancelled",id : v.booking_id})} className="Button button_delete" htmlType="button" size="large">Cancel</Button></Col><Col span={10}><Button onClick={() => statusChange({ status : "confirmed",id : v.booking_id})} className="Button button_success" htmlType="button" size="large">Confirm</Button></Col></Row> : null}
             {v.status === 'cancelled' ? <Row justify="space-around"><Col span={7}><Button onClick={() => statusChange({ status : "refunded",id : v.booking_id})} className="Button button_refund" htmlType="button" size="large">Refund</Button></Col><Col span={7}><Button onClick={() => statusChange({ status : "confirmed",id : v.booking_id})} className="Button button_success" htmlType="button" size="large">Confirm</Button></Col><Col span={7}><Button onClick={() => statusChange({ status : "pending",id : v.booking_id})} className="Button button_delete" htmlType="button" size="large">Pending</Button></Col></Row> : null}
         </Col>
-    </Row>
     )))};
+    </Row>
     </div>
 );
 }

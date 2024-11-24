@@ -52,7 +52,7 @@ function AppMenu({isInline=false}){
                         key: "booking",
                         style: {color:"white"}
                     },{
-                        label:"Acount",
+                        label:"Account",
                         key: "account",
                         style: {color:"white"}
                     },{

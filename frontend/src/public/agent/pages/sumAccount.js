@@ -93,8 +93,8 @@ return <Table columns={subColumns} dataSource={row.detail} pagination={false} />
     return (
         <><Header />
         <Row justify="center">
-            <Col span={22}>
-                <Title level={4} className="Title">All Booking</Title>
+            <Col span={20} offset={2} >
+                <Title level={2} className="Title">Account</Title>
             </Col>
         </Row>
         <Row justify="center">
